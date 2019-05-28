@@ -17,8 +17,6 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
 
 [개발 일정 (schedule)](https://github.com/sc372/simple-blog-app-react-node/wiki/%EA%B0%9C%EB%B0%9C-%EC%9D%BC%EC%A0%95-(schedule))
 
-[핵심 기능 (core feature)](https://github.com/sc372/simple-blog-app-react-node/wiki/%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5-(core-feature))
-
 [와이어 프레임 (wire frame)](https://github.com/sc372/simple-blog-app-react-node/wiki/%EC%99%80%EC%9D%B4%EC%96%B4-%ED%94%84%EB%A0%88%EC%9E%84-(wire-frame))
 
 [데이터 모델링 (data modeling)](https://github.com/sc372/simple-blog-app-react-node/wiki/%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81-(data-modeling))
