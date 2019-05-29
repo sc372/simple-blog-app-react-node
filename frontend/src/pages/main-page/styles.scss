@@ -1,0 +1,24 @@
+.blog-search-wrapper {
+  padding: 100px 0 10px 0;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  background-color: #fff;
+  text-align: center;
+
+  .blog-search-input {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.main-page-wrapper {
+  padding: 100px 10vw;
+
+  .blog-item-card {
+    padding: 50px 30px 0 30px;
+    .blog-item-img {
+      height: 250px;
+    }
+  }
+}

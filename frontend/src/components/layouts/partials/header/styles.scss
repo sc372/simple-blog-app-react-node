@@ -2,20 +2,82 @@
   background-color: #ffffff;
   z-index: 500;
   width: 100%;
-  height: 120px;
+  height: 100px;
   position: fixed;
-  padding: 10px 10px;
+  padding: 10px;
 
   .header-logo {
-    font-size: 2rem;
+    font-size: 2.5rem;
     float: left;
     padding: 1.5vh 0 0 50px;
-    color: #001529;
+    color: dimgray;
+  }
+
+  .header-logo:hover {
+    color: #292961;
+  }
+
+  .header-menu-auth-btn-group {
+    float: right;
+    padding: 20px 20px 0 0;
+
+    .header-menu-auth-btn {
+      margin: 0 5px 0 5px;
+      font-size: 0.8rem;
+    }
   }
 
   .header-menu-icon {
     float: right;
-    padding: 1.5vh 50px 0 0;
+    padding: 35px 50px 0 0;
     font-size: 30px;
+    color: dimgray;
+  }
+
+  .header-menu-icon:hover {
+    color: #292961;
+  }
+}
+
+.m-header-wrapper {
+  background-color: #ffffff;
+  z-index: 500;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  padding: 10px;
+
+  .m-header-logo {
+    font-size: 5rem;
+    float: left;
+    width: 20%;
+    min-width: 110px;
+    height: auto;
+    padding: 2vh 0 0 5vw;
+    color: dimgray;
+  }
+
+  .m-header-logo:hover {
+    color: #292961;
+  }
+
+  .m-header-menu-auth-btn-group {
+    float: right;
+    padding: 15px calc(20px + 1vw) 0 0;
+
+    .m-header-menu-auth-btn {
+      margin: 0 5px 0 5px;
+      font-size: 2rem;
+    }
+  }
+
+  .m-header-menu-icon {
+    float: right;
+    padding: 37px 5vw 0 0;
+    font-size: 4rem;
+  }
+
+  .m-header-menu-icon:hover {
+    color: #292961;
   }
 }
