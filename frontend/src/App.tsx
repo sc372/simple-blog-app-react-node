@@ -8,10 +8,19 @@ import {
   CreateBlogPage,
   UpdateBlogPage,
 } from './pages'
+import { Helmet } from 'react-helmet'
 
 const App: React.FC = () => {
   return (
     <>
+      <Helmet>
+        <title>Simple Blog</title>
+        <meta name="description" content="Simple Blog" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        />
+      </Helmet>
       <Route exact path="/" component={MainPage} />
       <Switch>
         <Route path="/my/blog" component={MyBlogPage} />

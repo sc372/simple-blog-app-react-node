@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Drawer, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import Responsive from '../../response-helper'
@@ -6,7 +6,7 @@ import Responsive from '../../response-helper'
 import './styles.scss'
 
 interface ISideBarProps {
-  setIsDrawerToggleValue: any
+  setIsDrawerToggleValue: Dispatch<SetStateAction<boolean>>
   isDrawerToggle: boolean
 }
 
@@ -37,11 +37,14 @@ const Sidebar: React.FC<ISideBarProps> = ({
             </div>
           </div>
           <div className="header-menu-link-wrapper">
-            <Link to="/my">
-              <div className="header-menu-link-item">마이 페이지</div>
+            <Link to="/" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="header-menu-link-item">메인 페이지</div>
             </Link>
-            <Link to="/my/blog">
-              <div className="header-menu-link-item">내가 쓴 글</div>
+            <Link to="/my/blog" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="header-menu-link-item">내가 작성한 글</div>
+            </Link>
+            <Link to="/my" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="header-menu-link-item">나의 정보</div>
             </Link>
           </div>
         </Drawer>
@@ -67,11 +70,14 @@ const Sidebar: React.FC<ISideBarProps> = ({
             </div>
           </div>
           <div className="m-header-menu-link-wrapper">
-            <Link to="/my">
-              <div className="m-header-menu-link-item">마이 페이지</div>
+            <Link to="/" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="m-header-menu-link-item">메인 페이지</div>
             </Link>
-            <Link to="/my/blog">
-              <div className="m-header-menu-link-item">내가 쓴 글</div>
+            <Link to="/my/blog" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="m-header-menu-link-item">내가 작성한 글</div>
+            </Link>
+            <Link to="/my" onClick={() => setIsDrawerToggleValue(false)}>
+              <div className="m-header-menu-link-item">나의 정보</div>
             </Link>
           </div>
         </Drawer>

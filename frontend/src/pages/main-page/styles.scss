@@ -20,5 +20,16 @@
     .blog-item-img {
       height: 250px;
     }
+    .blog-item-author {
+      color: #292961;
+    }
+
+    .blog-item-date {
+      float: right;
+    }
   }
+}
+
+.main-page-scroll-spinner {
+  font-size: 3rem;
 }

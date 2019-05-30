@@ -1,14 +1,10 @@
 import React from 'react'
 import { MainLayout } from '../../components/layouts'
-import { Card, Col, Row, Input } from 'antd'
+import { Card, Col, Row, Input, Avatar, Icon, Typography } from 'antd'
 
 import './styles.scss'
 
 const MainPage: React.FC = () => {
-  // const mapIndexed = R.addIndex(R.map)
-  // const scrollToTop = () =>
-  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-
   return (
     <MainLayout>
       <div className="blog-search-wrapper">
@@ -34,8 +30,20 @@ const MainPage: React.FC = () => {
                 }
               >
                 <Card.Meta
-                  title="Europe Street beat"
-                  description="www.instagram.com"
+                  title={
+                    <Typography.Paragraph ellipsis>
+                      ddddddddddddddddddddddddddddddd
+                    </Typography.Paragraph>
+                  }
+                  avatar={
+                    <Avatar src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
+                  }
+                  description={
+                    <div>
+                      <span className="blog-item-author">상자</span>
+                      <span className="blog-item-date">2019/06/01</span>
+                    </div>
+                  }
                 />
               </Card>
             </div>
@@ -270,6 +278,7 @@ const MainPage: React.FC = () => {
           </Col>
         </Row>
       </div>
+      <Icon type="loading" className="main-page-scroll-spinner" />
     </MainLayout>
   )
 }

@@ -16,6 +16,7 @@
     "jsx-wrap-multiline": false,
     "jsx-no-multiline-js": false,
     "jsx-no-lambda": false,
+    "jsx-boolean-value": false,
     "jsx-curly-spacing": [true, "never"],
     "arrow-return-shorthand": true, // 화살표 함수에 {}, return 을 입력 필요하지 않는가
     "arrow-parens": false, // 화살표 함수의 인자를 반드시 ()로 묶어야함.

@@ -1,3 +1,11 @@
 .create-blog-page-wrapper {
-  padding: 130px 10vw;
+  margin: 120px 16vw;
+
+  .create-blog-page-title-input {
+    max-width: 500px;
+  }
+
+  .create-blog-page-submit {
+    float: right;
+  }
 }

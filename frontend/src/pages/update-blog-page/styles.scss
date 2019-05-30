@@ -1,3 +1,11 @@
 .update-blog-page-wrapper {
-  padding: 130px 10vw;
+  margin: 120px 16vw;
+
+  .update-blog-page-title-input {
+    max-width: 500px;
+  }
+
+  .update-blog-page-submit {
+    float: right;
+  }
 }

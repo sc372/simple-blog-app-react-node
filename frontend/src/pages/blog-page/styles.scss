@@ -1,3 +1,23 @@
 .blog-page-wrapper {
-  padding: 130px 10vw;
+  margin: 120px 16vw;
+
+  .blog-page-author {
+    color: #292961;
+    font-size: 1rem;
+    margin-left: 10px;
+  }
+
+  .blog-page-date {
+    font-size: 0.9rem;
+    padding: 7px 0;
+  }
+
+  .blog-page-image {
+    margin-top: 50px;
+    max-width: 100%;
+  }
+
+  .blog-page-content-wrapper {
+    font-size: 1rem;
+  }
 }

@@ -6,5 +6,5 @@ const Max1000 = (props: any) => <Responsive {...props} maxWidth={1000} />
 
 export default {
   Min1000,
-  Max1000
+  Max1000,
 }

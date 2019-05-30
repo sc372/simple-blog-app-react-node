@@ -1,3 +1,15 @@
 .my-page-wrapper {
-  padding: 130px 10vw;
+  margin: 120px 16vw;
+
+  .my-page-input {
+    max-width: 500px;
+  }
+
+  .my-page-submit-wrapper {
+    margin-top: 50px;
+
+    .my-page-drop-out {
+      padding-left: 2vw;
+    }
+  }
 }
