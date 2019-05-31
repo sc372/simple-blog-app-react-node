@@ -25,25 +25,28 @@ const Sidebar: React.FC<ISideBarProps> = ({
             backgroundColor: '#fff',
             height: '100%',
           }}
-          onClose={() => setIsDrawerToggleValue(false)}
+          onClose={(): void => setIsDrawerToggleValue(false)}
           visible={isDrawerToggle}
         >
           <div className="header-menu-dismiss-wrapper">
             <div className="header-menu-dismiss-icon">
               <Icon
                 type="close"
-                onClick={() => setIsDrawerToggleValue(false)}
+                onClick={(): void => setIsDrawerToggleValue(false)}
               />
             </div>
           </div>
           <div className="header-menu-link-wrapper">
-            <Link to="/" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link to="/" onClick={(): void => setIsDrawerToggleValue(false)}>
               <div className="header-menu-link-item">메인 페이지</div>
             </Link>
-            <Link to="/my/blog" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link
+              to="/my/blog"
+              onClick={(): void => setIsDrawerToggleValue(false)}
+            >
               <div className="header-menu-link-item">내가 작성한 글</div>
             </Link>
-            <Link to="/my" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link to="/my" onClick={(): void => setIsDrawerToggleValue(false)}>
               <div className="header-menu-link-item">나의 정보</div>
             </Link>
           </div>
@@ -58,25 +61,28 @@ const Sidebar: React.FC<ISideBarProps> = ({
             backgroundColor: '#fff',
             height: '100%',
           }}
-          onClose={() => setIsDrawerToggleValue(false)}
+          onClose={(): void => setIsDrawerToggleValue(false)}
           visible={isDrawerToggle}
         >
           <div className="m-header-menu-dismiss-wrapper">
             <div className="m-header-menu-dismiss-icon">
               <Icon
                 type="close"
-                onClick={() => setIsDrawerToggleValue(false)}
+                onClick={(): void => setIsDrawerToggleValue(false)}
               />
             </div>
           </div>
           <div className="m-header-menu-link-wrapper">
-            <Link to="/" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link to="/" onClick={(): void => setIsDrawerToggleValue(false)}>
               <div className="m-header-menu-link-item">메인 페이지</div>
             </Link>
-            <Link to="/my/blog" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link
+              to="/my/blog"
+              onClick={(): void => setIsDrawerToggleValue(false)}
+            >
               <div className="m-header-menu-link-item">내가 작성한 글</div>
             </Link>
-            <Link to="/my" onClick={() => setIsDrawerToggleValue(false)}>
+            <Link to="/my" onClick={(): void => setIsDrawerToggleValue(false)}>
               <div className="m-header-menu-link-item">나의 정보</div>
             </Link>
           </div>

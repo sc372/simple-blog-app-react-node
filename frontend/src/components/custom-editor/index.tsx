@@ -9,7 +9,7 @@ const CustomEditor: React.FC = () => {
     <div className="custom-table-wrapper">
       <ReactQuill
         // value={}
-        onChange={(contents: string) => console.log('Line: 12', contents)}
+        onChange={(contents: string): void => console.log('Line: 12', contents)}
         theme={'snow'}
         placeholder={'내용을 작성해주세요.'}
         modules={{

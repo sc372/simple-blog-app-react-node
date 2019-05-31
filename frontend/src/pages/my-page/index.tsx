@@ -18,7 +18,7 @@ const MyPage: React.FC = () => {
           className="my-page-input"
           placeholder="닉네임을 입력해주세요."
           allowClear
-          onChange={(e: any) => console.log('Line: 18', e)}
+          onChange={e => console.log('Line: 18', e)}
         />
         <br />
         <br />
@@ -27,7 +27,7 @@ const MyPage: React.FC = () => {
           className="my-page-input"
           placeholder="이메일을 입력해주세요."
           allowClear
-          onChange={(e: any) => console.log('Line: 18', e)}
+          onChange={e => console.log('Line: 18', e)}
         />
         <br />
         <br />

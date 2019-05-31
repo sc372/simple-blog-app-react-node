@@ -18,7 +18,7 @@ const CreateBlogPage: React.FC = () => {
           className="create-blog-page-title-input"
           placeholder="제목을 입력해주세요."
           allowClear
-          onChange={(e: any) => console.log('Line: 17', e)}
+          onChange={e => console.log('Line: 17', e)}
           onPressEnter={() => console.log('Line: 18', 'skldhsfkj')}
         />
         <br />

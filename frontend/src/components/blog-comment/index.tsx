@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 // import * as R from 'ramda'
 
 import './styles.scss'
@@ -13,8 +13,10 @@ const BlogComment: React.FC = () => {
         <Input
           placeholder="댓글을 입력해주세요."
           allowClear
-          onChange={(e: any) => console.log('Line: 17', e)}
-          onPressEnter={() => console.log('Line: 18', 'skldhsfkj')}
+          onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+            console.log('Line: 17', e)
+          }
+          onPressEnter={(): void => console.log('Line: 18', 'skldhsfkj')}
         />
         <Button type="primary" className="blog-comment-submit">
           댓글 추가

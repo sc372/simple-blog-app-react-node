@@ -18,7 +18,7 @@ const MyBlogPage: React.FC = () => {
             className="my-blog-page-search-input"
             placeholder="제목을 검색해주세요."
             allowClear
-            onChange={(e: any) => console.log('Line: 18', e)}
+            onChange={e => console.log('Line: 18', e)}
           />
           <Button type="default" icon="search" htmlType="button">
             검색

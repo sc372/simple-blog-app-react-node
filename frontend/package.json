@@ -7,8 +7,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "lint-js": "eslint 'src/**/*.{js,jsx}'"
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix"
   },
   "dependencies": {
     "@types/jest": "24.0.13",
@@ -43,6 +42,8 @@
     "@types/react-helmet": "^5.0.8",
     "@types/react-responsive": "^3.0.3",
     "@types/react-router-dom": "^4.3.3",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
@@ -57,11 +58,7 @@
     "eslint-plugin-react-hooks": "^1.6.0",
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^2.3.0",
-    "lint-staged": "^8.1.7",
-    "tslint": "^5.16.0",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "tslint-react": "^4.0.0"
+    "lint-staged": "^8.1.7"
   },
   "husky": {
     "hooks": {
@@ -70,11 +67,8 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "tslint -c tslint.json"
-    ],
-    "*.{js,jsx}": [
-      "eslint"
+    "*.{ts,tsx, js,jsx}": [
+      "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix"
     ]
   },
   "browserslist": {

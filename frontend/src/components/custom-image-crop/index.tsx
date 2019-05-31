@@ -6,7 +6,7 @@ import './styles.scss'
 import 'cropperjs/dist/cropper.css'
 
 const CustomImageCrop: React.FC = () => {
-  const cropper: any = useRef(null)
+  const cropper: any = useRef(null) // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return (
     <div className="custom-image-crop-wrapper">

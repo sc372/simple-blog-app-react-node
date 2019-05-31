@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 
 import './styles.scss'
 
-interface IMyBlogTableProps {}
-
-const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
+const MyBlogTable: React.FC = () => {
   const dataSource = [
     {
       id: 'skjdhfksjd',
@@ -35,7 +33,6 @@ const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
           width={150}
         />
         <Table.Column title="제목" dataIndex="title" key="title" width={500} />
-        />
         <Table.Column
           title="작성일"
           dataIndex="createdAt"
@@ -48,7 +45,7 @@ const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
           key="id"
           width={100}
           onCellClick={record => console.log('Line: 38', record)}
-          render={record => (
+          render={() => (
             <Link to="/update-blog/slhfsd">
               <Icon className="blog-update-btn" type="edit" />
             </Link>

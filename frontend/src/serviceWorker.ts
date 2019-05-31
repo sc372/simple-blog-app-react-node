@@ -1,3 +1,4 @@
+/*eslint @typescript-eslint/no-use-before-define: 0*/
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -21,7 +22,7 @@ const isLocalhost = Boolean(
 )
 
 // tslint:disable-next-line
-type Config = {
+interface Config {
   onSuccess?: (registration: ServiceWorkerRegistration) => void
   onUpdate?: (registration: ServiceWorkerRegistration) => void
 }

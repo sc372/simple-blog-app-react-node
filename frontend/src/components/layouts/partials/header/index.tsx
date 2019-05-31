@@ -8,9 +8,7 @@ import { SignUpModal, SignInModal } from '../../../index'
 
 import './styles.scss'
 
-interface IHeaderProps {}
-
-const Header: React.FC<IHeaderProps> = () => {
+const Header: React.FC = () => {
   const [isDrawerToggle, setIsDrawerToggleValue] = useState(false)
   const [isSignUpModal, setIsSignUpModal] = useState(false)
   const [isSignInModal, setIsSignInModal] = useState(false)
@@ -45,7 +43,7 @@ const Header: React.FC<IHeaderProps> = () => {
             <Icon
               className="header-menu-icon"
               type="menu"
-              onClick={() => setIsDrawerToggleValue(true)}
+              onClick={(): void => setIsDrawerToggleValue(true)}
             />
           </>
         </Layout.Header>
@@ -59,7 +57,7 @@ const Header: React.FC<IHeaderProps> = () => {
             <Button
               size="small"
               className="m-header-sign-up-btn"
-              onClick={() => setIsSignUpModal(true)}
+              onClick={(): void => setIsSignUpModal(true)}
             >
               회원가입
             </Button>
@@ -67,7 +65,7 @@ const Header: React.FC<IHeaderProps> = () => {
               size="small"
               className="m-header-sign-in-btn"
               type="primary"
-              onClick={() => setIsSignInModal(true)}
+              onClick={(): void => setIsSignInModal(true)}
             >
               로그인
             </Button>
