@@ -31,3 +31,39 @@
     }
   }
 }
+
+@media (max-width: 1000px) {
+  .blog-comment-wrapper {
+    margin-top: 100px;
+
+    .blog-comment-create {
+      margin-bottom: 70px;
+
+      .blog-comment-submit {
+        float: right;
+        margin-top: 10px;
+      }
+    }
+
+    .blog-comment-item {
+      .blog-comment-author {
+        font-size: 3rem;
+        margin-left: 5px;
+      }
+
+      .blog-comment-date {
+        font-size: 2.5rem;
+        margin-left: 5px;
+      }
+
+      .blog-comment-delete {
+        margin-left: 5px;
+      }
+
+      .blog-comment-content {
+        font-size: 3rem;
+        margin-top: 10px;
+      }
+    }
+  }
+}

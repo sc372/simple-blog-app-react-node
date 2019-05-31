@@ -13,3 +13,21 @@
     }
   }
 }
+
+@media (max-width: 1000px) {
+  .my-page-wrapper {
+    margin: 120px 2vw;
+
+    .my-page-input {
+      max-width: 500px;
+    }
+
+    .my-page-submit-wrapper {
+      margin-top: 50px;
+
+      .my-page-drop-out {
+        padding-left: 2vw;
+      }
+    }
+  }
+}

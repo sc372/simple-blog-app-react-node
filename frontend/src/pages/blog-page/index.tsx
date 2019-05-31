@@ -17,7 +17,7 @@ const BlogPage: React.FC = () => {
         </div>
         <img
           className="blog-page-image"
-          src="https://picsum.photos/1300/500"
+          src="https://picsum.photos/1300/700"
           alt=""
         />
         <div className="blog-page-content-wrapper">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Layout, Icon, Row, Col, Button, Avatar } from 'antd'
+import { Layout, Icon, Button, Avatar } from 'antd'
 
 import Responsive from '../../response-helper'
 import { SideBar } from '../index'
@@ -19,82 +19,71 @@ const Header: React.FC<IHeaderProps> = () => {
     <>
       <Responsive.Min1000>
         <Layout.Header className="header-wrapper">
-          <Row type="flex" justify="space-between">
-            <Col span={12}>
-              <Link to="/">
-                <div className="header-logo">Simple Blog</div>
-              </Link>
-            </Col>
-            <Col span={10}>
-              <span className="header-menu-auth-btn-group">
-                <Avatar
-                  className="header-menu-auth-btn"
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                />
-                <Button
-                  className="header-menu-auth-btn"
-                  onClick={() => setIsSignUpModal(true)}
-                >
-                  회원가입
-                </Button>
-                <Button
-                  className="header-menu-auth-btn"
-                  type="primary"
-                  onClick={() => setIsSignInModal(true)}
-                >
-                  로그인
-                </Button>
-              </span>
-            </Col>
-            <Col span={2}>
-              <Icon
-                className="header-menu-icon"
-                type="menu"
-                onClick={() => setIsDrawerToggleValue(true)}
-              />
-            </Col>
-          </Row>
+          <Link to="/">
+            <div className="header-logo">Simple Blog</div>
+          </Link>
+          {/*<>*/}
+          {/*<Button*/}
+          {/*className="header-sign-up-btn"*/}
+          {/*onClick={() => setIsSignUpModal(true)}*/}
+          {/*>*/}
+          {/*회원가입*/}
+          {/*</Button>*/}
+          {/*<Button*/}
+          {/*className="header-sign-in-btn"*/}
+          {/*type="primary"*/}
+          {/*onClick={() => setIsSignInModal(true)}*/}
+          {/*>*/}
+          {/*로그인*/}
+          {/*</Button>*/}
+          {/*</>*/}
+          <>
+            <Avatar
+              className="header-avatar"
+              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            />
+            <Icon
+              className="header-menu-icon"
+              type="menu"
+              onClick={() => setIsDrawerToggleValue(true)}
+            />
+          </>
         </Layout.Header>
       </Responsive.Min1000>
       <Responsive.Max1000>
         <Layout.Header className="m-header-wrapper">
-          <Row type="flex" justify="space-between">
-            <Col span={12}>
-              <Link to="/">
-                <div className="m-header-logo">SB</div>
-              </Link>
-            </Col>
-            <Col span={10}>
-              <span className="m-header-menu-auth-btn-group">
-                <Avatar
-                  className="m-header-menu-auth-btn"
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                />
-                <Button
-                  size="small"
-                  className="m-header-menu-auth-btn"
-                  onClick={() => setIsSignUpModal(true)}
-                >
-                  회원가입
-                </Button>
-                <Button
-                  size="small"
-                  className="m-header-menu-auth-btn"
-                  type="primary"
-                  onClick={() => setIsSignInModal(true)}
-                >
-                  로그인
-                </Button>
-              </span>
-            </Col>
-            <Col span={2}>
-              <Icon
-                type="menu"
-                className="m-header-menu-icon"
-                onClick={() => setIsDrawerToggleValue(true)}
-              />
-            </Col>
-          </Row>
+          <Link to="/">
+            <div className="m-header-logo">SB</div>
+          </Link>
+          <>
+            <Button
+              size="small"
+              className="m-header-sign-up-btn"
+              onClick={() => setIsSignUpModal(true)}
+            >
+              회원가입
+            </Button>
+            <Button
+              size="small"
+              className="m-header-sign-in-btn"
+              type="primary"
+              onClick={() => setIsSignInModal(true)}
+            >
+              로그인
+            </Button>
+          </>
+          {/*<>*/}
+          {/*<Avatar*/}
+          {/*className="m-header-avatar"*/}
+          {/*src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"*/}
+          {/*/>*/}
+          {/*<span className="m-header-menu-icon">*/}
+          {/*<Icon*/}
+          {/*type="menu"*/}
+          {/*onClick={() => setIsDrawerToggleValue(true)}*/}
+          {/*/>*/}
+          {/*</span>*/}
+          {/*</>*/}
         </Layout.Header>
       </Responsive.Max1000>
       <SideBar

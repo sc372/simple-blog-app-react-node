@@ -21,3 +21,29 @@
     font-size: 1rem;
   }
 }
+
+@media (max-width: 1000px) {
+  .blog-page-wrapper {
+    margin: 120px 2vw;
+
+    .blog-page-author {
+      color: #292961;
+      font-size: 3rem;
+      margin-left: 10px;
+    }
+
+    .blog-page-date {
+      font-size: 2.5rem;
+      padding: 7px 0;
+    }
+
+    .blog-page-image {
+      margin-top: 50px;
+      max-width: 100%;
+    }
+
+    .blog-page-content-wrapper {
+      font-size: 3rem;
+    }
+  }
+}

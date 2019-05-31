@@ -17,14 +17,24 @@
     color: #292961;
   }
 
-  .header-menu-auth-btn-group {
+  .header-sign-up-btn {
     float: right;
-    padding: 20px 20px 0 0;
+    top: 33px;
+    right: 160px;
+    font-size: 0.8rem;
+  }
 
-    .header-menu-auth-btn {
-      margin: 0 5px 0 5px;
-      font-size: 0.8rem;
-    }
+  .header-sign-in-btn {
+    float: right;
+    top: 33px;
+    left: 15px;
+    font-size: 0.8rem;
+  }
+
+  .header-avatar {
+    float: right;
+    right: 150px;
+    top: 33px;
   }
 
   .header-menu-icon {
@@ -61,19 +71,30 @@
     color: #292961;
   }
 
-  .m-header-menu-auth-btn-group {
+  .m-header-sign-up-btn {
     float: right;
-    padding: 15px calc(20px + 1vw) 0 0;
+    top: 38px;
+    right: calc(80px + 3.5vw);
+    font-size: 2rem;
+  }
 
-    .m-header-menu-auth-btn {
-      margin: 0 5px 0 5px;
-      font-size: 2rem;
-    }
+  .m-header-sign-in-btn {
+    float: right;
+    top: 38px;
+    left: calc(40px - 3.5vw);
+    font-size: 2rem;
+  }
+
+  .m-header-avatar {
+    float: right;
+    top: 33px;
+    right: 70px;
+    font-size: 3rem;
   }
 
   .m-header-menu-icon {
     float: right;
-    padding: 37px 5vw 0 0;
+    margin: 18px 1vw 0 0;
     font-size: 4rem;
   }
 

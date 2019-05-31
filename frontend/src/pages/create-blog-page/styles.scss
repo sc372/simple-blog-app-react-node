@@ -9,3 +9,17 @@
     float: right;
   }
 }
+
+@media (max-width: 1000px) {
+  .create-blog-page-wrapper {
+    margin: 120px 2vw;
+
+    .create-blog-page-title-input {
+      max-width: 500px;
+    }
+
+    .create-blog-page-submit {
+      float: right;
+    }
+  }
+}

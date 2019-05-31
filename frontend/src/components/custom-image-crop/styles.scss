@@ -13,15 +13,13 @@
     }
   }
 
-  .select-image-cropper-wrapper {
-    .select-image-cropper {
-      height: 500px;
-      margin: 20px;
-    }
+  .select-image-cropper {
+    margin-right: 20px;
+    height: auto;
+  }
 
-    .select-image-cropper-result {
-      max-width: 100%;
-      height: auto;
-    }
+  .select-image-cropper-result {
+    margin-right: 20px;
+    height: auto;
   }
 }
