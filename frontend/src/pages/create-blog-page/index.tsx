@@ -1,12 +1,17 @@
 import React from 'react'
 import { Button, Input, Typography } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 
 import { MainLayout } from '../../components/layouts'
 import { CustomEditor, CustomImageCrop } from '../../components'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const CreateBlogPage: React.FC = () => {
+interface ICreateBlogPageProps extends IDispatchable {}
+
+const CreateBlogPage: React.FC<ICreateBlogPageProps> = () => {
   return (
     <MainLayout>
       <div className="create-blog-page-wrapper">
@@ -24,10 +29,12 @@ const CreateBlogPage: React.FC = () => {
         <br />
         <br />
         <Typography.Title level={4}>내용</Typography.Title>
+        // @ts-ignore
         <CustomEditor />
         <br />
         <br />
         <Typography.Title level={4}>이미지</Typography.Title>
+        // @ts-ignore
         <CustomImageCrop />
         <Button className="create-blog-page-submit" type="primary">
           작성 완료
@@ -37,4 +44,8 @@ const CreateBlogPage: React.FC = () => {
   )
 }
 
-export default CreateBlogPage
+const withConnect = connect()
+
+export default compose<ICreateBlogPageProps, ICreateBlogPageProps>(withConnect)(
+  CreateBlogPage
+)

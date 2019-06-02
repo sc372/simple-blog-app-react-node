@@ -1,11 +1,17 @@
 import React from 'react'
-import { MainLayout } from '../../components/layouts'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
 import { Avatar, Typography } from 'antd'
+
+import { MainLayout } from '../../components/layouts'
 import { BlogComment } from '../../components'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const BlogPage: React.FC = () => {
+interface IBlogPageProps extends IDispatchable {}
+
+const BlogPage: React.FC<IBlogPageProps> = () => {
   return (
     <MainLayout>
       <div className="blog-page-wrapper">
@@ -44,10 +50,13 @@ const BlogPage: React.FC = () => {
             applications and products.
           </p>
         </div>
+        // @ts-ignore
         <BlogComment />
       </div>
     </MainLayout>
   )
 }
 
-export default BlogPage
+const withConnect = connect()
+
+export default compose<IBlogPageProps, IBlogPageProps>(withConnect)(BlogPage)

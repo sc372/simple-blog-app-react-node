@@ -15,8 +15,12 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/explicit-function-return-type': false,
+    '@typescript-eslint/no-empty-interface': false,
+    '@typescript-eslint/no-explicit-any': false,
     '@typescript-eslint/interface-name-prefix': ['always'],
-    "react/prop-types": false
+    '@typescript-eslint/explicit-member-accessibility': false,
+    "react/prop-types": false,
+    "react/display-name": false
   },
   settings: {
     react: {

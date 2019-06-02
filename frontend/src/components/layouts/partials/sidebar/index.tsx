@@ -1,13 +1,17 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { Drawer, Icon } from 'antd'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+
 import Responsive from '../../response-helper'
+import { IDispatchable } from '../../../../models'
 
 import './styles.scss'
 
-interface ISideBarProps {
-  setIsDrawerToggleValue: Dispatch<SetStateAction<boolean>>
-  isDrawerToggle: boolean
+interface ISideBarProps extends IDispatchable {
+  readonly setIsDrawerToggleValue: Dispatch<SetStateAction<boolean>>
+  readonly isDrawerToggle: boolean
 }
 
 const Sidebar: React.FC<ISideBarProps> = ({
@@ -92,4 +96,6 @@ const Sidebar: React.FC<ISideBarProps> = ({
   )
 }
 
-export default Sidebar
+const withConnect = connect()
+
+export default compose<ISideBarProps, ISideBarProps>(withConnect)(Sidebar)

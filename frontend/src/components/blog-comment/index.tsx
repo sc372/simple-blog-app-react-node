@@ -1,10 +1,16 @@
 import React, { ChangeEvent } from 'react'
+import { Avatar, Button, Input } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 // import * as R from 'ramda'
 
-import './styles.scss'
-import { Avatar, Button, Input } from 'antd'
+import { IDispatchable } from '../../models'
 
-const BlogComment: React.FC = () => {
+import './styles.scss'
+
+interface IBlogCommentProps extends IDispatchable {}
+
+const BlogComment: React.FC<IBlogCommentProps> = () => {
   // const mapIndexed = R.addIndex(R.map)
 
   return (
@@ -55,4 +61,8 @@ const BlogComment: React.FC = () => {
   )
 }
 
-export default BlogComment
+const withConnect = connect()
+
+export default compose<IBlogCommentProps, IBlogCommentProps>(withConnect)(
+  BlogComment
+)

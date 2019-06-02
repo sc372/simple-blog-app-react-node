@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactQuill from 'react-quill'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 import 'react-quill/dist/quill.snow.css'
 
-const CustomEditor: React.FC = () => {
+interface ICustomEditorProps extends IDispatchable {}
+
+const CustomEditor: React.FC<ICustomEditorProps> = () => {
   return (
     <div className="custom-table-wrapper">
       <ReactQuill
@@ -51,4 +57,8 @@ const CustomEditor: React.FC = () => {
   )
 }
 
-export default CustomEditor
+const withConnect = connect()
+
+export default compose<ICustomEditorProps, ICustomEditorProps>(withConnect)(
+  CustomEditor
+)

@@ -1,12 +1,17 @@
 import React from 'react'
 import { Button, Input, Typography } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 
 import { MainLayout } from '../../components/layouts'
 import { CustomEditor, CustomImageCrop } from '../../components'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const UpdateBlogPage: React.FC = () => {
+interface IUpdateBlogPageProps extends IDispatchable {}
+
+const UpdateBlogPage: React.FC<IUpdateBlogPageProps> = () => {
   return (
     <MainLayout>
       <div className="update-blog-page-wrapper">
@@ -24,10 +29,12 @@ const UpdateBlogPage: React.FC = () => {
         <br />
         <br />
         <Typography.Title level={4}>내용</Typography.Title>
+        // @ts-ignore
         <CustomEditor />
         <br />
         <br />
         <Typography.Title level={4}>이미지</Typography.Title>
+        // @ts-ignore
         <CustomImageCrop />
         <Button className="update-blog-page-submit" type="primary">
           수정 완료
@@ -37,4 +44,8 @@ const UpdateBlogPage: React.FC = () => {
   )
 }
 
-export default UpdateBlogPage
+const withConnect = connect()
+
+export default compose<IUpdateBlogPageProps, IUpdateBlogPageProps>(withConnect)(
+  UpdateBlogPage
+)

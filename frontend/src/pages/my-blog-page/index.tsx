@@ -1,12 +1,17 @@
 import React from 'react'
 import { Button, Input, Typography } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 
 import { MainLayout } from '../../components/layouts'
 import { MyBlogTable } from '../../components'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const MyBlogPage: React.FC = () => {
+interface IMyBlogPageProps extends IDispatchable {}
+
+const MyBlogPage: React.FC<IMyBlogPageProps> = () => {
   return (
     <MainLayout>
       <div className="my-blog-page-wrapper">
@@ -31,6 +36,7 @@ const MyBlogPage: React.FC = () => {
           >
             글 작성
           </Button>
+          // @ts-ignore
           <MyBlogTable />
         </div>
       </div>
@@ -38,4 +44,8 @@ const MyBlogPage: React.FC = () => {
   )
 }
 
-export default MyBlogPage
+const withConnect = connect()
+
+export default compose<IMyBlogPageProps, IMyBlogPageProps>(withConnect)(
+  MyBlogPage
+)

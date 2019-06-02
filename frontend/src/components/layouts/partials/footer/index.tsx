@@ -1,9 +1,15 @@
 import React from 'react'
 import { Layout } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+
+import { IDispatchable } from '../../../../models'
 
 import './styles.scss'
 
-const Footer: React.FC = () => {
+interface IMainLayoutProps extends IDispatchable {}
+
+const Footer: React.FC<IMainLayoutProps> = () => {
   return (
     <Layout.Footer className="footer-wrapper">
       <div>
@@ -14,4 +20,6 @@ const Footer: React.FC = () => {
   )
 }
 
-export default Footer
+const withConnect = connect()
+
+export default compose<IMainLayoutProps, IMainLayoutProps>(withConnect)(Footer)

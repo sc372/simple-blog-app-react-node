@@ -1,10 +1,16 @@
 import React from 'react'
 import { Icon, Table } from 'antd'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const MyBlogTable: React.FC = () => {
+interface IMyBlogTableProps extends IDispatchable {}
+
+const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
   const dataSource = [
     {
       id: 'skjdhfksjd',
@@ -56,4 +62,8 @@ const MyBlogTable: React.FC = () => {
   )
 }
 
-export default MyBlogTable
+const withConnect = connect()
+
+export default compose<IMyBlogTableProps, IMyBlogTableProps>(withConnect)(
+  MyBlogTable
+)

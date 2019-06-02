@@ -1,12 +1,18 @@
 import React, { useRef } from 'react'
 import { Button, Col, Row } from 'antd'
 import Cropper from 'react-cropper'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
+
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 import 'cropperjs/dist/cropper.css'
 
-const CustomImageCrop: React.FC = () => {
-  const cropper: any = useRef(null) // eslint-disable-line @typescript-eslint/no-explicit-any
+interface ICustomImageProps extends IDispatchable {}
+
+const CustomImageCrop: React.FC<ICustomImageProps> = () => {
+  const cropper: any = useRef(null)
 
   return (
     <div className="custom-image-crop-wrapper">
@@ -49,4 +55,8 @@ const CustomImageCrop: React.FC = () => {
   )
 }
 
-export default CustomImageCrop
+const withConnect = connect()
+
+export default compose<ICustomImageProps, ICustomImageProps>(withConnect)(
+  CustomImageCrop
+)

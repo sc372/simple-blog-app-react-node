@@ -1,12 +1,17 @@
 import React from 'react'
 import { Button, Input, Typography } from 'antd'
+import { compose } from 'recompose'
+import { connect } from 'react-redux'
 
 import { MainLayout } from '../../components/layouts'
 import { CustomImageCrop } from '../../components'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const MyPage: React.FC = () => {
+interface IMyPageProps extends IDispatchable {}
+
+const MyPage: React.FC<IMyPageProps> = () => {
   return (
     <MainLayout>
       <div className="my-page-wrapper">
@@ -32,6 +37,7 @@ const MyPage: React.FC = () => {
         <br />
         <br />
         <Typography.Title level={4}>프로필 사진</Typography.Title>
+        // @ts-ignore
         <CustomImageCrop />
         <div className="my-page-submit-wrapper">
           <span className="my-page-submit">
@@ -46,4 +52,6 @@ const MyPage: React.FC = () => {
   )
 }
 
-export default MyPage
+const withConnect = connect()
+
+export default compose<IMyPageProps, IMyPageProps>(withConnect)(MyPage)

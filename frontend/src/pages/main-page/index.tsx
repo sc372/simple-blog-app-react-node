@@ -1,10 +1,16 @@
 import React from 'react'
 import { MainLayout } from '../../components/layouts'
 import { Card, Col, Row, Input, Avatar, Icon, Typography } from 'antd'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-const MainPage: React.FC = () => {
+interface IMainPageProps extends IDispatchable {}
+
+const MainPage: React.FC<IMainPageProps> = () => {
   return (
     <MainLayout>
       <div className="blog-search-wrapper">
@@ -283,4 +289,6 @@ const MainPage: React.FC = () => {
   )
 }
 
-export default MainPage
+const withConnect = connect()
+
+export default compose<IMainPageProps, IMainPageProps>(withConnect)(MainPage)
