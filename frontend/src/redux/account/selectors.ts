@@ -3,26 +3,38 @@ import { IStoreState } from '../store-state'
 
 export const accountState = () => (state: IStoreState) => state.account
 
-export const selectAccountUi = () =>
+export const getSignInFormUi = () =>
+  createSelector(
+    accountState(),
+    ({ signInFormUi }) => signInFormUi
+  )
+
+export const getAccountUi = () =>
   createSelector(
     accountState(),
     ({ accountUi }) => accountUi
   )
 
-export const selectAccountDomain = () =>
+export const getAccountDomain = () =>
   createSelector(
     accountState(),
     ({ accountDomain }) => accountDomain
   )
 
-export const selectAccountIsLoading = () =>
+export const getAccountIsLoading = () =>
   createSelector(
     accountState(),
-    ({ isLoading }) => isLoading
+    ({ accountIsLoading }) => accountIsLoading
   )
 
-export const selectAccountErrorMessage = () =>
+export const getAccountIsSuccess = () =>
   createSelector(
     accountState(),
-    ({ errorMessage }) => errorMessage
+    ({ accountIsSuccess }) => accountIsSuccess
+  )
+
+export const getAccountErrorMessage = () =>
+  createSelector(
+    accountState(),
+    ({ accountErrorMessage }) => accountErrorMessage
   )

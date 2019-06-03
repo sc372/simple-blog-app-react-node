@@ -1,19 +1,34 @@
-import React, { Dispatch, SetStateAction, useRef } from 'react'
-import { Form, Icon, Input, Modal } from 'antd'
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import { Form, Icon, Input, Modal, notification } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { createSelector } from 'reselect'
 
-import { IDispatchable, ISignUpFormUi } from '../../models'
-import { changeSignUpFormUi } from '../../redux/auth/actions'
-import { selectSignUpFormUi } from '../../redux/auth/selectors'
+import {
+  getAuthErrorMessage,
+  getAuthIsLoading,
+  getSignUpIsSuccess,
+  getSignUpFormUi,
+} from '../../redux/create-user/selectors'
+import { IDispatchable, ISignInFormUi } from '../../models'
 
 import './styles.scss'
+import {
+  changeSignUpFormUi,
+  createUser,
+  createUserError,
+  initialAuthState,
+} from '../../redux/create-user/actions'
+import * as R from 'ramda'
 
 interface ISignUpModalProps extends IDispatchable {
   readonly setIsSignUpModal: Dispatch<SetStateAction<boolean>>
   readonly isSignUpModal: boolean
-  readonly signUpFormUi: ISignUpFormUi
+  readonly signUpFormUi: ISignInFormUi
+  readonly signUpIsSuccess: boolean
+  readonly isAuthLoading: boolean
+  readonly authErrorMessage: string
+  readonly form: any
 }
 
 const SignUpCreateForm = Form.create({
@@ -27,9 +42,13 @@ const SignUpCreateForm = Form.create({
         // @ts-ignore
         isSignUpModal,
         // @ts-ignore
-        signUpFormUi,
+        dispatchChangeSignUpFormUi,
         // @ts-ignore
-        dispatchSignUpFormUi,
+        dispatchCreateUser,
+        // @ts-ignore
+        dispatchInitialAuthState,
+        // @ts-ignore
+        isAuthLoading,
         // @ts-ignore
         form,
       } = this.props
@@ -40,10 +59,8 @@ const SignUpCreateForm = Form.create({
           if (err) {
             console.log('유효하지 않은 값: ', values)
             return
-          } else {
-            setIsSignUpModal(false)
-            // dispatch(selectAccount())
           }
+          dispatchCreateUser()
         })
       }
 
@@ -51,96 +68,105 @@ const SignUpCreateForm = Form.create({
         <Modal
           title="회원가입"
           centered
-          okText="회원가입"
-          cancelText="취소"
           visible={isSignUpModal}
+          okText="가입"
+          cancelText="취소"
           onOk={handleSubmit}
-          onCancel={() => setIsSignUpModal(false)}
+          onCancel={() => {
+            dispatchInitialAuthState()
+            setIsSignUpModal(false)
+          }}
         >
-          <Form
-            onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
-            className="login-form-wrapper"
-          >
-            <Form.Item>
-              {form.getFieldDecorator('email', {
-                rules: [
-                  { type: 'email', message: '이메일 형식에 맞지 않습니다.' },
-                  { required: true, message: '이메일을 입력해주세요.' },
-                ],
-              })(
-                <Input
-                  prefix={<Icon type="mail" />}
-                  placeholder="이메일"
-                  value={signUpFormUi.email}
-                  onChange={e =>
-                    dispatchSignUpFormUi({ email: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('password', {
-                rules: [
-                  { required: true, message: '비밀번호를 입력해주세요.' },
-                  {
-                    pattern: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{6,12}$/,
-                    message:
-                      '비밀번호는 숫자, 문자, 특수문자 포함 6~12자리를 입력해주세요.',
-                  },
-                ],
-              })(
-                <Input
-                  prefix={<Icon type="lock" />}
-                  type="password"
-                  placeholder="비밀번호"
-                  value={signUpFormUi.password}
-                  onChange={e =>
-                    dispatchSignUpFormUi({ password: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('rePassword', {
-                rules: [
-                  {
-                    validator: (
-                      rule: any,
-                      value: any,
-                      callback: (arg0: string) => void
-                    ) =>
-                      value &&
-                      value !== form.getFieldValue('password') &&
-                      callback('비밀번호가 일치하지 않습니다.'),
-                  },
-                ],
-              })(
-                <Input
-                  prefix={<Icon type="lock" />}
-                  type="password"
-                  placeholder="비밀번호 재입력"
-                  value={signUpFormUi.rePassword}
-                  onChange={e =>
-                    dispatchSignUpFormUi({ rePassword: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('nickname', {
-                rules: [{ required: true, message: '닉네임을 입력해주세요.' }],
-              })(
-                <Input
-                  prefix={<Icon type="user" />}
-                  placeholder="닉네임"
-                  value={signUpFormUi.nickname}
-                  onChange={e =>
-                    dispatchSignUpFormUi({ nickname: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-          </Form>
+          {isAuthLoading ? (
+            <Icon className="sign-up-loading-icon" type="loading" />
+          ) : (
+            <Form
+              onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
+              className="login-form-wrapper"
+            >
+              <Form.Item>
+                {form.getFieldDecorator('email', {
+                  rules: [
+                    { type: 'email', message: '이메일 형식에 맞지 않습니다.' },
+                    { required: true, message: '이메일을 입력해주세요.' },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="mail" />}
+                    placeholder="이메일"
+                    onChange={e =>
+                      dispatchChangeSignUpFormUi({ email: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {form.getFieldDecorator('password', {
+                  rules: [
+                    { required: true, message: '비밀번호를 입력해주세요.' },
+                    {
+                      pattern: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{6,12}$/,
+                      message:
+                        '비밀번호는 숫자, 문자, 특수문자 포함 6~12자리를 입력해주세요.',
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="lock" />}
+                    type="password"
+                    placeholder="비밀번호"
+                    onChange={e =>
+                      dispatchChangeSignUpFormUi({ password: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {form.getFieldDecorator('rePassword', {
+                  rules: [
+                    {
+                      validator: (
+                        rule: any,
+                        value: any,
+                        callback: (arg0: string) => void
+                      ) => {
+                        if (value && value !== form.getFieldValue('password')) {
+                          callback('비밀번호가 일치하지 않습니다.')
+                        } else {
+                          // @ts-ignore
+                          callback()
+                        }
+                      },
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="lock" />}
+                    type="password"
+                    placeholder="비밀번호 재입력"
+                    onChange={e =>
+                      dispatchChangeSignUpFormUi({ rePassword: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {form.getFieldDecorator('nickname', {
+                  rules: [
+                    { required: true, message: '닉네임을 입력해주세요.' },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="user" />}
+                    placeholder="닉네임"
+                    onChange={e =>
+                      dispatchChangeSignUpFormUi({ nickname: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+            </Form>
+          )}
         </Modal>
       )
     }
@@ -151,11 +177,33 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
   setIsSignUpModal,
   isSignUpModal,
   signUpFormUi,
+  signUpIsSuccess,
+  authErrorMessage,
+  isAuthLoading,
   dispatch,
 }) => {
-  const saveFormRef: any = useRef(null)
+  useEffect(() => {
+    if (signUpIsSuccess) {
+      setIsSignUpModal(false)
+    }
+  }, [signUpIsSuccess]) // eslint-disable-line
 
-  const dispatchSignUpFormUi = (data: any) =>
+  useEffect(() => {
+    notification.config({
+      placement: 'bottomRight',
+    })
+
+    if (!R.isEmpty(authErrorMessage)) {
+      notification['error']({
+        message: authErrorMessage,
+      })
+      dispatch(createUserError(''))
+    }
+  }, [authErrorMessage]) // eslint-disable-line
+
+  const signUpFormRef: any = useRef(null)
+
+  const dispatchChangeSignUpFormUi = (data: any) =>
     dispatch(
       changeSignUpFormUi({
         ...signUpFormUi,
@@ -163,23 +211,38 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
       })
     )
 
+  const dispatchCreateUser = () => dispatch(createUser())
+  const dispatchInitialAuthState = () => dispatch(initialAuthState())
+
   return (
-    <div className="sign-up-modal-wrapper">
-      // @ts-ignore
+    <div className="sign-in-modal-wrapper">
+      {/*
+        // @ts-ignore */}
       <SignUpCreateForm
-        wrappedComponentRef={saveFormRef}
+        wrappedComponentRef={signUpFormRef}
         setIsSignUpModal={setIsSignUpModal}
         isSignUpModal={isSignUpModal}
-        dispatchSignUpFormUi={dispatchSignUpFormUi}
         signUpFormUi={signUpFormUi}
+        dispatchChangeSignUpFormUi={dispatchChangeSignUpFormUi}
+        dispatchCreateUser={dispatchCreateUser}
+        dispatchInitialAuthState={dispatchInitialAuthState}
+        isAuthLoading={isAuthLoading}
       />
     </div>
   )
 }
 
 const mapStateToProps = createSelector(
-  selectSignUpFormUi(),
-  signUpFormUi => ({ signUpFormUi })
+  getSignUpFormUi(),
+  getSignUpIsSuccess(),
+  getAuthIsLoading(),
+  getAuthErrorMessage(),
+  (signUpFormUi, signUpIsSuccess, isAuthLoading, authErrorMessage) => ({
+    signUpFormUi,
+    signUpIsSuccess,
+    isAuthLoading,
+    authErrorMessage,
+  })
 )
 
 const withConnect = connect(mapStateToProps)

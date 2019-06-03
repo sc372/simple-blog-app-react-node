@@ -1,17 +1,25 @@
-import { IAccountUi, IAccountDomain } from '../../models'
+import { IAccountUi, IAccountDomain, ISignInFormUi } from '../../models'
 
-export interface ISelectAccountPayload {
-  readonly isLoading: boolean
+export interface IChangeSignInFormUiPayload {
+  readonly signInFormUi: ISignInFormUi
 }
 
-export interface ISelectAccountUiSuccessPayload {
+export interface ISignInPayload {
+  readonly accountIsLoading: boolean
+}
+
+export interface IChangeAccountUiPayload {
   readonly accountUi: IAccountUi
 }
 
-export interface ISelectAccountDomainSuccessPayload {
+export interface IChangeAccountDomainPayload {
   readonly accountDomain: IAccountDomain
 }
 
+export interface IAccountSuccessPayload {
+  readonly accountIsSuccess: boolean
+}
+
 export interface IAccountErrorPayload {
-  readonly errorMessage: string
+  readonly accountErrorMessage: string
 }

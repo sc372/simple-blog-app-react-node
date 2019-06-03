@@ -19,8 +19,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': false,
     '@typescript-eslint/interface-name-prefix': ['always'],
     '@typescript-eslint/explicit-member-accessibility': false,
-    "react/prop-types": false,
-    "react/display-name": false
+    '@typescript-eslint/no-use-before-define': false,
+    'react/prop-types': false,
+    'react/display-name': false,
   },
   settings: {
     react: {
@@ -28,43 +29,3 @@ module.exports = {
     },
   },
 }
-// {
-//   "parser": "@typescript-eslint/parser",
-//   "extends": [
-//     "standard",
-//     "plugin:react/recommended",
-//     "prettier",
-//     "prettier/react",
-//     "prettier/standard"
-//   ],
-//   "plugins": [
-//     "react",
-//     "prettier",
-//     "standard",
-//     "@typescript-eslint/recommended",
-//     "react/recommended",
-//     "prettier/recommended"
-//   ],
-//   "globals": {
-//     "localStorage": true
-//   },
-//   "parserOptions": {
-//     "ecmaVersion": 2018,
-//     "sourceType": "module",
-//     "ecmaFeatures": {
-//       "jsx": true
-//     }
-//   },
-//   "env": {
-//     "es6": true,
-//     "node": true
-//   },
-//   "rules": {
-//     "prettier/prettier": ["error", { "singleQuote": true, "semi": false }]
-//   },
-//   "settings": {
-//     "react": {
-//       "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
-//     }
-//   }
-// }

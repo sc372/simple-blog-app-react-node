@@ -29,12 +29,14 @@ const UpdateBlogPage: React.FC<IUpdateBlogPageProps> = () => {
         <br />
         <br />
         <Typography.Title level={4}>내용</Typography.Title>
-        // @ts-ignore
+        {/*
+        // @ts-ignore */}
         <CustomEditor />
         <br />
         <br />
         <Typography.Title level={4}>이미지</Typography.Title>
-        // @ts-ignore
+        {/*
+        // @ts-ignore */}
         <CustomImageCrop />
         <Button className="update-blog-page-submit" type="primary">
           수정 완료

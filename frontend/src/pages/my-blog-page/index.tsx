@@ -36,7 +36,8 @@ const MyBlogPage: React.FC<IMyBlogPageProps> = () => {
           >
             글 작성
           </Button>
-          // @ts-ignore
+          {/*
+        // @ts-ignore */}
           <MyBlogTable />
         </div>
       </div>

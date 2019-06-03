@@ -50,7 +50,8 @@ const BlogPage: React.FC<IBlogPageProps> = () => {
             applications and products.
           </p>
         </div>
-        // @ts-ignore
+        {/*
+        // @ts-ignore */}
         <BlogComment />
       </div>
     </MainLayout>

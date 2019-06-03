@@ -10,14 +10,15 @@ interface IMainLayoutProps extends React.HTMLAttributes<any> {
   readonly children?: any
 }
 
-// todo: typescript error check
 const MainLayout: React.FC<IMainLayoutProps> = ({ children }) => {
   return (
     <Layout className="main-layout-wrapper">
-      // @ts-ignore
+      {/*
+        // @ts-ignore */}
       <Header />
       {children}
-      // @ts-ignore
+      {/*
+        // @ts-ignore */}
       <Footer />
     </Layout>
   )

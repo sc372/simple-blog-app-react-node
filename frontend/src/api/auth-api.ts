@@ -7,7 +7,7 @@ export interface IPostSignInApi {
 }
 
 export interface IPostSignInWithJwtApi {
-  readonly token: string | any
+  readonly jwtToken: any
 }
 
 export const postSignInApi = (data: IPostSignInApi) =>
@@ -21,7 +21,7 @@ export const postSignInApi = (data: IPostSignInApi) =>
     .catch(err => err.response)
 
 export const postSignInWithJwtApi = (data: IPostSignInWithJwtApi) =>
-  AxiosWithJwt(data.token)
+  AxiosWithJwt(data.jwtToken)
     .post('v1/auth/sign-in/auto')
     .then(res => res)
     .catch(err => err.response)

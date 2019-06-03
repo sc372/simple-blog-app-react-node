@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import {
   MainPage,
   MyPage,
@@ -9,8 +9,38 @@ import {
   UpdateBlogPage,
 } from './pages'
 import { Helmet } from 'react-helmet'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+import { IAccountUi, IDispatchable } from './models'
+import { signInWithJwt } from './redux/account/actions'
+import { createSelector } from 'reselect'
+import { getAccountUi } from './redux/account/selectors'
 
-const App: React.FC = () => {
+interface IAppProps extends IDispatchable {
+  readonly accountUi: IAccountUi
+}
+
+interface IPrivateRoute {
+  readonly path: any
+  readonly component: any
+  readonly isLogin: boolean
+}
+
+// TODO: 비동기 통신으로 page guard 에 이슈가 있음
+const PrivateRoute: React.FC<IPrivateRoute> = ({
+  component: Component,
+  isLogin,
+}) => (
+  <Route
+    render={props => (isLogin ? <Component {...props} /> : <Redirect to="/" />)}
+  />
+)
+
+const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
+  useEffect(() => {
+    localStorage.getItem('jwt_token') && dispatch(signInWithJwt())
+  }, []) // eslint-disable-line
+
   return (
     <>
       <Helmet>
@@ -21,16 +51,42 @@ const App: React.FC = () => {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
         />
       </Helmet>
-      <Route exact path="/" component={MainPage} />
       <Switch>
-        <Route path="/my/blog" component={MyBlogPage} />
-        <Route path="/my" component={MyPage} />
+        <Route exact path="/" component={MainPage} />
+        <Route path="/blogs/:blogId" component={BlogPage} />
+        <PrivateRoute
+          path="/my/blog"
+          component={MyBlogPage}
+          isLogin={accountUi.isLogin}
+        />
+        <PrivateRoute
+          path="/my"
+          component={MyPage}
+          isLogin={accountUi.isLogin}
+        />
+        <PrivateRoute
+          path="/create-blog"
+          component={CreateBlogPage}
+          isLogin={accountUi.isLogin}
+        />
+        <PrivateRoute
+          path="/update-blog/:blogId"
+          component={UpdateBlogPage}
+          isLogin={accountUi.isLogin}
+        />
+        {/*<Route path="*" componet={NoMatch}/>*/}
       </Switch>
-      <Route path="/blogs/:blogId" component={BlogPage} />
-      <Route path="/create-blog" component={CreateBlogPage} />
-      <Route path="/update-blog/:blogId" component={UpdateBlogPage} />
     </>
   )
 }
 
-export default App
+const mapStateToProps = createSelector(
+  getAccountUi(),
+  accountUi => ({
+    accountUi,
+  })
+)
+
+const withConnect = connect(mapStateToProps)
+
+export default compose<IAppProps, IAppProps>(withConnect)(App)

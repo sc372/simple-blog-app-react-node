@@ -1,8 +1,10 @@
-import { IAccountUi, IAccountDomain } from '../../models'
+import { IAccountUi, IAccountDomain, ISignInFormUi } from '../../models'
 
 export interface IAccountState {
+  readonly signInFormUi: ISignInFormUi
   readonly accountUi: IAccountUi
   readonly accountDomain: IAccountDomain
-  readonly isLoading: boolean
-  readonly errorMessage: string
+  readonly accountIsSuccess: boolean
+  readonly accountIsLoading: boolean
+  readonly accountErrorMessage: string
 }

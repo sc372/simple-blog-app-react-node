@@ -9,7 +9,10 @@ import Responsive from '../../response-helper'
 import { SideBar } from '../index'
 import { SignUpModal, SignInModal } from '../../../index'
 
-import { selectAccountUi } from '../../../../redux/account/selectors'
+import {
+  getAccountIsLoading,
+  getAccountUi,
+} from '../../../../redux/account/selectors'
 import { IDispatchable } from '../../../../models'
 import { IAccountUi } from '../../../../models/account'
 
@@ -17,9 +20,10 @@ import './styles.scss'
 
 interface IHeaderProps extends IDispatchable {
   readonly accountUi: IAccountUi
+  readonly accountIsLoading: boolean
 }
 
-const Header: React.FC<IHeaderProps> = ({ accountUi }) => {
+const Header: React.FC<IHeaderProps> = ({ accountUi, accountIsLoading }) => {
   const [isDrawerToggle, setIsDrawerToggleValue] = useState(false)
   const [isSignUpModal, setIsSignUpModal] = useState(false)
   const [isSignInModal, setIsSignInModal] = useState(false)
@@ -40,6 +44,8 @@ const Header: React.FC<IHeaderProps> = ({ accountUi }) => {
                 onClick={(): void => setIsDrawerToggleValue(true)}
               />
             </>
+          ) : accountIsLoading ? (
+            <Icon className="header-loading-icon" type="loading" />
           ) : (
             <>
               <Button
@@ -74,6 +80,8 @@ const Header: React.FC<IHeaderProps> = ({ accountUi }) => {
                 />
               </span>
             </>
+          ) : accountIsLoading ? (
+            <Icon className="m-header-loading-icon" type="loading" />
           ) : (
             <>
               <Button
@@ -95,33 +103,34 @@ const Header: React.FC<IHeaderProps> = ({ accountUi }) => {
           )}
         </Layout.Header>
       </Responsive.Max1000>
-      // @ts-ignore
+      {/*
+        // @ts-ignore */}
       <SideBar
         setIsDrawerToggleValue={setIsDrawerToggleValue}
         isDrawerToggle={isDrawerToggle}
       />
-      {isSignUpModal && (
-        // @ts-ignore
-        <SignUpModal
-          setIsSignUpModal={setIsSignUpModal}
-          isSignUpModal={isSignUpModal}
-        />
-      )}
-      {isSignInModal && (
-        // @ts-ignore
-        <SignInModal
-          setIsSignInModal={setIsSignInModal}
-          isSignInModal={isSignInModal}
-        />
-      )}
+      {/*
+        // @ts-ignore */}
+      <SignUpModal
+        setIsSignUpModal={setIsSignUpModal}
+        isSignUpModal={isSignUpModal}
+      />
+      {/*
+        // @ts-ignore */}
+      <SignInModal
+        setIsSignInModal={setIsSignInModal}
+        isSignInModal={isSignInModal}
+      />
     </>
   )
 }
 
 const mapStateToProps = createSelector(
-  selectAccountUi(),
-  accountUi => ({
+  getAccountUi(),
+  getAccountIsLoading(),
+  (accountUi, accountIsLoading) => ({
     accountUi,
+    accountIsLoading,
   })
 )
 

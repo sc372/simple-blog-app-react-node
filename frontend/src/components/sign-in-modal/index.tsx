@@ -1,20 +1,33 @@
-import React, { Dispatch, SetStateAction, useRef } from 'react'
-import { Checkbox, Form, Icon, Input, Modal } from 'antd'
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import { Checkbox, Form, Icon, Input, Modal, notification } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { createSelector } from 'reselect'
+import * as R from 'ramda'
 
-import { selectSignInFormUi } from '../../redux/auth/selectors'
+import { getSignInFormUi } from '../../redux/account/selectors'
 import { IDispatchable, ISignInFormUi } from '../../models'
+import { changeSignInFormUi } from '../../redux/account/actions'
+import {
+  initialAccountState,
+  signIn,
+  selectAccountError,
+} from '../../redux/account/actions'
+import {
+  getAccountErrorMessage,
+  getAccountIsLoading,
+  getAccountIsSuccess,
+} from '../../redux/account/selectors'
 
 import './styles.scss'
-import { changeSignInFormUi } from '../../redux/auth/actions'
-import { selectAccount } from '../../redux/account/actions'
 
 interface ISignInModalProps extends IDispatchable {
   readonly setIsSignInModal: Dispatch<SetStateAction<boolean>>
   readonly isSignInModal: boolean
   readonly signInFormUi: ISignInFormUi
+  readonly accountIsSuccess: boolean
+  readonly accountIsLoading: boolean
+  readonly accountErrorMessage: string
   readonly form: any
 }
 
@@ -31,9 +44,13 @@ const SignInCreateForm = Form.create({
         // @ts-ignore
         signInFormUi,
         // @ts-ignore
-        dispatchSignInFormUi,
+        accountIsLoading,
+        // @ts-ignore
+        dispatchChangeSignInFormUi,
         // @ts-ignore
         dispatchSelectAccount,
+        // @ts-ignore
+        dispatchInitialAccountState,
         // @ts-ignore
         form,
       } = this.props
@@ -45,11 +62,6 @@ const SignInCreateForm = Form.create({
             console.log('유효하지 않은 값: ', values)
             return
           } else {
-            setIsSignInModal(false)
-            console.log('Line: 49', 'skjhdfksjsd')
-            console.log('Line: 49', 'skjhdfksjsd')
-            console.log('Line: 49', 'skjhdfksjsd')
-            console.log('Line: 49', 'skjhdfksjsd')
             dispatchSelectAccount()
           }
         })
@@ -64,75 +76,72 @@ const SignInCreateForm = Form.create({
           cancelText="취소"
           onOk={handleSubmit}
           onCancel={() => {
-            dispatchSignInFormUi({
-              email: '',
-              password: '',
-              isAutoLogin: false,
-            })
+            dispatchInitialAccountState()
             setIsSignInModal(false)
           }}
         >
-          <Form
-            onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
-            className="login-form-wrapper"
-          >
-            <Form.Item>
-              {form.getFieldDecorator('email', {
-                rules: [
-                  { type: 'email', message: '이메일 형식에 맞지 않습니다.' },
-                  { required: true, message: '이메일을 입력해주세요.' },
-                ],
-              })(
-                <Input
-                  prefix={<Icon type="mail" />}
-                  placeholder="이메일"
-                  value={signInFormUi.email}
-                  onChange={e =>
-                    dispatchSignInFormUi({ email: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('password', {
-                rules: [
-                  { required: true, message: '비밀번호를 입력해주세요.' },
-                  {
-                    pattern: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{6,12}$/,
-                    message:
-                      '비밀번호는 숫자, 문자, 특수문자 포함 6~12자리를 입력해주세요.',
-                  },
-                ],
-              })(
-                <Input
-                  prefix={<Icon type="lock" />}
-                  type="password"
-                  placeholder="비밀번호"
-                  value={signInFormUi.password}
-                  onChange={e =>
-                    dispatchSignInFormUi({ password: e.target.value })
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {form.getFieldDecorator('isAutoLogin', {
-                valuePropName: 'checked',
-                initialValue: signInFormUi.isAutoLogin,
-              })(
-                <Checkbox
-                  checked={signInFormUi.isAutoLogin}
-                  onChange={() =>
-                    dispatchSignInFormUi({
-                      isAutoLogin: !signInFormUi.isAutoLogin,
-                    })
-                  }
-                >
-                  자동 로그인
-                </Checkbox>
-              )}
-            </Form.Item>
-          </Form>
+          {accountIsLoading ? (
+            <Icon className="sign-in-loading-icon" type="loading" />
+          ) : (
+            <Form
+              onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
+              className="login-form-wrapper"
+            >
+              <Form.Item>
+                {form.getFieldDecorator('email', {
+                  rules: [
+                    { type: 'email', message: '이메일 형식에 맞지 않습니다.' },
+                    { required: true, message: '이메일을 입력해주세요.' },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="mail" />}
+                    placeholder="이메일"
+                    onChange={e =>
+                      dispatchChangeSignInFormUi({ email: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {form.getFieldDecorator('password', {
+                  rules: [
+                    { required: true, message: '비밀번호를 입력해주세요.' },
+                    {
+                      pattern: /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{6,12}$/,
+                      message:
+                        '비밀번호는 숫자, 문자, 특수문자 포함 6~12자리를 입력해주세요.',
+                    },
+                  ],
+                })(
+                  <Input
+                    prefix={<Icon type="lock" />}
+                    type="password"
+                    placeholder="비밀번호"
+                    onChange={e =>
+                      dispatchChangeSignInFormUi({ password: e.target.value })
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {form.getFieldDecorator('isAutoLogin', {
+                  valuePropName: 'checked',
+                  initialValue: signInFormUi.isAutoLogin,
+                })(
+                  <Checkbox
+                    onChange={() =>
+                      dispatchChangeSignInFormUi({
+                        isAutoLogin: !signInFormUi.isAutoLogin,
+                      })
+                    }
+                  >
+                    자동 로그인
+                  </Checkbox>
+                )}
+              </Form.Item>
+            </Form>
+          )}
         </Modal>
       )
     }
@@ -143,11 +152,33 @@ const SignInModal: React.FC<ISignInModalProps> = ({
   setIsSignInModal,
   isSignInModal,
   signInFormUi,
+  accountIsLoading,
+  accountIsSuccess,
+  accountErrorMessage,
   dispatch,
 }) => {
-  const saveFormRef: any = useRef(null)
+  useEffect(() => {
+    if (accountIsSuccess) {
+      setIsSignInModal(false)
+    }
+  }, [accountIsSuccess]) // eslint-disable-line
 
-  const dispatchSignInFormUi = (data: any) =>
+  useEffect(() => {
+    notification.config({
+      placement: 'bottomRight',
+    })
+
+    if (!R.isEmpty(accountErrorMessage)) {
+      notification['error']({
+        message: accountErrorMessage,
+      })
+      dispatch(selectAccountError(''))
+    }
+  }, [accountErrorMessage]) // eslint-disable-line
+
+  const signInFormRef: any = useRef(null)
+
+  const dispatchChangeSignInFormUi = (data: any) =>
     dispatch(
       changeSignInFormUi({
         ...signInFormUi,
@@ -155,26 +186,38 @@ const SignInModal: React.FC<ISignInModalProps> = ({
       })
     )
 
-  const dispatchSelectAccount = () => dispatch(selectAccount())
+  const dispatchSelectAccount = () => dispatch(signIn())
+  const dispatchInitialAccountState = () => dispatch(initialAccountState())
 
   return (
     <div className="sign-in-modal-wrapper">
-      // @ts-ignore
+      {/*
+        // @ts-ignore */}
       <SignInCreateForm
-        wrappedComponentRef={saveFormRef}
+        wrappedComponentRef={signInFormRef}
         setIsSignInModal={setIsSignInModal}
         isSignInModal={isSignInModal}
         signInFormUi={signInFormUi}
-        dispatchSignInFormUi={dispatchSignInFormUi}
+        accountIsLoading={accountIsLoading}
+        dispatchChangeSignInFormUi={dispatchChangeSignInFormUi}
         dispatchSelectAccount={dispatchSelectAccount}
+        dispatchInitialAccountState={dispatchInitialAccountState}
       />
     </div>
   )
 }
 
 const mapStateToProps = createSelector(
-  selectSignInFormUi(),
-  signInFormUi => ({ signInFormUi })
+  getSignInFormUi(),
+  getAccountIsLoading(),
+  getAccountIsSuccess(),
+  getAccountErrorMessage(),
+  (signInFormUi, accountIsLoading, accountIsSuccess, accountErrorMessage) => ({
+    signInFormUi,
+    accountIsLoading,
+    accountIsSuccess,
+    accountErrorMessage,
+  })
 )
 
 const withConnect = connect(mapStateToProps)

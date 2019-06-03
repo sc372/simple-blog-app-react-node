@@ -1,3 +1,5 @@
-import { accountSaga } from './account/sagas'
+import { accountSagas } from './account/sagas'
+import { authSagas } from './create-user/sagas'
+import { updateUserSagas } from './update-user/sagas'
 
-export default [accountSaga]
+export default [accountSagas, authSagas, updateUserSagas]

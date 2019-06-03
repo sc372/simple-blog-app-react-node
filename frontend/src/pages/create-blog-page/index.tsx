@@ -29,12 +29,14 @@ const CreateBlogPage: React.FC<ICreateBlogPageProps> = () => {
         <br />
         <br />
         <Typography.Title level={4}>내용</Typography.Title>
-        // @ts-ignore
+        {/*
+        // @ts-ignore */}
         <CustomEditor />
         <br />
         <br />
         <Typography.Title level={4}>이미지</Typography.Title>
-        // @ts-ignore
+        {/*
+        // @ts-ignore */}
         <CustomImageCrop />
         <Button className="create-blog-page-submit" type="primary">
           작성 완료

@@ -1,20 +1,30 @@
 import { handleActions } from 'redux-actions'
 import { IAccountState } from './state'
 import {
-  SELECT_ACCOUNT,
-  SELECT_ACCOUNT_WITH_TOKEN,
-  SELECT_ACCOUNT_UI_SUCCESS,
-  SELECT_ACCOUNT_DOMAIN_SUCCESS,
+  SIGN_IN,
+  SIGN_IN_WITH_TOKEN,
+  CHANGE_ACCOUNT_UI,
+  CHANGE_ACCOUNT_DOMAIN,
+  ACCOUNT_SUCCESS,
   ACCOUNT_ERROR,
+  INITIAL_ACCOUNT_STATE,
+  CHANGE_SIGN_IN_FORM_UI,
 } from './constants'
 import {
-  ISelectAccountPayload,
-  ISelectAccountUiSuccessPayload,
-  ISelectAccountDomainSuccessPayload,
+  ISignInPayload,
+  IChangeAccountUiPayload,
+  IChangeAccountDomainPayload,
   IAccountErrorPayload,
+  IAccountSuccessPayload,
+  IChangeSignInFormUiPayload,
 } from './payloads'
 
 export const initialState: IAccountState = {
+  signInFormUi: {
+    email: '',
+    password: '',
+    isAutoLogin: false,
+  },
   accountUi: {
     nickname: '',
     isLogin: false,
@@ -25,40 +35,49 @@ export const initialState: IAccountState = {
     email: '',
     nickname: '',
     createdAt: new Date(),
+    filePath: '',
+    fileName: '',
     jwtToken: '',
   },
-  isLoading: false,
-  errorMessage: '',
+  accountIsSuccess: false,
+  accountIsLoading: false,
+  accountErrorMessage: '',
 }
 
 export default handleActions<IAccountState>(
   {
-    [SELECT_ACCOUNT]: (
+    [CHANGE_SIGN_IN_FORM_UI]: (
       state,
-      action: ReduxActions.Action<ISelectAccountPayload>
-    ) => ({
+      action: ReduxActions.Action<IChangeSignInFormUiPayload>
+    ) => ({ ...state, ...action.payload }),
+    [SIGN_IN]: (state, action: ReduxActions.Action<ISignInPayload>) => ({
       ...state,
       ...action.payload,
     }),
-    [SELECT_ACCOUNT_WITH_TOKEN]: (
+    [SIGN_IN_WITH_TOKEN]: (
       state,
-      action: ReduxActions.Action<ISelectAccountPayload>
-    ) => ({
-      ...state,
-      ...action.payload,
-    }),
-    [SELECT_ACCOUNT_UI_SUCCESS]: (
+      action: ReduxActions.Action<ISignInPayload>
+    ) => ({ ...state, ...action.payload }),
+    [CHANGE_ACCOUNT_UI]: (
       state,
-      action: ReduxActions.Action<ISelectAccountUiSuccessPayload>
-    ) => ({ ...state, isLoading: false, ...action.payload }),
-    [SELECT_ACCOUNT_DOMAIN_SUCCESS]: (
+      action: ReduxActions.Action<IChangeAccountUiPayload>
+    ) => ({ ...state, ...action.payload }),
+    [CHANGE_ACCOUNT_DOMAIN]: (
       state,
-      action: ReduxActions.Action<ISelectAccountDomainSuccessPayload>
-    ) => ({ ...state, isLoading: false, ...action.payload }),
+      action: ReduxActions.Action<IChangeAccountDomainPayload>
+    ) => ({ ...state, accountIsLoading: false, ...action.payload }),
+    [ACCOUNT_SUCCESS]: (
+      state,
+      action: ReduxActions.Action<IAccountSuccessPayload>
+    ) => ({ ...state, accountIsLoading: false, ...action.payload }),
     [ACCOUNT_ERROR]: (
       state,
       action: ReduxActions.Action<IAccountErrorPayload>
-    ) => ({ ...state, isLoading: false, ...action.payload }),
+    ) => ({ ...state, accountIsLoading: false, ...action.payload }),
+    [INITIAL_ACCOUNT_STATE]: (
+      state,
+      action: ReduxActions.Action<IAccountState>
+    ) => action.payload,
   },
   initialState
 )

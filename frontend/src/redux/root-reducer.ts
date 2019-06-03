@@ -1,13 +1,15 @@
 import { combineReducers, Reducer, AnyAction } from 'redux'
 import { IStoreState } from './store-state'
 import account from './account/reducer'
-import authFormUi from './auth/reducer'
+import auth from './create-user/reducer'
+import updateUser from './update-user/reducer'
 
 const rootReducer: Reducer<IStoreState, AnyAction> = combineReducers<
   IStoreState
 >({
   account,
-  authFormUi,
+  auth,
+  updateUser,
 })
 
 export default rootReducer

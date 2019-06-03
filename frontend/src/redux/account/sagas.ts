@@ -1,41 +1,43 @@
-import { all, call, put, takeLatest, select } from 'redux-saga/effects'
-import { SELECT_ACCOUNT, SELECT_ACCOUNT_WITH_TOKEN } from './constants'
+import { all, call, put, takeLatest, select, delay } from 'redux-saga/effects'
+import { SIGN_IN, SIGN_IN_WITH_TOKEN } from './constants'
 import {
-  selectAccountUiSuccess,
-  selectAccountDomainSuccess,
+  changeAccountUiSuccess,
+  changeAccountDomainSuccess,
   selectAccountError,
+  selectAccountSuccess,
 } from './actions'
-import { selectSignInFormUi } from '../auth/selectors'
+import { getSignInFormUi } from './selectors'
 import { postSignInApi, postSignInWithJwtApi } from '../../api/auth-api'
 import * as R from 'ramda'
 
 function* selectAccountSaga() {
-  const signInFormUi = yield select(selectSignInFormUi())
+  const signInFormUi = yield select(getSignInFormUi())
   const response = yield call(postSignInApi, signInFormUi)
-
-  console.log('Line: 16', response)
-  console.log('Line: 16', response)
 
   try {
     const { statusCode, data } = response.data
+    yield delay(1000)
 
     if (statusCode < 400) {
       yield put(
-        selectAccountUiSuccess({
+        changeAccountUiSuccess({
           nickname: data.nickname,
           isLogin: true,
           filePath: data.filePath,
         })
       )
       yield put(
-        selectAccountDomainSuccess({
+        changeAccountDomainSuccess({
           id: data.id,
           email: data.email,
           nickname: data.nickname,
           createdAt: data.createdAt,
+          filePath: data.filePath,
+          fileName: data.fileName,
           jwtToken: data.token,
         })
       )
+      yield put(selectAccountSuccess())
       signInFormUi.isAutoLogin && localStorage.setItem('jwt_token', data.token)
     } else {
       yield put(selectAccountError(response.data.data))
@@ -50,7 +52,7 @@ function* selectAccountWithTokenSaga() {
   if (R.isEmpty(localStorage.getItem('jwt_token'))) return
 
   const response = yield call(postSignInWithJwtApi, {
-    token: localStorage.getItem('jwt_token'),
+    jwtToken: localStorage.getItem('jwt_token'),
   })
 
   try {
@@ -58,21 +60,24 @@ function* selectAccountWithTokenSaga() {
 
     if (statusCode < 400) {
       yield put(
-        selectAccountUiSuccess({
+        changeAccountUiSuccess({
           nickname: data.nickname,
           isLogin: true,
           filePath: data.filePath,
         })
       )
       yield put(
-        selectAccountDomainSuccess({
+        changeAccountDomainSuccess({
           id: data.id,
           email: data.email,
           nickname: data.nickname,
           createdAt: data.createdAt,
+          filePath: data.filePath,
+          fileName: data.fileName,
           jwtToken: data.token,
         })
       )
+      yield put(selectAccountSuccess())
     } else {
       yield put(selectAccountError(response.data.data))
     }
@@ -82,9 +87,9 @@ function* selectAccountWithTokenSaga() {
   }
 }
 
-export function* accountSaga() {
+export function* accountSagas() {
   yield all([
-    takeLatest(SELECT_ACCOUNT, selectAccountSaga),
-    takeLatest(SELECT_ACCOUNT_WITH_TOKEN, selectAccountWithTokenSaga),
+    takeLatest(SIGN_IN, selectAccountSaga),
+    takeLatest(SIGN_IN_WITH_TOKEN, selectAccountWithTokenSaga),
   ])
 }

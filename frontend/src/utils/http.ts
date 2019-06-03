@@ -9,12 +9,12 @@ export const Axios = () =>
     },
   })
 
-export const AxiosWithJwt = (token = '') =>
+export const AxiosWithJwt = (jwtToken: string) =>
   axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
     withCredentials: true,
     headers: {
       'Content-type': 'application/json',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${jwtToken}`,
     },
   })

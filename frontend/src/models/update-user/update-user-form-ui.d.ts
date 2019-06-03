@@ -1,9 +1,8 @@
-export interface IAccountDomain {
+export interface IUpdateUserFormUi {
   readonly id: string
   readonly email: string
   readonly nickname: string
-  readonly jwtToken: string
   readonly filePath: string
   readonly fileName: string
-  readonly createdAt: Date
+  readonly jwtToken: string
 }
