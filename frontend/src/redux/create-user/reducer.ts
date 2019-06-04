@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { IAuthState } from './state'
+import { ICreateUserState } from './state'
 import {
   CHANGE_SIGN_UP_FORM_UI,
   CREATE_USER,
@@ -14,7 +14,7 @@ import {
   IAuthErrorPayload,
 } from './payloads'
 
-export const initialState: IAuthState = {
+export const initialState: ICreateUserState = {
   signUpFormUi: {
     email: '',
     password: '',
@@ -22,11 +22,11 @@ export const initialState: IAuthState = {
     nickname: '',
   },
   signUpIsSuccess: false,
-  authIsLoading: false,
-  authErrorMessage: '',
+  createUserIsLoading: false,
+  createUserErrorMessage: '',
 }
 
-export default handleActions<IAuthState>(
+export default handleActions<ICreateUserState>(
   {
     [CHANGE_SIGN_UP_FORM_UI]: (
       state,
@@ -39,13 +39,15 @@ export default handleActions<IAuthState>(
     [CREATE_USER_SUCCESS]: (
       state,
       action: ReduxActions.Action<ICreateUserSuccessPayload>
-    ) => ({ ...state, authIsLoading: false, ...action.payload }),
+    ) => ({ ...state, createUserIsLoading: false, ...action.payload }),
     [CREATE_USER_ERROR]: (
       state,
       action: ReduxActions.Action<IAuthErrorPayload>
-    ) => ({ ...state, authIsLoading: false, ...action.payload }),
-    [INITIAL_AUTH_STATE]: (state, action: ReduxActions.Action<IAuthState>) =>
-      action.payload,
+    ) => ({ ...state, createUserIsLoading: false, ...action.payload }),
+    [INITIAL_AUTH_STATE]: (
+      state,
+      action: ReduxActions.Action<ICreateUserState>
+    ) => action.payload,
   },
   initialState
 )

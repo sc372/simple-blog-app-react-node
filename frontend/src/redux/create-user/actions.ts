@@ -21,7 +21,7 @@ export const changeSignUpFormUi = createAction<
 >(CHANGE_SIGN_UP_FORM_UI, signUpFormUi => ({ signUpFormUi }))
 
 export const createUser = createAction<ICreateUserPayload>(CREATE_USER, () => ({
-  authIsLoading: true,
+  createUserIsLoading: true,
 }))
 
 export const createUserSuccess = createAction<ICreateUserSuccessPayload>(
@@ -31,7 +31,7 @@ export const createUserSuccess = createAction<ICreateUserSuccessPayload>(
 
 export const createUserError = createAction<IAuthErrorPayload, string>(
   CREATE_USER_ERROR,
-  authErrorMessage => ({ authErrorMessage, signUpIsSuccess: false })
+  createUserErrorMessage => ({ createUserErrorMessage, signUpIsSuccess: false })
 )
 
 export const initialAuthState = createAction(

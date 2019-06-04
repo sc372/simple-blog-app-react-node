@@ -164,10 +164,6 @@ const SignInModal: React.FC<ISignInModalProps> = ({
   }, [accountIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
-    notification.config({
-      placement: 'bottomRight',
-    })
-
     if (!R.isEmpty(accountErrorMessage)) {
       notification['error']({
         message: accountErrorMessage,

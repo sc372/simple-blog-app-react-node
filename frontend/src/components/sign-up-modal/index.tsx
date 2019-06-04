@@ -5,8 +5,8 @@ import { compose } from 'recompose'
 import { createSelector } from 'reselect'
 
 import {
-  getAuthErrorMessage,
-  getAuthIsLoading,
+  getCreateUserErrorMessage,
+  getCreateUserIsLoading,
   getSignUpIsSuccess,
   getSignUpFormUi,
 } from '../../redux/create-user/selectors'
@@ -27,7 +27,7 @@ interface ISignUpModalProps extends IDispatchable {
   readonly signUpFormUi: ISignInFormUi
   readonly signUpIsSuccess: boolean
   readonly isAuthLoading: boolean
-  readonly authErrorMessage: string
+  readonly createUserErrorMessage: string
   readonly form: any
 }
 
@@ -178,7 +178,7 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
   isSignUpModal,
   signUpFormUi,
   signUpIsSuccess,
-  authErrorMessage,
+  createUserErrorMessage,
   isAuthLoading,
   dispatch,
 }) => {
@@ -189,17 +189,13 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
   }, [signUpIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
-    notification.config({
-      placement: 'bottomRight',
-    })
-
-    if (!R.isEmpty(authErrorMessage)) {
+    if (!R.isEmpty(createUserErrorMessage)) {
       notification['error']({
-        message: authErrorMessage,
+        message: createUserErrorMessage,
       })
       dispatch(createUserError(''))
     }
-  }, [authErrorMessage]) // eslint-disable-line
+  }, [createUserErrorMessage]) // eslint-disable-line
 
   const signUpFormRef: any = useRef(null)
 
@@ -235,13 +231,13 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
 const mapStateToProps = createSelector(
   getSignUpFormUi(),
   getSignUpIsSuccess(),
-  getAuthIsLoading(),
-  getAuthErrorMessage(),
-  (signUpFormUi, signUpIsSuccess, isAuthLoading, authErrorMessage) => ({
+  getCreateUserIsLoading(),
+  getCreateUserErrorMessage(),
+  (signUpFormUi, signUpIsSuccess, isAuthLoading, createUserErrorMessage) => ({
     signUpFormUi,
     signUpIsSuccess,
     isAuthLoading,
-    authErrorMessage,
+    createUserErrorMessage,
   })
 )
 

@@ -8,34 +8,24 @@ import { IAccountDomain, IDispatchable } from '../../models'
 
 import './styles.scss'
 import 'cropperjs/dist/cropper.css'
-// import { createSelector } from 'reselect'
-// import { getAccountDomain } from '../../redux/account/selectors'
-// import { changeUpdateUserFormUi } from '../../redux/update-user/actions'
-// import { getUpdateUserFormUi } from '../../redux/update-user/selectors'
 
 interface ICustomImageProps extends IDispatchable {
   readonly accountDomain: IAccountDomain
   readonly state: any
   readonly dispatchSetState: any
+  readonly aspectRatio: any
 }
 
 const CustomImageCrop: React.FC<ICustomImageProps> = ({
   accountDomain,
   state,
   dispatchSetState,
+  aspectRatio,
 }) => {
   const cropper: any = useRef(null)
   const [cropperSrc, setCropperSrc] = useState(accountDomain.filePath)
 
   const setCropperUi = (data: any) => dispatchSetState(data)
-
-  // const dispatchUpdateUserFormUi = (data: any) =>
-  //   dispatch(
-  //     changeUpdateUserFormUi({
-  //       ...updateUserFormUi,
-  //       ...data,
-  //     })
-  //   )
 
   const handleInputImage = (e: any) => {
     e.preventDefault()
@@ -55,11 +45,6 @@ const CustomImageCrop: React.FC<ICustomImageProps> = ({
     setCropperUi({
       fileName: files[0].name,
     })
-
-    // dispatchUpdateUserFormUi({
-    //   ...updateUserFormUi,
-    //   fileName: files[0].name,
-    // })
   }
 
   const handleCropImage = () => {
@@ -67,10 +52,6 @@ const CustomImageCrop: React.FC<ICustomImageProps> = ({
     setCropperUi({
       filePath: cropper.current.getCroppedCanvas().toDataURL(),
     })
-    // dispatchUpdateUserFormUi({
-    //   ...updateUserFormUi,
-    //   filePath: cropper.current.getCroppedCanvas().toDataURL(),
-    // })
   }
 
   return (
@@ -94,7 +75,7 @@ const CustomImageCrop: React.FC<ICustomImageProps> = ({
         <Col xs={24} sm={24} md={24} lg={11} xl={11}>
           <Cropper
             className="select-image-cropper"
-            aspectRatio={50 / 50}
+            aspectRatio={aspectRatio}
             preview=".img-preview"
             guides={true}
             src={cropperSrc}
@@ -112,12 +93,6 @@ const CustomImageCrop: React.FC<ICustomImageProps> = ({
     </div>
   )
 }
-
-// const mapStateToProps = createSelector(
-//   getAccountDomain(),
-//   getUpdateUserFormUi(),
-//   (accountDomain, updateUserFormUi) => ({ accountDomain, updateUserFormUi })
-// )
 
 const withConnect = connect()
 

@@ -5,7 +5,7 @@ export interface IChangeSignUpFormUiPayload {
 }
 
 export interface ICreateUserPayload {
-  readonly authIsLoading: boolean
+  readonly createUserIsLoading: boolean
 }
 
 export interface ICreateUserSuccessPayload {
@@ -13,5 +13,5 @@ export interface ICreateUserSuccessPayload {
 }
 
 export interface IAuthErrorPayload {
-  readonly authErrorMessage: string
+  readonly createUserErrorMessage: string
 }

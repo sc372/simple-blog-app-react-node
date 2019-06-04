@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import {
-  MainPage,
-  MyPage,
-  BlogPage,
-  MyBlogPage,
-  CreateBlogPage,
-  UpdateBlogPage,
-} from './pages'
+import { MainPage, MyPage, BlogPage, MyBlogPage, BlogFormPage } from './pages'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
@@ -15,6 +8,7 @@ import { IAccountUi, IDispatchable } from './models'
 import { signInWithJwt } from './redux/account/actions'
 import { createSelector } from 'reselect'
 import { getAccountUi } from './redux/account/selectors'
+import { notification } from 'antd'
 
 interface IAppProps extends IDispatchable {
   readonly accountUi: IAccountUi
@@ -41,6 +35,11 @@ const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
     localStorage.getItem('jwt_token') && dispatch(signInWithJwt())
   }, []) // eslint-disable-line
 
+  notification.config({
+    placement: 'bottomRight',
+    duration: 3,
+  })
+
   return (
     <>
       <Helmet>
@@ -66,12 +65,12 @@ const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
         />
         <PrivateRoute
           path="/create-blog"
-          component={CreateBlogPage}
+          component={BlogFormPage}
           isLogin={accountUi.isLogin}
         />
         <PrivateRoute
           path="/update-blog/:blogId"
-          component={UpdateBlogPage}
+          component={BlogFormPage}
           isLogin={accountUi.isLogin}
         />
         {/*<Route path="*" componet={NoMatch}/>*/}

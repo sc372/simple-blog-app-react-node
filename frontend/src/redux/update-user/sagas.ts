@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest, select, delay } from 'redux-saga/effects'
+import { all, call, put, takeLatest, select } from 'redux-saga/effects'
 import { UPDATE_USER } from './constants'
 import {
   initialUpdateUserState,
@@ -7,16 +7,38 @@ import {
 } from './actions'
 import { getUpdateUserFormUi } from './selectors'
 import { putUpdateUserApi } from '../../api/user-api'
+import {
+  changeAccountDomainSuccess,
+  changeAccountUiSuccess,
+} from '../account/actions'
 
 function* updateUserSaga() {
   const updateUserFormUi = yield select(getUpdateUserFormUi())
   const response = yield call(putUpdateUserApi, updateUserFormUi)
 
   try {
-    const { statusCode } = response.data
-    yield delay(1000)
+    const { statusCode, data } = response.data
 
     if (statusCode < 400) {
+      yield put(
+        changeAccountUiSuccess({
+          nickname: data.nickname,
+          isLogin: true,
+          filePath: data.filePath,
+        })
+      )
+      yield put(
+        changeAccountDomainSuccess({
+          id: data.id,
+          email: data.email,
+          nickname: data.nickname,
+          createdAt: data.createdAt,
+          filePath: data.filePath,
+          fileName: data.fileName,
+          jwtToken: data.token,
+        })
+      )
+      localStorage.clear()
       yield put(updateUserSuccess())
       yield put(initialUpdateUserState())
     } else {

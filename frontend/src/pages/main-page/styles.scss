@@ -17,14 +17,28 @@
 
   .blog-item-card {
     padding: 50px 30px 0 30px;
+
     .blog-item-img {
       height: 250px;
     }
-    .blog-item-author {
-      color: #292961;
+    .blog-item-title {
+      cursor: pointer;
+    }
+    .blog-item-title:hover {
+      .blog-item-title-text {
+        color: #292961;
+      }
+    }
+    .blog-item-author-wrapper {
+      float: left;
+      .blog-item-author {
+        margin-left: 5px;
+        color: #292961;
+      }
     }
 
     .blog-item-date {
+      margin-top: 5px;
       float: right;
     }
   }
@@ -32,4 +46,18 @@
 
 .main-page-scroll-spinner {
   font-size: 3rem;
+}
+
+.scroll-to-top-btn-wrapper {
+  position: fixed;
+  width: 8vw;
+  height: 10vh;
+  bottom: 5vh;
+  right: 5vw;
+
+  .scroll-to-top-btn {
+    position: sticky;
+    float: right;
+    font-size: 40px;
+  }
 }

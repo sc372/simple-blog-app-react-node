@@ -1,55 +1,80 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { Avatar, Typography } from 'antd'
+import { createSelector } from 'reselect'
+import * as R from 'ramda'
 
 import { MainLayout } from '../../components/layouts'
 import { BlogComment } from '../../components'
-import { IDispatchable } from '../../models'
+import { IBlogsUi, IDispatchable } from '../../models'
 
 import './styles.scss'
+import { withRouter } from 'react-router'
+import {
+  getBlogUi,
+  getCreateBlogCommentIsSuccess,
+  getDeleteBlogCommentIsSuccess,
+  getUpdateBlogCommentIsSuccess,
+} from '../../redux/blog/selectors'
+import { selectBlog } from '../../redux/blog/actions'
 
-interface IBlogPageProps extends IDispatchable {}
+interface IBlogPageProps extends IDispatchable {
+  readonly blogUi: IBlogsUi
+  readonly createBlogCommentIsSuccess: boolean
+  readonly updateBlogCommentIsSuccess: boolean
+  readonly deleteBlogCommentIsSuccess: boolean
+  readonly location: any
+}
 
-const BlogPage: React.FC<IBlogPageProps> = () => {
+const BlogPage: React.FC<IBlogPageProps> = ({
+  blogUi,
+  createBlogCommentIsSuccess,
+  updateBlogCommentIsSuccess,
+  deleteBlogCommentIsSuccess,
+  location,
+  dispatch,
+}) => {
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(selectBlog(R.split('/', location.pathname)[2]))
+  }, []) // eslint-disable-line
+
+  useEffect(() => {
+    if (createBlogCommentIsSuccess) {
+      // @ts-ignore
+      dispatch(selectBlog(R.split('/', location.pathname)[2]))
+    }
+  }, [createBlogCommentIsSuccess]) // eslint-disable-line
+
+  useEffect(() => {
+    if (updateBlogCommentIsSuccess) {
+      // @ts-ignore
+      dispatch(selectBlog(R.split('/', location.pathname)[2]))
+    }
+  }, [updateBlogCommentIsSuccess]) // eslint-disable-line
+
+  useEffect(() => {
+    if (deleteBlogCommentIsSuccess) {
+      // @ts-ignore
+      dispatch(selectBlog(R.split('/', location.pathname)[2]))
+    }
+  }, [deleteBlogCommentIsSuccess]) // eslint-disable-line
+
   return (
     <MainLayout>
       <div className="blog-page-wrapper">
-        <Typography.Title level={2}>모래 뿐일 것이다.</Typography.Title>
+        <Typography.Title level={2}>{blogUi.title}</Typography.Title>
         <div>
-          <Avatar src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
-          <span className="blog-page-author">상자</span>
-          <div className="blog-page-date">2019/06/01</div>
+          <Avatar src={blogUi.userFilePath} />
+          <span className="blog-page-author">{blogUi.nickname}</span>
+          <div className="blog-page-date">{blogUi.createdAt}</div>
         </div>
-        <img
-          className="blog-page-image"
-          src="https://picsum.photos/1300/700"
-          alt=""
+        <img className="blog-page-image" src={blogUi.blogFilePath} alt="" />
+        <div
+          className="blog-page-content-wrapper"
+          dangerouslySetInnerHTML={{ __html: blogUi.contents }}
         />
-        <div className="blog-page-content-wrapper">
-          <p>
-            Ant Design which is specially created for internal desktop
-            applications, is committed to improving the experience of users and
-            product designers.User interface designers and user experience
-            designers, collectively, are considered as product designers, and
-            the boundaries of product managers, interaction designers, visual
-            designers, front-end developers and develop engineers are blurred.
-            Taking advantage of unitary specifications, Ant Design makes design
-            and prototype more simple and accessible for all project members,
-            which comprehensively promotes experience and development efficiency
-            of background applications and products.Ant Design which is
-            specially created for internal desktop applications, is committed to
-            improving the experience of users and product designers.User
-            interface designers and user experience designers, collectively, are
-            considered as product designers, and the boundaries of product
-            managers, interaction designers, visual designers, front-end
-            developers and develop engineers are blurred. Taking advantage of
-            unitary specifications, Ant Design makes design and prototype more
-            simple and accessible for all project members, which comprehensively
-            promotes experience and development efficiency of background
-            applications and products.
-          </p>
-        </div>
         {/*
         // @ts-ignore */}
         <BlogComment />
@@ -58,6 +83,27 @@ const BlogPage: React.FC<IBlogPageProps> = () => {
   )
 }
 
-const withConnect = connect()
+const mapStateToProps = createSelector(
+  getBlogUi(),
+  getCreateBlogCommentIsSuccess(),
+  getUpdateBlogCommentIsSuccess(),
+  getDeleteBlogCommentIsSuccess(),
+  (
+    blogUi,
+    createBlogCommentIsSuccess,
+    updateBlogCommentIsSuccess,
+    deleteBlogCommentIsSuccess
+  ) => ({
+    blogUi,
+    createBlogCommentIsSuccess,
+    updateBlogCommentIsSuccess,
+    deleteBlogCommentIsSuccess,
+  })
+)
 
-export default compose<IBlogPageProps, IBlogPageProps>(withConnect)(BlogPage)
+const withConnect = connect(mapStateToProps)
+
+export default compose<IBlogPageProps, IBlogPageProps>(withConnect)(
+  // @ts-ignore
+  compose<IBlogPageProps, IBlogPageProps>(withRouter)(BlogPage)
+)

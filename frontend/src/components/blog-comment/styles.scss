@@ -21,13 +21,21 @@
       margin-left: 5px;
     }
 
-    .blog-comment-delete {
+    .blog-comment-btn {
       margin-left: 5px;
     }
 
     .blog-comment-content {
       font-size: 1rem;
       margin-top: 10px;
+    }
+
+    .blog-comment-update-wrapper {
+      margin: 10px 0 40px 0;
+      .blog-comment-update-btn {
+        float: right;
+        margin-top: 10px;
+      }
     }
   }
 }
@@ -56,13 +64,21 @@
         margin-left: 5px;
       }
 
-      .blog-comment-delete {
+      .blog-comment-btn {
         margin-left: 5px;
       }
 
       .blog-comment-content {
         font-size: 3rem;
         margin-top: 10px;
+      }
+
+      .blog-comment-update-wrapper {
+        margin: 10px 0 40px 0;
+        .blog-comment-update-btn {
+          float: right;
+          margin-top: 10px;
+        }
       }
     }
   }

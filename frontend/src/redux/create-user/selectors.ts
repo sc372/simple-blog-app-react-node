@@ -1,28 +1,28 @@
 import { IStoreState } from '../store-state'
 import { createSelector } from 'reselect'
 
-export const authState = () => (state: IStoreState) => state.auth
+export const createUserState = () => (state: IStoreState) => state.createUser
 
 export const getSignUpFormUi = () =>
   createSelector(
-    authState(),
+    createUserState(),
     ({ signUpFormUi }) => signUpFormUi
   )
 
 export const getSignUpIsSuccess = () =>
   createSelector(
-    authState(),
+    createUserState(),
     ({ signUpIsSuccess }) => signUpIsSuccess
   )
 
-export const getAuthIsLoading = () =>
+export const getCreateUserIsLoading = () =>
   createSelector(
-    authState(),
-    ({ authIsLoading }) => authIsLoading
+    createUserState(),
+    ({ createUserIsLoading }) => createUserIsLoading
   )
 
-export const getAuthErrorMessage = () =>
+export const getCreateUserErrorMessage = () =>
   createSelector(
-    authState(),
-    ({ authErrorMessage }) => authErrorMessage
+    createUserState(),
+    ({ createUserErrorMessage }) => createUserErrorMessage
   )

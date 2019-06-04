@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
@@ -8,14 +8,27 @@ import { IDispatchable } from '../../models'
 import './styles.scss'
 import 'react-quill/dist/quill.snow.css'
 
-interface ICustomEditorProps extends IDispatchable {}
+interface ICustomEditorProps extends IDispatchable {
+  readonly dispatchSetState: any
+  readonly initialContents: any
+}
 
-const CustomEditor: React.FC<ICustomEditorProps> = () => {
+const CustomEditor: React.FC<ICustomEditorProps> = ({
+  dispatchSetState,
+  initialContents,
+}) => {
+  const [contents, setContents] = useState(initialContents)
+  useEffect(() => {
+    dispatchSetState({ contents })
+  }, [contents]) // eslint-disable-line
+
   return (
     <div className="custom-table-wrapper">
       <ReactQuill
-        // value={}
-        onChange={(contents: string): void => console.log('Line: 12', contents)}
+        value={contents}
+        onChange={(contents: string): void => {
+          setContents(contents)
+        }}
         theme={'snow'}
         placeholder={'내용을 작성해주세요.'}
         modules={{

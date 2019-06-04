@@ -1,8 +1,8 @@
 import { ISignUpFormUi } from '../../models'
 
-export interface IAuthState {
+export interface ICreateUserState {
   readonly signUpFormUi: ISignUpFormUi
   readonly signUpIsSuccess: boolean
-  readonly authIsLoading: boolean
-  readonly authErrorMessage: string
+  readonly createUserIsLoading: boolean
+  readonly createUserErrorMessage: string
 }

@@ -8,27 +8,15 @@ import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
-interface IMyBlogTableProps extends IDispatchable {}
+interface IMyBlogTableProps extends IDispatchable {
+  readonly dataSource: any
+  readonly pagination: any
+}
 
-const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
-  const dataSource = [
-    {
-      id: 'skjdhfksjd',
-      nickname: 'Mike',
-      title: '10 Downing Street',
-      createdAt: '2019/06/01',
-    },
-    {
-      id: 'skjdhksjh',
-      nickname: 'John',
-      title: '10 Downing Street',
-      createdAt: '2019/06/01',
-    },
-  ]
-  const pagination = {
-    pageSize: 7,
-    total: 50,
-  }
+const MyBlogTable: React.FC<IMyBlogTableProps> = ({
+  dataSource,
+  pagination,
+}) => {
   return (
     <div className="my-blog-table-wrapper">
       <Table dataSource={dataSource} pagination={pagination}>
@@ -50,9 +38,8 @@ const MyBlogTable: React.FC<IMyBlogTableProps> = () => {
           dataIndex="id"
           key="id"
           width={100}
-          onCellClick={record => console.log('Line: 38', record)}
-          render={() => (
-            <Link to="/update-blog/slhfsd">
+          render={(record: string) => (
+            <Link to={`/update-blog/${record}`}>
               <Icon className="blog-update-btn" type="edit" />
             </Link>
           )}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Form, Input, notification, Typography } from 'antd'
+import { Button, Form, Input, Modal, notification, Typography } from 'antd'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -58,12 +58,9 @@ const _MyPage: React.FC<IMyPageProps> = ({
   }, []) // eslint-disable-line
 
   useEffect(() => {
-    notification.config({
-      placement: 'bottomRight',
-    })
     if (updateUserIsSuccess) {
       history.push('/')
-      notification['error']({
+      notification['success']({
         message: '회원 정보가 수정 되었습니다.',
       })
       dispatchInitialUpdateUserState()
@@ -71,9 +68,6 @@ const _MyPage: React.FC<IMyPageProps> = ({
   }, [updateUserIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
-    notification.config({
-      placement: 'bottomRight',
-    })
     if (!R.isEmpty(updateUserErrorMessage) && !updateUserIsSuccess) {
       notification['error']({
         message: updateUserErrorMessage,
@@ -89,8 +83,20 @@ const _MyPage: React.FC<IMyPageProps> = ({
       if (err) {
         console.log('유효하지 않은 값: ', values)
         return
+      } else {
+        Modal.confirm({
+          title: '회원 정보를 수정하시겠습니까?',
+          okText: '수정',
+          cancelText: '취소',
+          centered: true,
+          onOk() {
+            dispatchUpdateUser()
+          },
+          onCancel() {
+            console.log('취소')
+          },
+        })
       }
-      dispatchUpdateUser()
     })
   }
 
@@ -157,6 +163,7 @@ const _MyPage: React.FC<IMyPageProps> = ({
             accountDomain={accountDomain}
             state={updateUserFormUi}
             dispatchSetState={dispatchChangeUpdateUserFormUi}
+            aspectRatio={1}
           />
           <div className="my-page-submit-wrapper">
             <span className="my-page-submit">

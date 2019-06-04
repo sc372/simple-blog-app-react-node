@@ -23,6 +23,6 @@ function* createUserSaga() {
   }
 }
 
-export function* authSagas() {
+export function* createUserSagas() {
   yield all([takeLatest(CREATE_USER, createUserSaga)])
 }
