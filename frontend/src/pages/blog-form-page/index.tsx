@@ -181,10 +181,7 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
     <MainLayout>
       <div className="create-blog-page-wrapper">
         <Typography.Title level={2}>
-          블로그{' '}
-          {R.split('/', location.pathname)[1] === 'create-blog'
-            ? '작성'
-            : '수정'}
+          블로그 {formType === 'create-blog' ? '작성' : '수정'}
         </Typography.Title>
         <br />
         <br />
@@ -206,7 +203,7 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
         <CustomEditor
           dispatchSetState={dispatchChangeBlogFormUi}
           initialContents={
-            R.split('/', location.pathname)[1] === 'create-blog'
+            formType === 'create-blog'
               ? ''
               : R.find(
                   R.propEq('id', R.split('/', location.pathname)[2])
@@ -230,11 +227,9 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
           type="primary"
           onClick={dispatchBlog}
         >
-          {R.split('/', location.pathname)[1] === 'create-blog'
-            ? '작성 완료'
-            : '수정 완료'}
+          {formType === 'create-blog' ? '작성 완료' : '수정 완료'}
         </Button>
-        {R.split('/', location.pathname)[1] === 'update-blog' && (
+        {formType === 'update-blog' && (
           <Button
             className="create-blog-page-submit"
             type="danger"

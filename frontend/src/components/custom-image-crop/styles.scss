@@ -16,11 +16,13 @@
   .select-image-cropper {
     margin: 20px 20px 0 0;
     height: auto;
+    max-height: 500px;
   }
 
   .select-image-cropper-result {
     margin: 20px 0 0 0;
     height: auto;
     width: 95%;
+    max-height: 500px;
   }
 }
