@@ -42,9 +42,16 @@ const MainPage: React.FC<IMainPageProps> = ({
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
 
   const [page, setPage] = useState(0)
+  const [preLoading, setPreLoading] = useState(true)
   useEffect(() => {
     dispatch(selectBlogs(0, blogsSearchText))
   }, []) // eslint-disable-line
+
+  useEffect(() => {
+    if (selectBlogsIsLoading) {
+      setPreLoading(false)
+    }
+  }, [selectBlogsIsLoading]) // eslint-disable-line
 
   const nextBlogsDispatch = () => {
     dispatch(selectBlogs(page + 1, blogsSearchText))
@@ -68,6 +75,12 @@ const MainPage: React.FC<IMainPageProps> = ({
         </p>
       </div>
       <div className="main-page-wrapper">
+        {!preLoading && !selectBlogsIsLoading && blogsTotalCount === 0 && (
+          <Empty
+            className="empty-icon"
+            description={<span>글이 없습니다.</span>}
+          />
+        )}
         <Row justify="start" align="middle">
           <InfiniteScroll
             dataLength={blogsTotalCount}
@@ -128,9 +141,6 @@ const MainPage: React.FC<IMainPageProps> = ({
           </InfiniteScroll>
         </Row>
       </div>
-      {!R.isEmpty(blogsSearchText) && blogsTotalCount === 0 && (
-        <Empty description={<span>글이 없습니다.</span>} />
-      )}
       {selectBlogsIsLoading && !R.isEmpty(blogsUi) && (
         <Icon type="loading" className="main-page-scroll-spinner" />
       )}

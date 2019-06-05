@@ -1,36 +1,24 @@
 import React, { useEffect } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-import { MainPage, MyPage, BlogPage, MyBlogPage, BlogFormPage } from './pages'
+import { Route, Switch } from 'react-router-dom'
+import {
+  MainPage,
+  MyPage,
+  BlogPage,
+  MyBlogPage,
+  BlogFormPage,
+  NotFoundPage,
+} from './pages'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
-import { IAccountUi, IDispatchable } from './models'
+import { IDispatchable } from './models'
 import { signInWithJwt } from './redux/account/actions'
-import { createSelector } from 'reselect'
-import { getAccountUi } from './redux/account/selectors'
 import { notification } from 'antd'
+import PrivateRoute from './PrivateGuard'
 
-interface IAppProps extends IDispatchable {
-  readonly accountUi: IAccountUi
-}
+interface IAppProps extends IDispatchable {}
 
-interface IPrivateRoute {
-  readonly path: any
-  readonly component: any
-  readonly isLogin: boolean
-}
-
-// TODO: 비동기 통신으로 page guard 에 이슈가 있음
-const PrivateRoute: React.FC<IPrivateRoute> = ({
-  component: Component,
-  isLogin,
-}) => (
-  <Route
-    render={props => (isLogin ? <Component {...props} /> : <Redirect to="/" />)}
-  />
-)
-
-const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
+const App: React.FC<IAppProps> = ({ dispatch }) => {
   useEffect(() => {
     localStorage.getItem('jwt_token') && dispatch(signInWithJwt())
   }, []) // eslint-disable-line
@@ -54,39 +42,20 @@ const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route path="/blogs/:blogId" component={BlogPage} />
-        <PrivateRoute
-          path="/my/blog"
-          component={MyBlogPage}
-          isLogin={accountUi.isLogin}
-        />
-        <PrivateRoute
-          path="/my"
-          component={MyPage}
-          isLogin={accountUi.isLogin}
-        />
-        <PrivateRoute
-          path="/create-blog"
-          component={BlogFormPage}
-          isLogin={accountUi.isLogin}
-        />
-        <PrivateRoute
-          path="/update-blog/:blogId"
-          component={BlogFormPage}
-          isLogin={accountUi.isLogin}
-        />
-        {/*<Route path="*" componet={NoMatch}/>*/}
+        // @ts-ignore
+        <PrivateRoute path="/my/blog" component={MyBlogPage} />
+        // @ts-ignore
+        <PrivateRoute path="/my" component={MyPage} />
+        // @ts-ignore
+        <PrivateRoute path="/create-blog" component={BlogFormPage} />
+        // @ts-ignore
+        <PrivateRoute path="/update-blog/:blogId" component={BlogFormPage} />
+        <Route component={NotFoundPage} />
       </Switch>
     </>
   )
 }
 
-const mapStateToProps = createSelector(
-  getAccountUi(),
-  accountUi => ({
-    accountUi,
-  })
-)
-
-const withConnect = connect(mapStateToProps)
+const withConnect = connect()
 
 export default compose<IAppProps, IAppProps>(withConnect)(App)

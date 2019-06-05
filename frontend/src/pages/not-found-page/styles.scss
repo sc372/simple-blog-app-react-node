@@ -1,0 +1,15 @@
+.not-found-page-wrapper {
+  position: relative;
+  min-height: 850px;
+
+  .not-found-img-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .not-found-img {
+      width: 30vw;
+    }
+  }
+}

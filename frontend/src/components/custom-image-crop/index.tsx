@@ -6,25 +6,23 @@ import { connect } from 'react-redux'
 import 'cropperjs/dist/cropper.css'
 import * as R from 'ramda'
 
-import { IAccountDomain, IDispatchable } from '../../models'
+import { IDispatchable } from '../../models'
 
 import './styles.scss'
 
 interface ICustomImageProps extends IDispatchable {
-  readonly accountDomain: IAccountDomain
   readonly state: any
   readonly dispatchSetState: any
   readonly aspectRatio: any
 }
 
 const CustomImageCrop: React.FC<ICustomImageProps> = ({
-  accountDomain,
   state,
   dispatchSetState,
   aspectRatio,
 }) => {
   const cropper: any = useRef(null)
-  const [cropperSrc, setCropperSrc] = useState(accountDomain.filePath)
+  const [cropperSrc, setCropperSrc] = useState('')
 
   const setCropperUi = (data: any) => dispatchSetState(data)
 
