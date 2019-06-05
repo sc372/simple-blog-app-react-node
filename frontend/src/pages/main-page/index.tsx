@@ -10,7 +10,7 @@ import { createSelector } from 'reselect'
 
 import { IBlogsUi, IDispatchable } from '../../models'
 import {
-  getBlogsIsLoading,
+  getSelectBlogsIsLoading,
   getBlogsSearchText,
   getBlogsTotalCount,
   getBlogsUi,
@@ -23,7 +23,7 @@ interface IMainPageProps extends IDispatchable {
   readonly blogsUi: IBlogsUi[]
   readonly blogsTotalCount: number
   readonly blogsSearchText: string
-  readonly blogsIsLoading: boolean
+  readonly selectBblogsIsLoading: boolean
   readonly history: any
 }
 
@@ -31,7 +31,7 @@ const MainPage: React.FC<IMainPageProps> = ({
   blogsUi,
   blogsTotalCount,
   blogsSearchText,
-  blogsIsLoading,
+  selectBblogsIsLoading,
   history,
   dispatch,
 }) => {
@@ -128,7 +128,7 @@ const MainPage: React.FC<IMainPageProps> = ({
       {!R.isEmpty(blogsSearchText) && blogsTotalCount === 0 && (
         <Empty description={<span>글이 없습니다.</span>} />
       )}
-      {blogsIsLoading && (
+      {selectBblogsIsLoading && (
         <Icon type="loading" className="main-page-scroll-spinner" />
       )}
       <div className="scroll-to-top-btn-wrapper">
@@ -146,12 +146,12 @@ const mapStateToProps = createSelector(
   getBlogsUi(),
   getBlogsTotalCount(),
   getBlogsSearchText(),
-  getBlogsIsLoading(),
-  (blogsUi, blogsTotalCount, blogsSearchText, blogsIsLoading) => ({
+  getSelectBlogsIsLoading(),
+  (blogsUi, blogsTotalCount, blogsSearchText, selectBblogsIsLoading) => ({
     blogsUi,
     blogsTotalCount,
     blogsSearchText,
-    blogsIsLoading,
+    selectBblogsIsLoading,
   })
 )
 

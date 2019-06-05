@@ -2,23 +2,27 @@ import { createAction } from 'redux-actions'
 import {
   CHANGE_BLOG_FORM_UI,
   CREATE_BLOG,
-  UPDATE_BLOG,
+  CREATE_BLOG_SUCCESS,
+  CREATE_BLOG_ERROR,
   DELETE_BLOG,
-  BLOG_FORM_SUCCESS,
-  BLOG_FORM_ERROR,
-  INITIAL_BLOG_FORM_UI_STATE,
-  DELETE_BLOG_ERROR,
   DELETE_BLOG_SUCCESS,
+  DELETE_BLOG_ERROR,
+  UPDATE_BLOG,
+  UPDATE_BLOG_SUCCESS,
+  UPDATE_BLOG_ERROR,
+  INITIAL_BLOG_FORM_UI_STATE,
 } from './constants'
 import {
   IChangeBlogFormUiPayload,
   ICreateBlogPayload,
-  IUpdateBlogPayload,
+  ICreateBlogSuccessPayload,
+  ICreateBlogErrorPayload,
   IDeleteBlogPayload,
-  IBlogFormSuccessPayload,
-  IBlogFormErrorPayload,
   IDeleteBlogSuccessPayload,
   IDeleteBlogErrorPayload,
+  IUpdateBlogPayload,
+  IUpdateBlogSuccessPayload,
+  IUpdateBlogErrorPayload,
 } from './payloads'
 import { IBlogFormUi } from '../../models'
 import { initialState } from './reducer'
@@ -29,23 +33,19 @@ export const changeBlogFormUi = createAction<
 >(CHANGE_BLOG_FORM_UI, blogFormUi => ({ blogFormUi }))
 
 export const createBlog = createAction<ICreateBlogPayload>(CREATE_BLOG, () => ({
-  blogFormIsLoading: true,
+  createBlogIsLoading: true,
 }))
 
-export const updateBlog = createAction<IUpdateBlogPayload>(UPDATE_BLOG, () => ({
-  blogFormIsLoading: true,
-}))
-
-export const blogFormSuccess = createAction<IBlogFormSuccessPayload>(
-  BLOG_FORM_SUCCESS,
-  () => ({ blogFormIsSuccess: true })
+export const createBlogSuccess = createAction<ICreateBlogSuccessPayload>(
+  CREATE_BLOG_SUCCESS,
+  () => ({ createBlogIsSuccess: true })
 )
 
-export const blogFormError = createAction<IBlogFormErrorPayload, string>(
-  BLOG_FORM_ERROR,
-  blogFormErrorMessage => ({
-    blogFormErrorMessage,
-    blogFormIsSuccess: false,
+export const createBlogError = createAction<ICreateBlogErrorPayload, string>(
+  CREATE_BLOG_ERROR,
+  createBlogErrorMessage => ({
+    createBlogErrorMessage,
+    createBlogIsSuccess: false,
   })
 )
 
@@ -67,6 +67,23 @@ export const deleteBlogError = createAction<IDeleteBlogErrorPayload, string>(
   deleteBlogErrorMessage => ({
     deleteBlogErrorMessage,
     deleteBlogIsSuccess: false,
+  })
+)
+
+export const updateBlog = createAction<IUpdateBlogPayload>(UPDATE_BLOG, () => ({
+  updateBlogIsLoading: true,
+}))
+
+export const updateBlogSuccess = createAction<IUpdateBlogSuccessPayload>(
+  UPDATE_BLOG_SUCCESS,
+  () => ({ updateBlogIsSuccess: true })
+)
+
+export const updateBlogError = createAction<IUpdateBlogErrorPayload, string>(
+  UPDATE_BLOG_ERROR,
+  updateBlogErrorMessage => ({
+    updateBlogErrorMessage,
+    updateBlogIsSuccess: false,
   })
 )
 

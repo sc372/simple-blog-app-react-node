@@ -26,12 +26,15 @@ export const createUser = createAction<ICreateUserPayload>(CREATE_USER, () => ({
 
 export const createUserSuccess = createAction<ICreateUserSuccessPayload>(
   CREATE_USER_SUCCESS,
-  () => ({ signUpIsSuccess: true })
+  () => ({ createUserIsSuccess: true })
 )
 
 export const createUserError = createAction<IAuthErrorPayload, string>(
   CREATE_USER_ERROR,
-  createUserErrorMessage => ({ createUserErrorMessage, signUpIsSuccess: false })
+  createUserErrorMessage => ({
+    createUserErrorMessage,
+    createUserIsSuccess: false,
+  })
 )
 
 export const initialAuthState = createAction(

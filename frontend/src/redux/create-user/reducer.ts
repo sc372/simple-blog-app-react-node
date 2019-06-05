@@ -21,7 +21,7 @@ export const initialState: ICreateUserState = {
     rePassword: '',
     nickname: '',
   },
-  signUpIsSuccess: false,
+  createUserIsSuccess: false,
   createUserIsLoading: false,
   createUserErrorMessage: '',
 }

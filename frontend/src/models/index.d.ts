@@ -12,4 +12,6 @@ export {
   IBlogsUi,
   IBlogsCommentUi,
   IBlogsCommentDomain,
+  IBlogsCommentCommentUi,
+  IBlogsCommentCommentDomain,
 } from './blogs'

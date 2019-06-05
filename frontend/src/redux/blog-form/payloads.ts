@@ -5,19 +5,15 @@ export interface IChangeBlogFormUiPayload {
 }
 
 export interface ICreateBlogPayload {
-  readonly blogFormIsLoading: boolean
+  readonly createBlogIsLoading: boolean
 }
 
-export interface IUpdateBlogPayload {
-  readonly blogFormIsLoading: boolean
+export interface ICreateBlogSuccessPayload {
+  readonly createBlogIsSuccess: boolean
 }
 
-export interface IBlogFormSuccessPayload {
-  readonly blogFormIsSuccess: boolean
-}
-
-export interface IBlogFormErrorPayload {
-  readonly blogFormErrorMessage: string
+export interface ICreateBlogErrorPayload {
+  readonly createBlogErrorMessage: string
 }
 
 export interface IDeleteBlogPayload {
@@ -30,4 +26,16 @@ export interface IDeleteBlogSuccessPayload {
 
 export interface IDeleteBlogErrorPayload {
   readonly deleteBlogErrorMessage: string
+}
+
+export interface IUpdateBlogPayload {
+  readonly updateBlogIsLoading: boolean
+}
+
+export interface IUpdateBlogSuccessPayload {
+  readonly updateBlogIsSuccess: boolean
+}
+
+export interface IUpdateBlogErrorPayload {
+  readonly updateBlogErrorMessage: string
 }

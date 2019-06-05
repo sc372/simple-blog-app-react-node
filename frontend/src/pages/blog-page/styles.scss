@@ -1,6 +1,13 @@
 .blog-page-wrapper {
   margin: 120px 16vw;
 
+  .blog-page-loading-wrapper {
+    text-align: center;
+    .blog-page-loading {
+      font-size: 5rem;
+    }
+  }
+
   .blog-page-author {
     color: #292961;
     font-size: 1rem;
@@ -27,6 +34,11 @@
 @media (max-width: 1000px) {
   .blog-page-wrapper {
     margin: 120px 2vw;
+
+    .blog-page-loading-wrapper {
+      .blog-page-loading {
+      }
+    }
 
     .blog-page-author {
       color: #292961;

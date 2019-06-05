@@ -17,19 +17,24 @@ import {
 import './styles.scss'
 import { createSelector } from 'reselect'
 import {
-  getBlogFormIsSuccess,
   getBlogFormUi,
-  getBlogFormErrorMessage,
+  getCreateBlogIsSuccess,
+  getCreateBlogErrorMessage,
+  getUpdateBlogIsSuccess,
+  getUpdateBlogErrorMessage,
   getDeleteBlogIsSuccess,
+  getDeleteBlogErrorMessage,
 } from '../../redux/blog-form/selectors'
 import { getAccountDomain } from '../../redux/account/selectors'
 import {
-  blogFormError,
   changeBlogFormUi,
   createBlog,
-  initialBlogFormUiState,
+  createBlogError,
   updateBlog,
+  updateBlogError,
   deleteBlog,
+  deleteBlogError,
+  initialBlogFormUiState,
 } from '../../redux/blog-form/actions'
 import { getMyBlogsDomain } from '../../redux/my-blogs/selectors'
 
@@ -37,9 +42,11 @@ interface IBlogFormPageProps extends IDispatchable {
   readonly accountDomain: IAccountDomain
   readonly blogFormUi: IBlogFormUi
   readonly myBlogsDomain: IMyBlogsDomain
-  readonly blogFormIsSuccess: boolean
+  readonly createBlogIsSuccess: boolean
+  readonly createBlogErrorMessage: boolean
+  readonly updateBlogIsSuccess: boolean
+  readonly updateBlogErrorMessage: boolean
   readonly deleteBlogIsSuccess: boolean
-  readonly blogFormErrorMessage: boolean
   readonly deleteBlogErrorMessage: boolean
   readonly location: any
   readonly history: any
@@ -49,9 +56,12 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
   accountDomain,
   blogFormUi,
   myBlogsDomain,
-  blogFormIsSuccess,
+  createBlogIsSuccess,
+  createBlogErrorMessage,
+  updateBlogIsSuccess,
+  updateBlogErrorMessage,
   deleteBlogIsSuccess,
-  blogFormErrorMessage,
+  deleteBlogErrorMessage,
   location,
   history,
   dispatch,
@@ -89,7 +99,7 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
   }, []) // eslint-disable-line
 
   useEffect(() => {
-    if (blogFormIsSuccess) {
+    if (createBlogIsSuccess || updateBlogIsSuccess) {
       history.push('/my/blog')
       notification['success']({
         message: `블로그 ${
@@ -98,7 +108,7 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
       })
       dispatchInitialBlogFormUiState()
     }
-  }, [blogFormIsSuccess]) // eslint-disable-line
+  }, [createBlogIsSuccess, updateBlogIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
     if (deleteBlogIsSuccess) {
@@ -111,13 +121,31 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
   }, [deleteBlogIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
-    if (!R.isEmpty(blogFormErrorMessage) && !blogFormIsSuccess) {
+    if (!R.isEmpty(createBlogErrorMessage) && !createBlogIsSuccess) {
       notification['error']({
-        message: blogFormErrorMessage,
+        message: createBlogErrorMessage,
       })
-      dispatchBlogError('')
+      dispatch(createBlogError(''))
     }
-  }, [blogFormErrorMessage]) // eslint-disable-line
+  }, [createBlogErrorMessage]) // eslint-disable-line
+
+  useEffect(() => {
+    if (!R.isEmpty(updateBlogErrorMessage) && !updateBlogIsSuccess) {
+      notification['error']({
+        message: updateBlogErrorMessage,
+      })
+      dispatch(updateBlogError(''))
+    }
+  }, [updateBlogErrorMessage]) // eslint-disable-line
+
+  useEffect(() => {
+    if (!R.isEmpty(deleteBlogErrorMessage) && !deleteBlogIsSuccess) {
+      notification['error']({
+        message: deleteBlogErrorMessage,
+      })
+      dispatch(deleteBlogError(''))
+    }
+  }, [deleteBlogErrorMessage]) // eslint-disable-line
 
   // dispatcher
   const dispatchChangeBlogFormUi = (data: any) =>
@@ -166,8 +194,6 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
       },
     })
 
-  const dispatchBlogError = (message: string) =>
-    dispatch(blogFormError(message))
   const dispatchInitialBlogFormUiState = () =>
     dispatch(initialBlogFormUiState())
 
@@ -246,23 +272,32 @@ const mapStateToProps = createSelector(
   getAccountDomain(),
   getBlogFormUi(),
   getMyBlogsDomain(),
-  getBlogFormIsSuccess(),
+  getCreateBlogIsSuccess(),
+  getCreateBlogErrorMessage(),
+  getUpdateBlogIsSuccess(),
+  getUpdateBlogErrorMessage(),
   getDeleteBlogIsSuccess(),
-  getBlogFormErrorMessage(),
+  getDeleteBlogErrorMessage(),
   (
     accountDomain,
     blogFormUi,
     myBlogsDomain,
-    blogFormIsSuccess,
+    createBlogIsSuccess,
+    createBlogErrorMessage,
+    updateBlogIsSuccess,
+    updateBlogErrorMessage,
     deleteBlogIsSuccess,
-    blogFormErrorMessage
+    deleteBlogErrorMessage
   ) => ({
     accountDomain,
     blogFormUi,
     myBlogsDomain,
-    blogFormIsSuccess,
+    createBlogIsSuccess,
+    createBlogErrorMessage,
+    updateBlogIsSuccess,
+    updateBlogErrorMessage,
     deleteBlogIsSuccess,
-    blogFormErrorMessage,
+    deleteBlogErrorMessage,
   })
 )
 

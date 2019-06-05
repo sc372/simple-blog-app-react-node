@@ -1,4 +1,5 @@
 import { IBlogsCommentDomain } from './blogs-comment-domain'
+import { IAccountDomain } from '../account'
 
 export interface IBlogsDomain {
   readonly id: string
@@ -8,5 +9,6 @@ export interface IBlogsDomain {
   readonly fileName: string
   readonly createdAt: Date
   readonly updatedAt: Date
-  readonly comments: IBlogsCommentDomain[]
+  readonly blogComments: IBlogsCommentDomain[]
+  readonly user: IAccountDomain
 }

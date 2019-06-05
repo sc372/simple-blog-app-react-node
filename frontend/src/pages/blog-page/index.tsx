@@ -11,55 +11,19 @@ import { IBlogsUi, IDispatchable } from '../../models'
 
 import './styles.scss'
 import { withRouter } from 'react-router'
-import {
-  getBlogUi,
-  getCreateBlogCommentIsSuccess,
-  getDeleteBlogCommentIsSuccess,
-  getUpdateBlogCommentIsSuccess,
-} from '../../redux/blog/selectors'
+import { getBlogUi } from '../../redux/blog/selectors'
 import { selectBlog } from '../../redux/blog/actions'
 
 interface IBlogPageProps extends IDispatchable {
   readonly blogUi: IBlogsUi
-  readonly createBlogCommentIsSuccess: boolean
-  readonly updateBlogCommentIsSuccess: boolean
-  readonly deleteBlogCommentIsSuccess: boolean
   readonly location: any
 }
 
-const BlogPage: React.FC<IBlogPageProps> = ({
-  blogUi,
-  createBlogCommentIsSuccess,
-  updateBlogCommentIsSuccess,
-  deleteBlogCommentIsSuccess,
-  location,
-  dispatch,
-}) => {
+const BlogPage: React.FC<IBlogPageProps> = ({ blogUi, location, dispatch }) => {
   useEffect(() => {
     // @ts-ignore
     dispatch(selectBlog(R.split('/', location.pathname)[2]))
   }, []) // eslint-disable-line
-
-  useEffect(() => {
-    if (createBlogCommentIsSuccess) {
-      // @ts-ignore
-      dispatch(selectBlog(R.split('/', location.pathname)[2]))
-    }
-  }, [createBlogCommentIsSuccess]) // eslint-disable-line
-
-  useEffect(() => {
-    if (updateBlogCommentIsSuccess) {
-      // @ts-ignore
-      dispatch(selectBlog(R.split('/', location.pathname)[2]))
-    }
-  }, [updateBlogCommentIsSuccess]) // eslint-disable-line
-
-  useEffect(() => {
-    if (deleteBlogCommentIsSuccess) {
-      // @ts-ignore
-      dispatch(selectBlog(R.split('/', location.pathname)[2]))
-    }
-  }, [deleteBlogCommentIsSuccess]) // eslint-disable-line
 
   return (
     <MainLayout>
@@ -76,7 +40,7 @@ const BlogPage: React.FC<IBlogPageProps> = ({
           dangerouslySetInnerHTML={{ __html: blogUi.contents }}
         />
         {/*
-        // @ts-ignore */}
+            // @ts-ignore */}
         <BlogComment />
       </div>
     </MainLayout>
@@ -85,19 +49,8 @@ const BlogPage: React.FC<IBlogPageProps> = ({
 
 const mapStateToProps = createSelector(
   getBlogUi(),
-  getCreateBlogCommentIsSuccess(),
-  getUpdateBlogCommentIsSuccess(),
-  getDeleteBlogCommentIsSuccess(),
-  (
+  blogUi => ({
     blogUi,
-    createBlogCommentIsSuccess,
-    updateBlogCommentIsSuccess,
-    deleteBlogCommentIsSuccess
-  ) => ({
-    blogUi,
-    createBlogCommentIsSuccess,
-    updateBlogCommentIsSuccess,
-    deleteBlogCommentIsSuccess,
   })
 )
 

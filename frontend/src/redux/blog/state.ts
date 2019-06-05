@@ -3,9 +3,10 @@ import { IBlogsUi, IBlogsDomain } from '../../models'
 export interface IBlogState {
   readonly blogUi: IBlogsUi
   readonly blogDomain: IBlogsDomain
-  readonly blogIsSuccess: boolean
-  readonly blogErrorMessage: string
-  readonly blogIsLoading: boolean
+  readonly selectBlogIsSuccess: boolean
+  readonly selectBlogErrorMessage: string
+  readonly selectBlogIsLoading: boolean
+  // blog-comment
   readonly createBlogCommentIsSuccess: boolean
   readonly createBlogCommentErrorMessage: string
   readonly createBlogCommentIsLoading: boolean
@@ -15,4 +16,14 @@ export interface IBlogState {
   readonly deleteBlogCommentIsSuccess: boolean
   readonly deleteBlogCommentErrorMessage: string
   readonly deleteBlogCommentIsLoading: boolean
+  // blog-comment-comment
+  readonly createBlogCommentCommentIsSuccess: boolean
+  readonly createBlogCommentCommentErrorMessage: string
+  readonly createBlogCommentCommentIsLoading: boolean
+  readonly updateBlogCommentCommentIsSuccess: boolean
+  readonly updateBlogCommentCommentErrorMessage: string
+  readonly updateBlogCommentCommentIsLoading: boolean
+  readonly deleteBlogCommentCommentIsSuccess: boolean
+  readonly deleteBlogCommentCommentErrorMessage: string
+  readonly deleteBlogCommentCommentIsLoading: boolean
 }

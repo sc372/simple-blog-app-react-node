@@ -83,10 +83,7 @@ const SignInCreateForm = Form.create({
           {accountIsLoading ? (
             <Icon className="sign-in-loading-icon" type="loading" />
           ) : (
-            <Form
-              onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
-              className="login-form-wrapper"
-            >
+            <Form className="login-form-wrapper">
               <Form.Item>
                 {form.getFieldDecorator('email', {
                   rules: [

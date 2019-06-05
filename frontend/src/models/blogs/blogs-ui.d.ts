@@ -8,5 +8,5 @@ export interface IBlogsUi {
   readonly blogFilePath: string
   readonly userFilePath: string
   readonly createdAt: string
-  readonly blogComment: IBlogsCommentUi[]
+  readonly blogComments: IBlogsCommentUi[]
 }

@@ -1,4 +1,4 @@
-export interface IBlogsCommentDomain {
+export interface IBlogsCommentCommentDomain {
   readonly id: string
   readonly comment: string
   readonly userId: string

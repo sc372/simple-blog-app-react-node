@@ -9,7 +9,7 @@ export interface ICreateUserPayload {
 }
 
 export interface ICreateUserSuccessPayload {
-  readonly signUpIsSuccess: boolean
+  readonly createUserIsSuccess: boolean
 }
 
 export interface IAuthErrorPayload {

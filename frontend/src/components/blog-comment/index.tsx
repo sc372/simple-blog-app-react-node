@@ -23,6 +23,7 @@ import {
   deleteBlogComment,
   updateBlogComment,
 } from '../../redux/blog/actions'
+import BlogCommentComment from '../blog-comment-comment'
 
 import './styles.scss'
 
@@ -69,7 +70,7 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
         setNewComment('')
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
 
@@ -84,28 +85,25 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
         dispatch(updateBlogComment(updateComment, blogCommentId))
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
 
   const dispatchDeleteComment = (blogCommentId: string) =>
     Modal.confirm({
       title: '댓글 삭제',
-      content: '댓글을 삭제하시겠습니까?',
+      content: '댓글을 삭제하시겠습니까?(댓글의 댓글은 모두 삭제됩니다.)',
       okText: '삭제',
       cancelText: '취소',
       centered: true,
       okType: 'danger',
       onOk() {
         dispatch(deleteBlogComment(blogCommentId))
-        setUpdateComment('')
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
-
-  console.log('Line: 103', isUpdateComment)
 
   return (
     <div className="blog-comment-wrapper">
@@ -113,24 +111,25 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
         <div className="blog-comment-create">
           <Input
             placeholder="댓글을 입력해주세요."
-            allowClear
             value={newComment}
             onChange={(e: ChangeEvent<HTMLInputElement>): void =>
               setNewComment(e.target.value)
             }
             onPressEnter={dispatchCreateComment}
+            suffix={
+              <Button
+                type="primary"
+                className="blog-comment-submit"
+                onClick={dispatchCreateComment}
+                disabled={isUpdateComment}
+              >
+                추가
+              </Button>
+            }
           />
-          <Button
-            type="primary"
-            className="blog-comment-submit"
-            onClick={dispatchCreateComment}
-            disabled={isUpdateComment}
-          >
-            댓글 추가
-          </Button>
         </div>
       ) : null}
-      {R.isEmpty(blogUi.blogComment) ? (
+      {R.isEmpty(blogUi.blogComments) ? (
         <Empty description={<span>댓글이 없습니다.</span>} />
       ) : (
         mapIndexed(
@@ -198,9 +197,12 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
               ) : (
                 <p className="blog-comment-content">{v.comment}</p>
               )}
+              {/*
+               // @ts-ignore */}
+              <BlogCommentComment blogCommentId={v.id} />
             </div>
           ),
-          blogUi.blogComment
+          blogUi.blogComments
         )
       )}
     </div>

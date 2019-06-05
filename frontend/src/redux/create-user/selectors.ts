@@ -9,10 +9,10 @@ export const getSignUpFormUi = () =>
     ({ signUpFormUi }) => signUpFormUi
   )
 
-export const getSignUpIsSuccess = () =>
+export const getCreateUserIsSuccess = () =>
   createSelector(
     createUserState(),
-    ({ signUpIsSuccess }) => signUpIsSuccess
+    ({ createUserIsSuccess }) => createUserIsSuccess
   )
 
 export const getCreateUserIsLoading = () =>

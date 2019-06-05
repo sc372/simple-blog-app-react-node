@@ -6,7 +6,7 @@ export interface IMyBlogsState {
   readonly myBlogsPageNum: number
   readonly myBlogsTotalCount: number
   readonly myBlogsSearchText: string
-  readonly myBlogsIsSuccess: boolean
-  readonly myBlogsIsLoading: boolean
-  readonly myBlogsErrorMessage: string
+  readonly selectMyBlogsIsSuccess: boolean
+  readonly selectMyBlogsIsLoading: boolean
+  readonly selectMyBlogsErrorMessage: string
 }

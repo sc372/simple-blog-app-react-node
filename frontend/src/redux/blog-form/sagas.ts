@@ -1,10 +1,12 @@
 import { all, call, put, takeLatest, select, delay } from 'redux-saga/effects'
 import { CREATE_BLOG, DELETE_BLOG, UPDATE_BLOG } from './constants'
 import {
-  blogFormSuccess,
-  blogFormError,
+  createBlogSuccess,
+  createBlogError,
   deleteBlogError,
   deleteBlogSuccess,
+  updateBlogError,
+  updateBlogSuccess,
 } from './actions'
 import { getBlogFormUi } from './selectors'
 import { postBlogApi, putBlogApi, deleteBlogApi } from '../../api/blog-api'
@@ -19,13 +21,13 @@ function* createBlogSaga() {
     yield delay(1000)
 
     if (statusCode < 400) {
-      yield put(blogFormSuccess())
+      yield put(createBlogSuccess())
     } else {
-      yield put(blogFormError(response.data.data))
+      yield put(createBlogError(response.data.data))
     }
   } catch (error) {
     console.log(error)
-    yield put(blogFormError(response.data.data))
+    yield put(createBlogError(response.data.data))
   }
 }
 
@@ -38,13 +40,13 @@ function* updateBlogSaga() {
     yield delay(1000)
 
     if (statusCode < 400) {
-      yield put(blogFormSuccess())
+      yield put(updateBlogSuccess())
     } else {
-      yield put(blogFormError(response.data.data))
+      yield put(updateBlogError(response.data.data))
     }
   } catch (error) {
     console.log(error)
-    yield put(blogFormError(response.data.data))
+    yield put(updateBlogError(response.data.data))
   }
 }
 

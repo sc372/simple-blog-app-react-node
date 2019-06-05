@@ -3,8 +3,8 @@ import {
   SELECT_MY_BLOGS,
   CHANGE_MY_BLOGS_UI,
   CHANGE_MY_BLOGS_DOMAIN,
-  MY_BLOGS_SUCCESS,
-  MY_BLOGS_ERROR,
+  SELECT_MY_BLOGS_SUCCESS,
+  SELECT_MY_BLOGS_ERROR,
   INITIAL_MY_BLOGS_STATE,
   CHANGE_MY_BLOGS_TOTAL_COUNT,
   CHANGE_MY_BLOGS_SEARCH_TEXT,
@@ -15,8 +15,8 @@ import {
   IChangeMyBlogsDomainPayload,
   IChangeMyBlogsTotalCountPayload,
   IChangeMyBlogsSearchTextPayload,
-  IMyBlogsSuccessPayload,
-  IMyBlogsErrorPayload,
+  ISelectMyBlogsSuccessPayload,
+  ISelectMyBlogsErrorPayload,
 } from './payloads'
 import { IMyBlogsUi, IMyBlogsDomain } from '../../models'
 import { initialState } from './reducer'
@@ -26,21 +26,21 @@ export const selectMyBlogs = createAction<
   number,
   string
 >(SELECT_MY_BLOGS, (myBlogsPageNum, myBlogsSearchText) => ({
-  myBlogsIsLoading: true,
+  selectMyBlogsIsLoading: true,
   myBlogsPageNum,
   myBlogsSearchText,
 }))
 
-export const myBlogsSuccess = createAction<IMyBlogsSuccessPayload>(
-  MY_BLOGS_SUCCESS,
-  () => ({ myBlogsIsSuccess: true })
+export const myBlogsSuccess = createAction<ISelectMyBlogsSuccessPayload>(
+  SELECT_MY_BLOGS_SUCCESS,
+  () => ({ selectMyBlogsIsSuccess: true })
 )
 
-export const myBlogsError = createAction<IMyBlogsErrorPayload, string>(
-  MY_BLOGS_ERROR,
-  myBlogsErrorMessage => ({
-    myBlogsErrorMessage,
-    myBlogsIsSuccess: false,
+export const myBlogsError = createAction<ISelectMyBlogsErrorPayload, string>(
+  SELECT_MY_BLOGS_ERROR,
+  selectMyBlogsErrorMessage => ({
+    selectMyBlogsErrorMessage,
+    selectMyBlogsIsSuccess: false,
   })
 )
 export const changeMyBlogsUi = createAction<

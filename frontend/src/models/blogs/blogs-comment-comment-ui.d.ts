@@ -1,4 +1,4 @@
-export interface IBlogsCommentUi {
+export interface IBlogsCommentCommentUi {
   readonly id: string
   readonly comment: string
   readonly userId: string

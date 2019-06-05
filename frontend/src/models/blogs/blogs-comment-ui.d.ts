@@ -1,3 +1,5 @@
+import { IBlogsCommentCommentUi } from './blogs-comment-comment-ui'
+
 export interface IBlogsCommentUi {
   readonly id: string
   readonly comment: string
@@ -5,4 +7,5 @@ export interface IBlogsCommentUi {
   readonly userNickname: string
   readonly userFilePath: string
   readonly createdAt: string
+  readonly blogCommentComments: IBlogsCommentCommentUi[]
 }

@@ -6,8 +6,8 @@ import {
   CHANGE_MY_BLOGS_DOMAIN,
   CHANGE_MY_BLOGS_TOTAL_COUNT,
   CHANGE_MY_BLOGS_SEARCH_TEXT,
-  MY_BLOGS_SUCCESS,
-  MY_BLOGS_ERROR,
+  SELECT_MY_BLOGS_SUCCESS,
+  SELECT_MY_BLOGS_ERROR,
   INITIAL_MY_BLOGS_STATE,
 } from './constants'
 import {
@@ -16,8 +16,8 @@ import {
   IChangeMyBlogsDomainPayload,
   IChangeMyBlogsTotalCountPayload,
   IChangeMyBlogsSearchTextPayload,
-  IMyBlogsSuccessPayload,
-  IMyBlogsErrorPayload,
+  ISelectMyBlogsSuccessPayload,
+  ISelectMyBlogsErrorPayload,
 } from './payloads'
 
 export const initialState: IMyBlogsState = {
@@ -26,9 +26,9 @@ export const initialState: IMyBlogsState = {
   myBlogsPageNum: 0,
   myBlogsTotalCount: 0,
   myBlogsSearchText: '',
-  myBlogsIsSuccess: false,
-  myBlogsIsLoading: false,
-  myBlogsErrorMessage: '',
+  selectMyBlogsIsSuccess: false,
+  selectMyBlogsIsLoading: false,
+  selectMyBlogsErrorMessage: '',
 }
 
 export default handleActions<IMyBlogsState>(
@@ -36,7 +36,7 @@ export default handleActions<IMyBlogsState>(
     [SELECT_MY_BLOGS]: (
       state,
       action: ReduxActions.Action<ISelectMyBlogsPayload>
-    ) => ({ ...state, myBlogsIsLoading: true, ...action.payload }),
+    ) => ({ ...state, selectMyBlogsIsLoading: true, ...action.payload }),
     [CHANGE_MY_BLOGS_UI]: (
       state,
       action: ReduxActions.Action<IChangeMyBlogsUiPayload>
@@ -53,14 +53,14 @@ export default handleActions<IMyBlogsState>(
       state,
       action: ReduxActions.Action<IChangeMyBlogsSearchTextPayload>
     ) => ({ ...state, ...action.payload }),
-    [MY_BLOGS_SUCCESS]: (
+    [SELECT_MY_BLOGS_SUCCESS]: (
       state,
-      action: ReduxActions.Action<IMyBlogsSuccessPayload>
-    ) => ({ ...state, myBlogsIsLoading: false, ...action.payload }),
-    [MY_BLOGS_ERROR]: (
+      action: ReduxActions.Action<ISelectMyBlogsSuccessPayload>
+    ) => ({ ...state, selectMyBlogsIsLoading: false, ...action.payload }),
+    [SELECT_MY_BLOGS_ERROR]: (
       state,
-      action: ReduxActions.Action<IMyBlogsErrorPayload>
-    ) => ({ ...state, myBlogsIsLoading: false, ...action.payload }),
+      action: ReduxActions.Action<ISelectMyBlogsErrorPayload>
+    ) => ({ ...state, selectMyBlogsIsLoading: false, ...action.payload }),
     [INITIAL_MY_BLOGS_STATE]: (
       state,
       action: ReduxActions.Action<IMyBlogsState>

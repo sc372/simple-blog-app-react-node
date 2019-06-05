@@ -1,7 +1,7 @@
 import { IBlogsUi, IBlogsDomain } from '../../models'
 
 export interface ISelectBlogsPayload {
-  readonly blogsIsLoading: boolean
+  readonly selectBlogsIsLoading: boolean
 }
 
 export interface IChangeBlogsUiPayload {
@@ -20,10 +20,10 @@ export interface IChangeBlogsSearchTextPayload {
   readonly blogsSearchText: string
 }
 
-export interface IBlogsSuccessPayload {
-  readonly blogsIsSuccess: boolean
+export interface ISelectBlogsSuccessPayload {
+  readonly selectBlogsIsSuccess: boolean
 }
 
-export interface IBlogsErrorPayload {
-  readonly blogsErrorMessage: string
+export interface ISelectBlogsErrorPayload {
+  readonly selectBlogsErrorMessage: string
 }

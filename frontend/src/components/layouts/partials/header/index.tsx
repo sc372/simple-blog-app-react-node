@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
@@ -21,9 +21,14 @@ import './styles.scss'
 interface IHeaderProps extends IDispatchable {
   readonly accountUi: IAccountUi
   readonly accountIsLoading: boolean
+  readonly history: any
 }
 
-const Header: React.FC<IHeaderProps> = ({ accountUi, accountIsLoading }) => {
+const Header: React.FC<IHeaderProps> = ({
+  accountUi,
+  accountIsLoading,
+  history,
+}) => {
   const [isDrawerToggle, setIsDrawerToggleValue] = useState(false)
   const [isSignUpModal, setIsSignUpModal] = useState(false)
   const [isSignInModal, setIsSignInModal] = useState(false)
@@ -37,7 +42,12 @@ const Header: React.FC<IHeaderProps> = ({ accountUi, accountIsLoading }) => {
           </Link>
           {accountUi.isLogin ? (
             <>
-              <Avatar className="header-avatar" src={accountUi.filePath} />
+              <span
+                className="header-avatar-wrapper"
+                onClick={() => history.push('/my')}
+              >
+                <Avatar className="header-avatar" src={accountUi.filePath} />
+              </span>
               <Icon
                 className="header-menu-icon"
                 type="menu"
@@ -72,7 +82,12 @@ const Header: React.FC<IHeaderProps> = ({ accountUi, accountIsLoading }) => {
           </Link>
           {accountUi.isLogin ? (
             <>
-              <Avatar className="m-header-avatar" src={accountUi.filePath} />
+              <span
+                className="m-header-avatar-wrapper"
+                onClick={() => history.push('/my')}
+              >
+                <Avatar className="m-header-avatar" src={accountUi.filePath} />
+              </span>
               <span className="m-header-menu-icon">
                 <Icon
                   type="menu"
@@ -136,4 +151,7 @@ const mapStateToProps = createSelector(
 
 const withConnect = connect(mapStateToProps)
 
-export default compose<IHeaderProps, IHeaderProps>(withConnect)(Header)
+export default compose<IHeaderProps, IHeaderProps>(withConnect)(
+  // @ts-ignore
+  compose<IHeaderProps, IHeaderProps>(withRouter)(Header)
+)

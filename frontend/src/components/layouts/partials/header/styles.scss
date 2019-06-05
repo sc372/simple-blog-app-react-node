@@ -31,10 +31,13 @@
     font-size: 0.8rem;
   }
 
-  .header-avatar {
-    float: right;
-    right: 150px;
-    top: 33px;
+  .header-avatar-wrapper {
+    cursor: pointer;
+    .header-avatar {
+      float: right;
+      right: 150px;
+      top: 33px;
+    }
   }
 
   .header-menu-icon {
@@ -91,11 +94,15 @@
     font-size: 2rem;
   }
 
-  .m-header-avatar {
-    float: right;
-    top: 33px;
-    right: 70px;
-    font-size: 3rem;
+  .m-header-avatar-wrapper {
+    cursor: pointer;
+
+    .m-header-avatar {
+      float: right;
+      top: 33px;
+      right: 70px;
+      font-size: 3rem;
+    }
   }
 
   .m-header-menu-icon {

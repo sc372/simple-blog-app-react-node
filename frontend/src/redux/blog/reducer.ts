@@ -1,12 +1,11 @@
 import { handleActions } from 'redux-actions'
 import { IBlogState } from './state'
 import {
-  SELECT_BLOG,
   CHANGE_BLOG_UI,
   CHANGE_BLOG_DOMAIN,
-  BLOG_SUCCESS,
-  BLOG_ERROR,
-  INITIAL_BLOG_STATE,
+  SELECT_BLOG,
+  SELECT_BLOG_SUCCESS,
+  SELECT_BLOG_ERROR,
   CREATE_BLOG_COMMENT,
   CREATE_BLOG_COMMENT_ERROR,
   CREATE_BLOG_COMMENT_SUCCESS,
@@ -16,13 +15,24 @@ import {
   UPDATE_BLOG_COMMENT_SUCCESS,
   UPDATE_BLOG_COMMENT,
   DELETE_BLOG_COMMENT,
+  CREATE_BLOG_COMMENT_COMMENT,
+  CREATE_BLOG_COMMENT_COMMENT_SUCCESS,
+  CREATE_BLOG_COMMENT_COMMENT_ERROR,
+  UPDATE_BLOG_COMMENT_COMMENT,
+  UPDATE_BLOG_COMMENT_COMMENT_SUCCESS,
+  UPDATE_BLOG_COMMENT_COMMENT_ERROR,
+  DELETE_BLOG_COMMENT_COMMENT,
+  DELETE_BLOG_COMMENT_COMMENT_SUCCESS,
+  DELETE_BLOG_COMMENT_COMMENT_ERROR,
+  INITIAL_BLOG_STATE,
+  INITIAL_BLOG_OTHER_DATA_STATE,
 } from './constants'
 import {
-  ISelectBlogPayload,
   IChangeBlogUiPayload,
   IChangeBlogDomainPayload,
-  IBlogSuccessPayload,
-  IBlogErrorPayload,
+  ISelectBlogPayload,
+  ISelectBlogSuccessPayload,
+  ISelectBlogErrorPayload,
   ICreateBlogCommentPayload,
   ICreateBlogCommentErrorPayload,
   ICreateBlogCommentSuccessPayload,
@@ -32,6 +42,16 @@ import {
   IDeleteBlogCommentErrorPayload,
   IUpdateBlogCommentPayload,
   IDeleteBlogCommentPayload,
+  ICreateBlogCommentCommentPayload,
+  ICreateBlogCommentCommentSuccessPayload,
+  ICreateBlogCommentCommentErrorPayload,
+  IUpdateBlogCommentCommentPayload,
+  IUpdateBlogCommentCommentSuccessPayload,
+  IUpdateBlogCommentCommentErrorPayload,
+  IDeleteBlogCommentCommentPayload,
+  IDeleteBlogCommentCommentSuccessPayload,
+  IDeleteBlogCommentCommentErrorPayload,
+  IInitialBlogOtherDataStatePayload,
 } from './payloads'
 
 export const initialState: IBlogState = {
@@ -43,7 +63,7 @@ export const initialState: IBlogState = {
     blogFilePath: '',
     userFilePath: '',
     createdAt: '',
-    blogComment: [],
+    blogComments: [],
   },
   blogDomain: {
     id: '',
@@ -53,11 +73,20 @@ export const initialState: IBlogState = {
     fileName: '',
     createdAt: new Date(),
     updatedAt: new Date(),
-    comments: [],
+    blogComments: [],
+    user: {
+      id: '',
+      email: '',
+      nickname: '',
+      jwtToken: '',
+      filePath: '',
+      fileName: '',
+      createdAt: new Date(),
+    },
   },
-  blogIsSuccess: false,
-  blogErrorMessage: '',
-  blogIsLoading: false,
+  selectBlogIsSuccess: false,
+  selectBlogErrorMessage: '',
+  selectBlogIsLoading: false,
   createBlogCommentIsSuccess: false,
   createBlogCommentErrorMessage: '',
   createBlogCommentIsLoading: false,
@@ -67,14 +96,19 @@ export const initialState: IBlogState = {
   deleteBlogCommentIsSuccess: false,
   deleteBlogCommentErrorMessage: '',
   deleteBlogCommentIsLoading: false,
+  createBlogCommentCommentIsSuccess: false,
+  createBlogCommentCommentErrorMessage: '',
+  createBlogCommentCommentIsLoading: false,
+  updateBlogCommentCommentIsSuccess: false,
+  updateBlogCommentCommentErrorMessage: '',
+  updateBlogCommentCommentIsLoading: false,
+  deleteBlogCommentCommentIsSuccess: false,
+  deleteBlogCommentCommentErrorMessage: '',
+  deleteBlogCommentCommentIsLoading: false,
 }
 
 export default handleActions<IBlogState>(
   {
-    [SELECT_BLOG]: (
-      state,
-      action: ReduxActions.Action<ISelectBlogPayload>
-    ) => ({ ...state, blogIsLoading: true, ...action.payload }),
     [CHANGE_BLOG_UI]: (
       state,
       action: ReduxActions.Action<IChangeBlogUiPayload>
@@ -83,19 +117,28 @@ export default handleActions<IBlogState>(
       state,
       action: ReduxActions.Action<IChangeBlogDomainPayload>
     ) => ({ ...state, ...action.payload }),
-    [BLOG_SUCCESS]: (
+    [SELECT_BLOG]: (
       state,
-      action: ReduxActions.Action<IBlogSuccessPayload>
-    ) => ({ ...state, blogIsLoading: false, ...action.payload }),
-    [BLOG_ERROR]: (state, action: ReduxActions.Action<IBlogErrorPayload>) => ({
+      action: ReduxActions.Action<ISelectBlogPayload>
+    ) => ({ ...state, selectBlogIsLoading: true, ...action.payload }),
+    [SELECT_BLOG_SUCCESS]: (
+      state,
+      action: ReduxActions.Action<ISelectBlogSuccessPayload>
+    ) => ({ ...state, selectBlogIsLoading: false, ...action.payload }),
+    [SELECT_BLOG_ERROR]: (
+      state,
+      action: ReduxActions.Action<ISelectBlogErrorPayload>
+    ) => ({
       ...state,
-      blogIsLoading: false,
+      selectBlogIsLoading: false,
       ...action.payload,
     }),
+
+    // blog-comment
     [CREATE_BLOG_COMMENT]: (
       state,
       action: ReduxActions.Action<ICreateBlogCommentPayload>
-    ) => ({ ...state, blogIsLoading: true, ...action.payload }),
+    ) => ({ ...state, createBlogCommentIsLoading: true, ...action.payload }),
     [CREATE_BLOG_COMMENT_SUCCESS]: (
       state,
       action: ReduxActions.Action<ICreateBlogCommentSuccessPayload>
@@ -138,6 +181,86 @@ export default handleActions<IBlogState>(
     ) => ({
       ...state,
       deleteBlogCommentIsLoading: false,
+      ...action.payload,
+    }),
+    // blog-comment-comment
+    [CREATE_BLOG_COMMENT_COMMENT]: (
+      state,
+      action: ReduxActions.Action<ICreateBlogCommentCommentPayload>
+    ) => ({
+      ...state,
+      createBlogCommentCommentIsLoading: true,
+      ...action.payload,
+    }),
+    [CREATE_BLOG_COMMENT_COMMENT_SUCCESS]: (
+      state,
+      action: ReduxActions.Action<ICreateBlogCommentCommentSuccessPayload>
+    ) => ({
+      ...state,
+      createBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [CREATE_BLOG_COMMENT_COMMENT_ERROR]: (
+      state,
+      action: ReduxActions.Action<ICreateBlogCommentCommentErrorPayload>
+    ) => ({
+      ...state,
+      createBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [UPDATE_BLOG_COMMENT_COMMENT]: (
+      state,
+      action: ReduxActions.Action<IUpdateBlogCommentCommentPayload>
+    ) => ({
+      ...state,
+      updateBlogCommentCommentIsLoading: true,
+      ...action.payload,
+    }),
+    [UPDATE_BLOG_COMMENT_COMMENT_SUCCESS]: (
+      state,
+      action: ReduxActions.Action<IUpdateBlogCommentCommentSuccessPayload>
+    ) => ({
+      ...state,
+      updateBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [UPDATE_BLOG_COMMENT_COMMENT_ERROR]: (
+      state,
+      action: ReduxActions.Action<IUpdateBlogCommentCommentErrorPayload>
+    ) => ({
+      ...state,
+      updateBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [DELETE_BLOG_COMMENT_COMMENT]: (
+      state,
+      action: ReduxActions.Action<IDeleteBlogCommentCommentPayload>
+    ) => ({
+      ...state,
+      deleteBlogCommentCommentIsLoading: true,
+      ...action.payload,
+    }),
+    [DELETE_BLOG_COMMENT_COMMENT_SUCCESS]: (
+      state,
+      action: ReduxActions.Action<IDeleteBlogCommentCommentSuccessPayload>
+    ) => ({
+      ...state,
+      deleteBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [DELETE_BLOG_COMMENT_COMMENT_ERROR]: (
+      state,
+      action: ReduxActions.Action<IDeleteBlogCommentCommentErrorPayload>
+    ) => ({
+      ...state,
+      deleteBlogCommentCommentIsLoading: false,
+      ...action.payload,
+    }),
+    [INITIAL_BLOG_OTHER_DATA_STATE]: (
+      state,
+      action: ReduxActions.Action<IInitialBlogOtherDataStatePayload>
+    ) => ({
+      ...state,
       ...action.payload,
     }),
     [INITIAL_BLOG_STATE]: (state, action: ReduxActions.Action<IBlogState>) =>

@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 import {
   getCreateUserErrorMessage,
   getCreateUserIsLoading,
-  getSignUpIsSuccess,
+  getCreateUserIsSuccess,
   getSignUpFormUi,
 } from '../../redux/create-user/selectors'
 import { IDispatchable, ISignInFormUi } from '../../models'
@@ -25,7 +25,7 @@ interface ISignUpModalProps extends IDispatchable {
   readonly setIsSignUpModal: Dispatch<SetStateAction<boolean>>
   readonly isSignUpModal: boolean
   readonly signUpFormUi: ISignInFormUi
-  readonly signUpIsSuccess: boolean
+  readonly createUserIsSuccess: boolean
   readonly isAuthLoading: boolean
   readonly createUserErrorMessage: string
   readonly form: any
@@ -80,10 +80,7 @@ const SignUpCreateForm = Form.create({
           {isAuthLoading ? (
             <Icon className="sign-up-loading-icon" type="loading" />
           ) : (
-            <Form
-              onSubmit={() => console.log('Line: 69', 'skjdhkfj')}
-              className="login-form-wrapper"
-            >
+            <Form className="login-form-wrapper">
               <Form.Item>
                 {form.getFieldDecorator('email', {
                   rules: [
@@ -177,16 +174,16 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
   setIsSignUpModal,
   isSignUpModal,
   signUpFormUi,
-  signUpIsSuccess,
+  createUserIsSuccess,
   createUserErrorMessage,
   isAuthLoading,
   dispatch,
 }) => {
   useEffect(() => {
-    if (signUpIsSuccess) {
+    if (createUserIsSuccess) {
       setIsSignUpModal(false)
     }
-  }, [signUpIsSuccess]) // eslint-disable-line
+  }, [createUserIsSuccess]) // eslint-disable-line
 
   useEffect(() => {
     if (!R.isEmpty(createUserErrorMessage)) {
@@ -230,12 +227,17 @@ const SignUpModal: React.FC<ISignUpModalProps> = ({
 
 const mapStateToProps = createSelector(
   getSignUpFormUi(),
-  getSignUpIsSuccess(),
+  getCreateUserIsSuccess(),
   getCreateUserIsLoading(),
   getCreateUserErrorMessage(),
-  (signUpFormUi, signUpIsSuccess, isAuthLoading, createUserErrorMessage) => ({
+  (
     signUpFormUi,
-    signUpIsSuccess,
+    createUserIsSuccess,
+    isAuthLoading,
+    createUserErrorMessage
+  ) => ({
+    signUpFormUi,
+    createUserIsSuccess,
     isAuthLoading,
     createUserErrorMessage,
   })

@@ -3,11 +3,12 @@ import { Button, Col, Row } from 'antd'
 import Cropper from 'react-cropper'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
+import 'cropperjs/dist/cropper.css'
+import * as R from 'ramda'
 
 import { IAccountDomain, IDispatchable } from '../../models'
 
 import './styles.scss'
-import 'cropperjs/dist/cropper.css'
 
 interface ICustomImageProps extends IDispatchable {
   readonly accountDomain: IAccountDomain
@@ -40,11 +41,13 @@ const CustomImageCrop: React.FC<ICustomImageProps> = ({
       // @ts-ignore
       setCropperSrc(reader.result)
     }
-    reader.readAsDataURL(files[0])
+    if (e.target.files[0]) {
+      reader.readAsDataURL(files[0])
 
-    setCropperUi({
-      fileName: files[0].name,
-    })
+      setCropperUi({
+        fileName: !R.isEmpty(e.target.files[0]) && files[0].name,
+      })
+    }
   }
 
   const handleCropImage = () => {

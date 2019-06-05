@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Avatar, Button, Empty, Input, Modal } from 'antd'
+import { Avatar, Button, Input, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import * as R from 'ramda'
@@ -16,189 +16,198 @@ import {
 import { getAccountDomain, getAccountUi } from '../../redux/account/selectors'
 import {
   getBlogUi,
-  getUpdateBlogCommentIsSuccess,
+  getUpdateBlogCommentCommentIsSuccess,
 } from '../../redux/blog/selectors'
 import {
-  createBlogComment,
-  deleteBlogComment,
-  updateBlogComment,
+  createBlogCommentComment,
+  deleteBlogCommentComment,
+  updateBlogCommentComment,
 } from '../../redux/blog/actions'
 
 import './styles.scss'
 
-interface IBlogCommentProps extends IDispatchable {
+interface IBlogCommentCommentProps extends IDispatchable {
+  readonly blogCommentId: string
   readonly accountUi: IAccountUi
   readonly accountDomain: IAccountDomain
   readonly blogUi: IBlogsUi
-  readonly updateBlogCommentIsSuccess: boolean
+  readonly updateBlogCommentCommentIsSuccess: boolean
 }
 
-const BlogComment: React.FC<IBlogCommentProps> = ({
+const BlogCommentComment: React.FC<IBlogCommentCommentProps> = ({
+  blogCommentId,
   accountUi,
   accountDomain,
   blogUi,
-  updateBlogCommentIsSuccess,
+  updateBlogCommentCommentIsSuccess,
   dispatch,
 }) => {
   const mapIndexed = R.addIndex(R.map)
-  const [newComment, setNewComment] = useState('')
-  const [updateComment, setUpdateComment] = useState('')
-  const [isUpdateComment, setIsUpdateComment] = useState(false)
+  const pickBlogComment = R.filter(
+    v => v.id === blogCommentId,
+    blogUi.blogComments
+  )
+
+  const [newCommentComment, setNewCommentComment] = useState('')
+  const [updateCommentComment, setUpdateCommentComment] = useState('')
+  const [isUpdateCommentComment, setIsUpdateCommentComment] = useState(false)
   const [
-    blogCommentIdForUpdateComment,
-    setBlogCommentIdForUpdateComment,
+    blogCommentCommentIdForUpdateCommentComment,
+    setBlogCommentCommentIdForUpdateCommentComment,
   ] = useState('')
 
   useEffect(() => {
-    if (updateBlogCommentIsSuccess) {
-      setIsUpdateComment(false)
-      setUpdateComment('')
-      setBlogCommentIdForUpdateComment('')
+    if (updateBlogCommentCommentIsSuccess) {
+      setIsUpdateCommentComment(false)
+      setUpdateCommentComment('')
+      setBlogCommentCommentIdForUpdateCommentComment('')
     }
-  }, [updateBlogCommentIsSuccess]) // eslint-disable-line
+  }, [updateBlogCommentCommentIsSuccess]) // eslint-disable-line
 
   const dispatchCreateComment = () =>
     Modal.confirm({
-      title: '댓글 작성',
-      content: '댓글을 작성하시겠습니까?',
+      title: '댓글의 댓글 작성',
+      content: '댓글의 댓글을 작성하시겠습니까?',
       okText: '작성',
       cancelText: '취소',
       centered: true,
       onOk() {
-        dispatch(createBlogComment(newComment))
-        setNewComment('')
+        dispatch(createBlogCommentComment(newCommentComment, blogCommentId))
+        setNewCommentComment('')
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
 
-  const dispatchUpdateComment = (blogCommentId: string) =>
+  const dispatchUpdateCommentComment = (blogCommentCommentId: string) =>
     Modal.confirm({
-      title: '댓글 수정',
-      content: '댓글을 수정하시겠습니까?',
+      title: '댓글의 댓글 수정',
+      content: '댓글의 댓글을 수정하시겠습니까?',
       okText: '수정',
       cancelText: '취소',
       centered: true,
       onOk() {
-        dispatch(updateBlogComment(updateComment, blogCommentId))
+        dispatch(
+          updateBlogCommentComment(updateCommentComment, blogCommentCommentId)
+        )
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
 
-  const dispatchDeleteComment = (blogCommentId: string) =>
+  const dispatchDeleteComment = (blogCommentCommentId: string) =>
     Modal.confirm({
-      title: '댓글 삭제',
-      content: '댓글을 삭제하시겠습니까?(댓글의 댓글은 모두 삭제됩니다.)',
+      title: '댓글의 댓글 삭제',
+      content: '댓글의 댓글을 삭제하시겠습니까?',
       okText: '삭제',
       cancelText: '취소',
       centered: true,
       okType: 'danger',
       onOk() {
-        dispatch(deleteBlogComment(blogCommentId))
+        dispatch(deleteBlogCommentComment(blogCommentCommentId, blogCommentId))
       },
       onCancel() {
-        console.log('Cancel')
+        console.log('취소')
       },
     })
 
   return (
-    <div className="blog-comment-wrapper">
+    <div className="blog-comment-comment-wrapper">
       {accountUi.isLogin ? (
-        <div className="blog-comment-create">
+        <div className="blog-comment-comment-create">
           <Input
             placeholder="댓글을 입력해주세요."
-            allowClear
-            value={newComment}
+            value={newCommentComment}
             onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-              setNewComment(e.target.value)
+              setNewCommentComment(e.target.value)
             }
             onPressEnter={dispatchCreateComment}
+            suffix={
+              <Button
+                type="primary"
+                className="blog-comment-comment-submit"
+                onClick={dispatchCreateComment}
+                disabled={isUpdateCommentComment}
+              >
+                추가
+              </Button>
+            }
           />
-          <Button
-            type="primary"
-            className="blog-comment-submit"
-            onClick={dispatchCreateComment}
-            disabled={isUpdateComment}
-          >
-            댓글 추가
-          </Button>
         </div>
       ) : null}
-      {R.isEmpty(blogUi.blogComment) ? (
-        <Empty description={<span>댓글이 없습니다.</span>} />
-      ) : (
-        mapIndexed(
-          // @ts-ignore
-          (v: IBlogsCommentUi, i: number) => (
-            <div key={i} className="blog-comment-item">
-              <hr />
-              <Avatar src={v.userFilePath} />
-              <span className="blog-comment-author">{v.userNickname}</span>
-              <span className="blog-comment-date">{v.createdAt}</span>
-              {accountDomain.id === v.userId && !isUpdateComment ? (
-                <span className="blog-comment-btn">
-                  <Button
-                    size="small"
-                    type="danger"
-                    onClick={() => dispatchDeleteComment(v.id)}
-                  >
-                    삭제
-                  </Button>
+      {mapIndexed(
+        // @ts-ignore
+        (v: IBlogsCommentUi, i: number) => (
+          <div key={i} className="blog-comment-comment-item">
+            <Avatar src={v.userFilePath} />
+            <span className="blog-comment-comment-author">
+              {v.userNickname}
+            </span>
+            <span className="blog-comment-comment-date">{v.createdAt}</span>
+            {accountDomain.id === v.userId && !isUpdateCommentComment ? (
+              <span className="blog-comment-btn">
+                <Button
+                  size="small"
+                  type="danger"
+                  onClick={() => dispatchDeleteComment(v.id)}
+                >
+                  삭제
+                </Button>
+                <Button
+                  size="small"
+                  type="default"
+                  onClick={() => {
+                    setIsUpdateCommentComment(true)
+                    setUpdateCommentComment(v.comment)
+                    setBlogCommentCommentIdForUpdateCommentComment(v.id)
+                  }}
+                >
+                  수정
+                </Button>
+              </span>
+            ) : null}
+            {isUpdateCommentComment &&
+            v.id === blogCommentCommentIdForUpdateCommentComment ? (
+              <div className="blog-comment-comment-update-wrapper">
+                <Input
+                  placeholder="수정할 댓글을 입력해주세요."
+                  allowClear
+                  value={updateCommentComment}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                    setUpdateCommentComment(e.target.value)
+                  }
+                  onPressEnter={() => dispatchUpdateCommentComment(v.id)}
+                />
+                <span className="blog-comment-comment-update-btn">
                   <Button
                     size="small"
                     type="default"
                     onClick={() => {
-                      setIsUpdateComment(true)
-                      setUpdateComment(v.comment)
-                      setBlogCommentIdForUpdateComment(v.id)
+                      setIsUpdateCommentComment(false)
+                      setUpdateCommentComment('')
+                      setBlogCommentCommentIdForUpdateCommentComment('')
                     }}
+                  >
+                    취소
+                  </Button>
+                  <Button
+                    size="small"
+                    type="primary"
+                    onClick={() => dispatchUpdateCommentComment(v.id)}
                   >
                     수정
                   </Button>
                 </span>
-              ) : null}
-              {isUpdateComment && v.id === blogCommentIdForUpdateComment ? (
-                <div className="blog-comment-update-wrapper">
-                  <Input
-                    placeholder="수정할 댓글을 입력해주세요."
-                    allowClear
-                    value={updateComment}
-                    onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-                      setUpdateComment(e.target.value)
-                    }
-                    onPressEnter={() => dispatchUpdateComment(v.id)}
-                  />
-                  <span className="blog-comment-update-btn">
-                    <Button
-                      size="small"
-                      type="default"
-                      onClick={() => {
-                        setIsUpdateComment(false)
-                        setUpdateComment('')
-                        setBlogCommentIdForUpdateComment('')
-                      }}
-                    >
-                      취소
-                    </Button>
-                    <Button
-                      size="small"
-                      type="primary"
-                      onClick={() => dispatchUpdateComment(v.id)}
-                    >
-                      수정
-                    </Button>
-                  </span>
-                </div>
-              ) : (
-                <p className="blog-comment-content">{v.comment}</p>
-              )}
-            </div>
-          ),
-          blogUi.blogComment
-        )
+              </div>
+            ) : (
+              <p className="blog-comment-content">{v.comment}</p>
+            )}
+          </div>
+        ),
+        // @ts-ignore
+        pickBlogComment[0].blogCommentComments
       )}
     </div>
   )
@@ -208,18 +217,22 @@ const mapStateToProps = createSelector(
   getAccountUi(),
   getAccountDomain(),
   getBlogUi(),
-  getUpdateBlogCommentIsSuccess(),
-  (accountUi, accountDomain, blogUi, updateBlogCommentIsSuccess) => ({
+  getUpdateBlogCommentCommentIsSuccess(),
+  (accountUi, accountDomain, blogUi, updateBlogCommentCommentIsSuccess) => ({
     accountUi,
     accountDomain,
     blogUi,
-    updateBlogCommentIsSuccess,
+    updateBlogCommentCommentIsSuccess,
   })
 )
 
 const withConnect = connect(mapStateToProps)
 
-export default compose<IBlogCommentProps, IBlogCommentProps>(withConnect)(
+export default compose<IBlogCommentCommentProps, IBlogCommentCommentProps>(
+  withConnect
+)(
   // @ts-ignore
-  compose<IBlogCommentProps, IBlogCommentProps>(withRouter)(BlogComment)
+  compose<IBlogCommentCommentProps, IBlogCommentCommentProps>(withRouter)(
+    BlogCommentComment
+  )
 )

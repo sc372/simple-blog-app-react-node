@@ -33,20 +33,20 @@ export const getBlogsSearchText = () =>
     ({ blogsSearchText }) => blogsSearchText
   )
 
-export const getBlogsIsSuccess = () =>
+export const getSelectBlogsIsSuccess = () =>
   createSelector(
     blogsState(),
-    ({ blogsIsSuccess }) => blogsIsSuccess
+    ({ selectBlogsIsSuccess }) => selectBlogsIsSuccess
   )
 
-export const getBlogsIsLoading = () =>
+export const getSelectBlogsIsLoading = () =>
   createSelector(
     blogsState(),
-    ({ blogsIsLoading }) => blogsIsLoading
+    ({ selectBlogsIsLoading }) => selectBlogsIsLoading
   )
 
-export const getBlogsErrorMessage = () =>
+export const getSelectBlogsErrorMessage = () =>
   createSelector(
     blogsState(),
-    ({ blogsErrorMessage }) => blogsErrorMessage
+    ({ selectBlogsErrorMessage }) => selectBlogsErrorMessage
   )

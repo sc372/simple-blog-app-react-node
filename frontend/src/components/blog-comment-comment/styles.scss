@@ -1,38 +1,39 @@
-.blog-comment-wrapper {
-  margin-top: 100px;
+.blog-comment-comment-wrapper {
+  margin-top: 5px;
 
-  .blog-comment-create {
-    margin-bottom: 70px;
+  .blog-comment-comment-create {
+    margin-left: 50px;
+    margin-bottom: 5px;
 
-    .blog-comment-submit {
-      float: right;
-      margin-top: 10px;
+    .blog-comment-comment-submit {
+      left: 12px;
     }
   }
 
-  .blog-comment-item {
-    .blog-comment-author {
+  .blog-comment-comment-item {
+    margin-left: 50px;
+    .blog-comment-comment-author {
       font-size: 1rem;
       margin-left: 5px;
     }
 
-    .blog-comment-date {
+    .blog-comment-comment-date {
       font-size: 0.8rem;
       margin-left: 5px;
     }
 
-    .blog-comment-btn {
+    .blog-comment-comment-btn {
       margin-left: 5px;
     }
 
-    .blog-comment-content {
+    .blog-comment-comment-content {
       font-size: 1rem;
       margin-top: 10px;
     }
 
-    .blog-comment-update-wrapper {
+    .blog-comment-comment-update-wrapper {
       margin: 10px 0 40px 0;
-      .blog-comment-update-btn {
+      .blog-comment-comment-update-btn {
         float: right;
         margin-top: 10px;
       }
@@ -41,41 +42,42 @@
 }
 
 @media (max-width: 1000px) {
-  .blog-comment-wrapper {
-    margin-top: 100px;
+  .blog-comment-comment-wrapper {
+    margin-top: 5px;
 
-    .blog-comment-create {
-      margin-bottom: 70px;
+    .blog-comment-comment-create {
+      margin-left: 50px;
+      margin-bottom: 5px;
 
-      .blog-comment-submit {
-        float: right;
-        margin-top: 10px;
+      .blog-comment-comment-submit {
+        left: 12px;
       }
     }
 
-    .blog-comment-item {
-      .blog-comment-author {
+    .blog-comment-comment-item {
+      margin-left: 50px;
+      .blog-comment-comment-author {
         font-size: 3rem;
         margin-left: 5px;
       }
 
-      .blog-comment-date {
+      .blog-comment-comment-date {
         font-size: 2.5rem;
         margin-left: 5px;
       }
 
-      .blog-comment-btn {
+      .blog-comment-comment-btn {
         margin-left: 5px;
       }
 
-      .blog-comment-content {
+      .blog-comment-comment-content {
         font-size: 3rem;
         margin-top: 10px;
       }
 
-      .blog-comment-update-wrapper {
+      .blog-comment-comment-update-wrapper {
         margin: 10px 0 40px 0;
-        .blog-comment-update-btn {
+        .blog-comment-comment-update-btn {
           float: right;
           margin-top: 10px;
         }

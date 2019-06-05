@@ -9,22 +9,22 @@ export const getBlogFormUi = () =>
     ({ blogFormUi }) => blogFormUi
   )
 
-export const getBlogFormIsSuccess = () =>
+export const getCreateBlogIsSuccess = () =>
   createSelector(
     blogFormState(),
-    ({ blogFormIsSuccess }) => blogFormIsSuccess
+    ({ createBlogIsSuccess }) => createBlogIsSuccess
   )
 
-export const getBlogFormIsLoading = () =>
+export const getCreateBlogIsLoading = () =>
   createSelector(
     blogFormState(),
-    ({ blogFormIsLoading }) => blogFormIsLoading
+    ({ createBlogIsLoading }) => createBlogIsLoading
   )
 
-export const getBlogFormErrorMessage = () =>
+export const getCreateBlogErrorMessage = () =>
   createSelector(
     blogFormState(),
-    ({ blogFormErrorMessage }) => blogFormErrorMessage
+    ({ createBlogErrorMessage }) => createBlogErrorMessage
   )
 
 export const getDeleteBlogIsSuccess = () =>
@@ -43,4 +43,22 @@ export const getDeleteBlogErrorMessage = () =>
   createSelector(
     blogFormState(),
     ({ deleteBlogErrorMessage }) => deleteBlogErrorMessage
+  )
+
+export const getUpdateBlogIsSuccess = () =>
+  createSelector(
+    blogFormState(),
+    ({ updateBlogIsSuccess }) => updateBlogIsSuccess
+  )
+
+export const getUpdateBlogIsLoading = () =>
+  createSelector(
+    blogFormState(),
+    ({ updateBlogIsLoading }) => updateBlogIsLoading
+  )
+
+export const getUpdateBlogErrorMessage = () =>
+  createSelector(
+    blogFormState(),
+    ({ updateBlogErrorMessage }) => updateBlogErrorMessage
   )

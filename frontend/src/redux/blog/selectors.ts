@@ -15,24 +15,25 @@ export const getBlogDomain = () =>
     ({ blogDomain }) => blogDomain
   )
 
-export const getBlogIsSuccess = () =>
+export const getSelectBlogIsSuccess = () =>
   createSelector(
     blogState(),
-    ({ blogIsSuccess }) => blogIsSuccess
+    ({ selectBlogIsSuccess }) => selectBlogIsSuccess
   )
 
-export const getBlogIsLoading = () =>
+export const getSelectBlogIsLoading = () =>
   createSelector(
     blogState(),
-    ({ blogIsLoading }) => blogIsLoading
+    ({ selectBlogIsLoading }) => selectBlogIsLoading
   )
 
-export const getBlogErrorMessage = () =>
+export const getSelectBlogErrorMessage = () =>
   createSelector(
     blogState(),
-    ({ blogErrorMessage }) => blogErrorMessage
+    ({ selectBlogErrorMessage }) => selectBlogErrorMessage
   )
 
+// blog-comment
 export const getCreateBlogCommentIsSuccess = () =>
   createSelector(
     blogState(),
@@ -85,4 +86,62 @@ export const getDeleteBlogCommentErrorMessage = () =>
   createSelector(
     blogState(),
     ({ deleteBlogCommentErrorMessage }) => deleteBlogCommentErrorMessage
+  )
+
+// blog-comment-comment
+export const getCreateBlogCommentCommentIsSuccess = () =>
+  createSelector(
+    blogState(),
+    ({ createBlogCommentCommentIsSuccess }) => createBlogCommentCommentIsSuccess
+  )
+
+export const getCreateBlogCommentCommentIsLoading = () =>
+  createSelector(
+    blogState(),
+    ({ createBlogCommentCommentIsLoading }) => createBlogCommentCommentIsLoading
+  )
+
+export const getCreateBlogCommentCommentErrorMessage = () =>
+  createSelector(
+    blogState(),
+    ({ createBlogCommentCommentErrorMessage }) =>
+      createBlogCommentCommentErrorMessage
+  )
+
+export const getUpdateBlogCommentCommentIsSuccess = () =>
+  createSelector(
+    blogState(),
+    ({ updateBlogCommentCommentIsSuccess }) => updateBlogCommentCommentIsSuccess
+  )
+
+export const getUpdateBlogCommentCommentIsLoading = () =>
+  createSelector(
+    blogState(),
+    ({ updateBlogCommentCommentIsLoading }) => updateBlogCommentCommentIsLoading
+  )
+
+export const getUpdateBlogCommentCommentErrorMessage = () =>
+  createSelector(
+    blogState(),
+    ({ updateBlogCommentCommentErrorMessage }) =>
+      updateBlogCommentCommentErrorMessage
+  )
+
+export const getDeleteBlogCommentCommentIsSuccess = () =>
+  createSelector(
+    blogState(),
+    ({ deleteBlogCommentCommentIsSuccess }) => deleteBlogCommentCommentIsSuccess
+  )
+
+export const getDeleteBlogCommentCommentIsLoading = () =>
+  createSelector(
+    blogState(),
+    ({ deleteBlogCommentCommentIsLoading }) => deleteBlogCommentCommentIsLoading
+  )
+
+export const getDeleteBlogCommentCommentErrorMessage = () =>
+  createSelector(
+    blogState(),
+    ({ deleteBlogCommentCommentErrorMessage }) =>
+      deleteBlogCommentCommentErrorMessage
   )
