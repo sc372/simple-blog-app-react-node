@@ -43,6 +43,7 @@ const App: React.FC<IAppProps> = ({ accountUi, dispatch }) => {
   return (
     <>
       <Helmet>
+        <meta charSet="UTF-8" />
         <title>Simple Blog</title>
         <meta name="description" content="Simple Blog" />
         <meta

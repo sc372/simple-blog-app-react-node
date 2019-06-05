@@ -3,6 +3,7 @@ import { Form, Icon, Input, Modal, notification } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { createSelector } from 'reselect'
+import * as R from 'ramda'
 
 import {
   getCreateUserErrorMessage,
@@ -12,14 +13,14 @@ import {
 } from '../../redux/create-user/selectors'
 import { IDispatchable, ISignInFormUi } from '../../models'
 
-import './styles.scss'
 import {
   changeSignUpFormUi,
   createUser,
   createUserError,
   initialAuthState,
 } from '../../redux/create-user/actions'
-import * as R from 'ramda'
+
+import './styles.scss'
 
 interface ISignUpModalProps extends IDispatchable {
   readonly setIsSignUpModal: Dispatch<SetStateAction<boolean>>

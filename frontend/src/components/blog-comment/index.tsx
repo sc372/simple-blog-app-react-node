@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Avatar, Button, Empty, Input, Modal } from 'antd'
+import { Avatar, Button, Empty, Input } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import * as R from 'ramda'
@@ -24,6 +24,11 @@ import {
   updateBlogComment,
 } from '../../redux/blog/actions'
 import BlogCommentComment from '../blog-comment-comment'
+import {
+  confirmCreateComment,
+  confirmDeleteComment,
+  confirmUpdateComment,
+} from '../../utils/confirm'
 
 import './styles.scss'
 
@@ -58,53 +63,6 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
     }
   }, [updateBlogCommentIsSuccess]) // eslint-disable-line
 
-  const dispatchCreateComment = () =>
-    Modal.confirm({
-      title: '댓글 작성',
-      content: '댓글을 작성하시겠습니까?',
-      okText: '작성',
-      cancelText: '취소',
-      centered: true,
-      onOk() {
-        dispatch(createBlogComment(newComment))
-        setNewComment('')
-      },
-      onCancel() {
-        console.log('취소')
-      },
-    })
-
-  const dispatchUpdateComment = (blogCommentId: string) =>
-    Modal.confirm({
-      title: '댓글 수정',
-      content: '댓글을 수정하시겠습니까?',
-      okText: '수정',
-      cancelText: '취소',
-      centered: true,
-      onOk() {
-        dispatch(updateBlogComment(updateComment, blogCommentId))
-      },
-      onCancel() {
-        console.log('취소')
-      },
-    })
-
-  const dispatchDeleteComment = (blogCommentId: string) =>
-    Modal.confirm({
-      title: '댓글 삭제',
-      content: '댓글을 삭제하시겠습니까?(댓글의 댓글은 모두 삭제됩니다.)',
-      okText: '삭제',
-      cancelText: '취소',
-      centered: true,
-      okType: 'danger',
-      onOk() {
-        dispatch(deleteBlogComment(blogCommentId))
-      },
-      onCancel() {
-        console.log('취소')
-      },
-    })
-
   return (
     <div className="blog-comment-wrapper">
       {accountUi.isLogin ? (
@@ -115,12 +73,22 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
             onChange={(e: ChangeEvent<HTMLInputElement>): void =>
               setNewComment(e.target.value)
             }
-            onPressEnter={dispatchCreateComment}
+            onPressEnter={() =>
+              confirmCreateComment(() => {
+                dispatch(createBlogComment(newComment))
+                setNewComment('')
+              })
+            }
             suffix={
               <Button
                 type="primary"
                 className="blog-comment-submit"
-                onClick={dispatchCreateComment}
+                onClick={() =>
+                  confirmCreateComment(() => {
+                    dispatch(createBlogComment(newComment))
+                    setNewComment('')
+                  })
+                }
                 disabled={isUpdateComment}
               >
                 추가
@@ -145,7 +113,11 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
                   <Button
                     size="small"
                     type="danger"
-                    onClick={() => dispatchDeleteComment(v.id)}
+                    onClick={() =>
+                      confirmDeleteComment(() => {
+                        dispatch(deleteBlogComment(v.id))
+                      })
+                    }
                   >
                     삭제
                   </Button>
@@ -171,7 +143,11 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
                     onChange={(e: ChangeEvent<HTMLInputElement>): void =>
                       setUpdateComment(e.target.value)
                     }
-                    onPressEnter={() => dispatchUpdateComment(v.id)}
+                    onPressEnter={() =>
+                      confirmUpdateComment(() => {
+                        dispatch(updateBlogComment(updateComment, v.id))
+                      })
+                    }
                   />
                   <span className="blog-comment-update-btn">
                     <Button
@@ -188,7 +164,11 @@ const BlogComment: React.FC<IBlogCommentProps> = ({
                     <Button
                       size="small"
                       type="primary"
-                      onClick={() => dispatchUpdateComment(v.id)}
+                      onClick={() =>
+                        confirmUpdateComment(() => {
+                          dispatch(updateBlogComment(updateComment, v.id))
+                        })
+                      }
                     >
                       수정
                     </Button>

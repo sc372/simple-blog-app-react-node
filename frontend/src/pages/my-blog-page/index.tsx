@@ -2,14 +2,12 @@ import React, { useEffect } from 'react'
 import { Button, Input, Typography } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
+import { createSelector } from 'reselect'
+import { Link } from 'react-router-dom'
 
 import { MainLayout } from '../../components/layouts'
 import { MyBlogTable } from '../../components'
 import { IDispatchable, IMyBlogsUi } from '../../models'
-
-import './styles.scss'
-import { Link } from 'react-router-dom'
-import { createSelector } from 'reselect'
 import {
   getMyBlogsSearchText,
   getMyBlogsTotalCount,
@@ -19,6 +17,8 @@ import {
   changeMyBlogsSearchText,
   selectMyBlogs,
 } from '../../redux/my-blogs/actions'
+
+import './styles.scss'
 
 interface IMyBlogPageProps extends IDispatchable {
   readonly myBlogsUi: IMyBlogsUi

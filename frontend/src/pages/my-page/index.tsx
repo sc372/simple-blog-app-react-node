@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Form, Input, Modal, notification, Typography } from 'antd'
+import { Button, Form, Input, notification, Typography } from 'antd'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -9,7 +9,6 @@ import { MainLayout } from '../../components/layouts'
 import { CustomImageCrop } from '../../components'
 import { IAccountDomain, IDispatchable, IUpdateUserFormUi } from '../../models'
 
-import './styles.scss'
 import { createSelector } from 'reselect'
 import { getAccountDomain } from '../../redux/account/selectors'
 import {
@@ -23,6 +22,9 @@ import {
   getUpdateUserFormUi,
   getUpdateUserIsSuccess,
 } from '../../redux/update-user/selectors'
+import { confirmUpdateAccount } from '../../utils/confirm'
+
+import './styles.scss'
 
 interface IMyPageProps extends IDispatchable {
   readonly accountDomain: IAccountDomain
@@ -84,18 +86,7 @@ const _MyPage: React.FC<IMyPageProps> = ({
         console.log('유효하지 않은 값: ', values)
         return
       } else {
-        Modal.confirm({
-          title: '회원 정보를 수정하시겠습니까?',
-          okText: '수정',
-          cancelText: '취소',
-          centered: true,
-          onOk() {
-            dispatchUpdateUser()
-          },
-          onCancel() {
-            console.log('취소')
-          },
-        })
+        confirmUpdateAccount(() => dispatchUpdateUser())
       }
     })
   }

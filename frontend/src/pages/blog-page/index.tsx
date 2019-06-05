@@ -4,15 +4,16 @@ import { connect } from 'react-redux'
 import { Avatar, Typography } from 'antd'
 import { createSelector } from 'reselect'
 import * as R from 'ramda'
+import Fade from 'react-reveal/Fade'
+import { withRouter } from 'react-router'
 
 import { MainLayout } from '../../components/layouts'
 import { BlogComment } from '../../components'
 import { IBlogsUi, IDispatchable } from '../../models'
-
-import './styles.scss'
-import { withRouter } from 'react-router'
 import { getBlogUi } from '../../redux/blog/selectors'
 import { selectBlog } from '../../redux/blog/actions'
+
+import './styles.scss'
 
 interface IBlogPageProps extends IDispatchable {
   readonly blogUi: IBlogsUi
@@ -27,22 +28,24 @@ const BlogPage: React.FC<IBlogPageProps> = ({ blogUi, location, dispatch }) => {
 
   return (
     <MainLayout>
-      <div className="blog-page-wrapper">
-        <Typography.Title level={2}>{blogUi.title}</Typography.Title>
-        <div>
-          <Avatar src={blogUi.userFilePath} />
-          <span className="blog-page-author">{blogUi.nickname}</span>
-          <div className="blog-page-date">{blogUi.createdAt}</div>
-        </div>
-        <img className="blog-page-image" src={blogUi.blogFilePath} alt="" />
-        <div
-          className="blog-page-content-wrapper"
-          dangerouslySetInnerHTML={{ __html: blogUi.contents }}
-        />
-        {/*
+      <Fade>
+        <div className="blog-page-wrapper">
+          <Typography.Title level={2}>{blogUi.title}</Typography.Title>
+          <div>
+            <Avatar src={blogUi.userFilePath} />
+            <span className="blog-page-author">{blogUi.nickname}</span>
+            <div className="blog-page-date">{blogUi.createdAt}</div>
+          </div>
+          <img className="blog-page-image" src={blogUi.blogFilePath} alt="" />
+          <div
+            className="blog-page-content-wrapper"
+            dangerouslySetInnerHTML={{ __html: blogUi.contents }}
+          />
+          {/*
             // @ts-ignore */}
-        <BlogComment />
-      </div>
+          <BlogComment />
+        </div>
+      </Fade>
     </MainLayout>
   )
 }

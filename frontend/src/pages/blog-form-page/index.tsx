@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Input, Modal, notification, Typography } from 'antd'
+import { Button, Input, notification, Typography } from 'antd'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import * as R from 'ramda'
@@ -13,8 +13,6 @@ import {
   IDispatchable,
   IMyBlogsDomain,
 } from '../../models'
-
-import './styles.scss'
 import { createSelector } from 'reselect'
 import {
   getBlogFormUi,
@@ -37,6 +35,13 @@ import {
   initialBlogFormUiState,
 } from '../../redux/blog-form/actions'
 import { getMyBlogsDomain } from '../../redux/my-blogs/selectors'
+import {
+  confirmCreateBlog,
+  confirmDeleteBlog,
+  confirmUpdateBlog,
+} from '../../utils/confirm'
+
+import './styles.scss'
 
 interface IBlogFormPageProps extends IDispatchable {
   readonly accountDomain: IAccountDomain
@@ -66,8 +71,10 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
   history,
   dispatch,
 }) => {
+  const formType = R.split('/', location.pathname)[1]
+
   useEffect(() => {
-    switch (R.split('/', location.pathname)[1]) {
+    switch (formType) {
       case 'create-blog':
         dispatchChangeBlogFormUi({
           blogId: undefined,
@@ -103,7 +110,7 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
       history.push('/my/blog')
       notification['success']({
         message: `블로그 ${
-          R.split('/', location.pathname)[1] === 'create-blog' ? '작성' : '수정'
+          formType === 'create-blog' ? '작성' : '수정'
         }이 완료 되었습니다.`,
       })
       dispatchInitialBlogFormUiState()
@@ -157,42 +164,15 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
     )
   const dispatchBlog = async () => {
     if (!R.includes('', R.values(R.omit(['blogId'], blogFormUi)))) {
-      const okText =
-        R.split('/', location.pathname)[1] === 'create-blog' ? '저장' : '수정'
-      Modal.confirm({
-        title: `글을 ${okText} 하시겠습니까?`,
-        okText,
-        cancelText: '취소',
-        centered: true,
-        onOk() {
-          R.split('/', location.pathname)[1] === 'create-blog'
-            ? dispatch(createBlog())
-            : dispatch(updateBlog())
-        },
-        onCancel() {
-          console.log('취소')
-        },
-      })
+      formType === 'create-blog'
+        ? confirmCreateBlog(() => dispatch(createBlog()))
+        : confirmUpdateBlog(() => dispatch(updateBlog()))
     } else {
       notification['warning']({
         message: '모든 내용을 입력해주시기 바랍니다.',
       })
     }
   }
-  const dispatchDeleteBlog = () =>
-    Modal.confirm({
-      title: `글을 삭제 하시겠습니까?`,
-      okText: '삭제',
-      cancelText: '취소',
-      centered: true,
-      okType: 'danger',
-      onOk() {
-        dispatch(deleteBlog(R.split('/', location.pathname)[2]))
-      },
-      onCancel() {
-        console.log('취소')
-      },
-    })
 
   const dispatchInitialBlogFormUiState = () =>
     dispatch(initialBlogFormUiState())
@@ -258,7 +238,11 @@ const BlogFormPage: React.FC<IBlogFormPageProps> = ({
           <Button
             className="create-blog-page-submit"
             type="danger"
-            onClick={dispatchDeleteBlog}
+            onClick={() =>
+              confirmDeleteBlog(() =>
+                dispatch(deleteBlog(R.split('/', location.pathname)[2]))
+              )
+            }
           >
             삭제 하기
           </Button>
