@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import * as R from 'ramda'
 import { withRouter } from 'react-router'
 import { createSelector } from 'reselect'
+import Fade from 'react-reveal/Fade'
 
 import { IBlogsUi, IDispatchable } from '../../models'
 import {
@@ -23,7 +24,7 @@ interface IMainPageProps extends IDispatchable {
   readonly blogsUi: IBlogsUi[]
   readonly blogsTotalCount: number
   readonly blogsSearchText: string
-  readonly selectBblogsIsLoading: boolean
+  readonly selectBlogsIsLoading: boolean
   readonly history: any
 }
 
@@ -31,7 +32,7 @@ const MainPage: React.FC<IMainPageProps> = ({
   blogsUi,
   blogsTotalCount,
   blogsSearchText,
-  selectBblogsIsLoading,
+  selectBlogsIsLoading,
   history,
   dispatch,
 }) => {
@@ -78,46 +79,48 @@ const MainPage: React.FC<IMainPageProps> = ({
               // @ts-ignore
               (v: IBlogsUi, i: number) => (
                 <Col key={i} xs={24} sm={24} md={24} lg={12} xl={6}>
-                  <div key={i} className="blog-item-card">
-                    <Card
-                      cover={
-                        <img
-                          alt=""
-                          className="blog-item-img"
-                          src={v.blogFilePath}
-                        />
-                      }
-                    >
-                      <Card.Meta
-                        title={
-                          <div
-                            className="blog-item-title"
-                            onClick={() => history.push(`/blogs/${v.id}`)}
-                          >
-                            <Typography.Paragraph
-                              ellipsis
-                              className="blog-item-title-text"
+                  <Fade>
+                    <div key={i} className="blog-item-card">
+                      <Card
+                        cover={
+                          <img
+                            alt=""
+                            className="blog-item-img"
+                            src={v.blogFilePath}
+                          />
+                        }
+                      >
+                        <Card.Meta
+                          title={
+                            <div
+                              className="blog-item-title"
+                              onClick={() => history.push(`/blogs/${v.id}`)}
                             >
-                              {v.title}
-                            </Typography.Paragraph>
-                          </div>
-                        }
-                        description={
-                          <div>
-                            <span className="blog-item-author-wrapper">
-                              <Avatar src={v.userFilePath} />
-                              <span className="blog-item-author">
-                                {v.nickname}
+                              <Typography.Paragraph
+                                ellipsis
+                                className="blog-item-title-text"
+                              >
+                                {v.title}
+                              </Typography.Paragraph>
+                            </div>
+                          }
+                          description={
+                            <div>
+                              <span className="blog-item-author-wrapper">
+                                <Avatar src={v.userFilePath} />
+                                <span className="blog-item-author">
+                                  {v.nickname}
+                                </span>
                               </span>
-                            </span>
-                            <span className="blog-item-date">
-                              {v.createdAt}
-                            </span>
-                          </div>
-                        }
-                      />
-                    </Card>
-                  </div>
+                              <span className="blog-item-date">
+                                {v.createdAt}
+                              </span>
+                            </div>
+                          }
+                        />
+                      </Card>
+                    </div>
+                  </Fade>
                 </Col>
               ),
               blogsUi
@@ -128,7 +131,7 @@ const MainPage: React.FC<IMainPageProps> = ({
       {!R.isEmpty(blogsSearchText) && blogsTotalCount === 0 && (
         <Empty description={<span>글이 없습니다.</span>} />
       )}
-      {selectBblogsIsLoading && (
+      {selectBlogsIsLoading && !R.isEmpty(blogsUi) && (
         <Icon type="loading" className="main-page-scroll-spinner" />
       )}
       <div className="scroll-to-top-btn-wrapper">
@@ -147,11 +150,11 @@ const mapStateToProps = createSelector(
   getBlogsTotalCount(),
   getBlogsSearchText(),
   getSelectBlogsIsLoading(),
-  (blogsUi, blogsTotalCount, blogsSearchText, selectBblogsIsLoading) => ({
+  (blogsUi, blogsTotalCount, blogsSearchText, selectBlogsIsLoading) => ({
     blogsUi,
     blogsTotalCount,
     blogsSearchText,
-    selectBblogsIsLoading,
+    selectBlogsIsLoading,
   })
 )
 

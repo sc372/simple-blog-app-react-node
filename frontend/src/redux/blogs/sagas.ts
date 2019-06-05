@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest, select, delay } from 'redux-saga/effects'
+import { all, call, put, takeLatest, select } from 'redux-saga/effects'
 import { SELECT_BLOGS } from './constants'
 import {
   selectBlogsSuccess,
@@ -23,7 +23,6 @@ function* selectBlogsSaga({ payload }: any) {
 
   try {
     const { statusCode, data } = response.data
-    yield delay(500)
 
     if (statusCode < 400) {
       const blogsUi = R.map(

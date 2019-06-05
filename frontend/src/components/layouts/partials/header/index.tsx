@@ -8,7 +8,6 @@ import { Layout, Icon, Button, Avatar } from 'antd'
 import Responsive from '../../response-helper'
 import { SideBar } from '../index'
 import { SignUpModal, SignInModal } from '../../../index'
-
 import {
   getAccountIsLoading,
   getAccountUi,
