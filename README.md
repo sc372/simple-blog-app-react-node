@@ -76,6 +76,6 @@ $> yarn && yarn dev  // npm install && npm run dev
 
 [데이터 모델링 (data modeling)](<https://github.com/sc372/simple-blog-app-react-node/wiki/%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%AA%A8%EB%8D%B8%EB%A7%81-(data-modeling)>)
 
-[프론트엔드 (rontend)](<https://github.com/sc372/simple-blog-app-react-node/wiki/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-(frontend)>)
+[프론트엔드 (frontend)](<https://github.com/sc372/simple-blog-app-react-node/wiki/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-(frontend)>)
 
 [백엔드 (backend)](<https://github.com/sc372/simple-blog-app-react-node/wiki/%EB%B0%B1%EC%97%94%EB%93%9C-(backend)>)
