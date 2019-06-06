@@ -32,7 +32,7 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
 - .env 추가(backend)
 
 ```bash
- $> cd backend  // root parh 기준 
+ $> cd backend  // root path 기준 
  $> touch .env
 ```
 
@@ -56,13 +56,13 @@ JWT_SECRET=test123
 
 - backend dev server start (backend dev 서버 구동)
 ```bash
-$> cd backend  // root parh 기준 
+$> cd backend  // root path 기준 
 $> yarn && yarn dev  // npm install && npm run dev
 ```
 
 - frontend dev server start(frontend dev 서버 구동)
 ```bash
-$> cd frontend  // root parh 기준 
+$> cd frontend  // root path 기준 
 $> yarn && yarn dev  // npm install && npm run dev
 ```
 
