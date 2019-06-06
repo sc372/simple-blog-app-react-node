@@ -98,6 +98,15 @@ const Sidebar: React.FC<ISideBarProps> = ({
             <Link to="/my" onClick={(): void => setIsDrawerToggleValue(false)}>
               <div className="m-header-menu-link-item">나의 정보</div>
             </Link>
+            <a
+              href="/"
+              onClick={(): void => {
+                localStorage.clear()
+                setIsDrawerToggleValue(false)
+              }}
+            >
+              <div className="m-header-menu-link-item">로그 아웃</div>
+            </a>
           </div>
         </Drawer>
       </Responsive.Max1000>
