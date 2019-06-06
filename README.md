@@ -26,7 +26,7 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
  postgres@~$ psql
  postgres=# create database simple_blog owner test;  // 데이터 베이스 생성
  postgres=# \c simple_blog  // 데이터 베이스 접근
- simple_blog=# CREATE EXTENSION IF NOT EXISTS "uuid-ossp";  // UUID auto generator을 위한 세팅
+ simple_blog=# CREATE EXTENSION IF NOT EXISTS "uuid-ossp";  // UUID auto generate 위한 세팅
 ```
 
 - .env 추가(backend)
