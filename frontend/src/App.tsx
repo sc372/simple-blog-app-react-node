@@ -59,7 +59,7 @@ const App: React.FC<IAppProps> = ({ dispatch }) => {
         />
       </Helmet>
       {/*
-      // @ts-ignore */}
+       // @ts-ignore */}
       <Suspense
         maxDuration={200}
         fallback={
@@ -75,20 +75,20 @@ const App: React.FC<IAppProps> = ({ dispatch }) => {
       >
         <Switch>
           {/*
-            // @ts-ignore */}
+           // @ts-ignore */}
           <Route exact path="/" component={MainPage} />
           <Route path="/blogs/:blogId" component={BlogPage} />
           {/*
-            // @ts-ignore */}
+           // @ts-ignore */}
           <LazyPrivateRoute path="/my/blog" component={MyBlogPage} />
           {/*
-            // @ts-ignore */}
+           // @ts-ignore */}
           <LazyPrivateRoute path="/my" component={MyPage} />
           {/*
-            // @ts-ignore */}
+           // @ts-ignore */}
           <LazyPrivateRoute path="/create-blog" component={BlogFormPage} />
           {/*
-            // @ts-ignore */}
+           // @ts-ignore */}
           <LazyPrivateRoute
             path="/update-blog/:blogId"
             component={BlogFormPage}
