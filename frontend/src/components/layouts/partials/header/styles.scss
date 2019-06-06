@@ -57,67 +57,68 @@
     font-size: 30px;
   }
 }
+@media (max-width: 1000px) {
+  .header-wrapper {
+    background-color: #ffffff;
+    z-index: 500;
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    padding: 10px;
 
-.m-header-wrapper {
-  background-color: #ffffff;
-  z-index: 500;
-  width: 100%;
-  height: 100px;
-  position: fixed;
-  padding: 10px;
-
-  .m-header-logo {
-    font-size: 5rem;
-    float: left;
-    width: 20%;
-    min-width: 110px;
-    height: auto;
-    padding: 2vh 0 0 5vw;
-    color: dimgray;
-  }
-
-  .m-header-logo:hover {
-    color: #292961;
-  }
-
-  .m-header-sign-up-btn {
-    float: right;
-    top: 38px;
-    right: calc(80px + 3.5vw);
-    font-size: 2rem;
-  }
-
-  .m-header-sign-in-btn {
-    float: right;
-    top: 38px;
-    left: calc(40px - 3.5vw);
-    font-size: 2rem;
-  }
-
-  .m-header-avatar-wrapper {
-    cursor: pointer;
-
-    .m-header-avatar {
-      float: right;
-      top: 33px;
-      right: 70px;
-      font-size: 3rem;
+    .header-logo {
+      font-size: 5rem;
+      float: left;
+      width: 20%;
+      min-width: 110px;
+      height: auto;
+      padding: 2vh 0 0 5vw;
+      color: dimgray;
     }
-  }
 
-  .m-header-menu-icon {
-    float: right;
-    margin: 18px 1vw 0 0;
-    font-size: 4rem;
-  }
+    .header-logo:hover {
+      color: #292961;
+    }
 
-  .m-header-menu-icon:hover {
-    color: #292961;
-  }
+    .m-header-sign-up-btn {
+      float: right;
+      top: 34px;
+      right: calc(80px + 3.5vw);
+      font-size: 2rem;
+    }
 
-  .m-header-loading-icon {
-    float: right;
-    margin: 35px 10vw 0 0;
-    font-size: 4rem;
+    .m-header-sign-in-btn {
+      float: right;
+      top: 34px;
+      left: calc(40px - 3.5vw);
+      font-size: 2rem;
+    }
+
+    .header-avatar-wrapper {
+      cursor: pointer;
+
+      .header-avatar {
+        float: right;
+        top: 31px;
+        right: 80px;
+        font-size: 3rem;
+      }
+    }
+
+    .header-menu-icon {
+      float: right;
+      padding: 37px 0 0 0;
+      font-size: 4rem;
+    }
+
+    .header-menu-icon:hover {
+      color: #292961;
+    }
+
+    .header-loading-icon {
+      float: right;
+      padding: 37px 30px 0 0;
+      font-size: 4rem;
+    }
   }
 }

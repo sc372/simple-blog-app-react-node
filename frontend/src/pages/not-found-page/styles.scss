@@ -9,7 +9,7 @@
     transform: translate(-50%, -50%);
 
     .not-found-img {
-      width: 30vw;
+      width: calc(120px + 20vw);
     }
   }
 }

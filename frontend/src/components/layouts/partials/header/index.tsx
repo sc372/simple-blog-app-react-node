@@ -34,29 +34,34 @@ const Header: React.FC<IHeaderProps> = ({
 
   return (
     <>
-      <Responsive.Min1000>
-        <Layout.Header className="header-wrapper">
-          <Link to="/">
+      <Layout.Header className="header-wrapper">
+        <Link to="/">
+          <Responsive.Min1000>
             <div className="header-logo">Simple Blog</div>
-          </Link>
-          {accountUi.isLogin ? (
-            <>
-              <span
-                className="header-avatar-wrapper"
-                onClick={() => history.push('/my')}
-              >
-                <Avatar className="header-avatar" src={accountUi.filePath} />
-              </span>
-              <Icon
-                className="header-menu-icon"
-                type="menu"
-                onClick={(): void => setIsDrawerToggleValue(true)}
-              />
-            </>
-          ) : accountIsLoading ? (
-            <Icon className="header-loading-icon" type="loading" />
-          ) : (
-            <>
+          </Responsive.Min1000>
+          <Responsive.Max1000>
+            <div className="header-logo">SB</div>
+          </Responsive.Max1000>
+        </Link>
+        {accountUi.isLogin ? (
+          <>
+            <span
+              className="header-avatar-wrapper"
+              onClick={() => history.push('/my')}
+            >
+              <Avatar className="header-avatar" src={accountUi.filePath} />
+            </span>
+            <Icon
+              className="header-menu-icon"
+              type="menu"
+              onClick={(): void => setIsDrawerToggleValue(true)}
+            />
+          </>
+        ) : accountIsLoading ? (
+          <Icon className="header-loading-icon" type="loading" />
+        ) : (
+          <>
+            <Responsive.Min1000>
               <Button
                 className="header-sign-up-btn"
                 onClick={() => setIsSignUpModal(true)}
@@ -70,34 +75,8 @@ const Header: React.FC<IHeaderProps> = ({
               >
                 로그인
               </Button>
-            </>
-          )}
-        </Layout.Header>
-      </Responsive.Min1000>
-      <Responsive.Max1000>
-        <Layout.Header className="m-header-wrapper">
-          <Link to="/">
-            <div className="m-header-logo">SB</div>
-          </Link>
-          {accountUi.isLogin ? (
-            <>
-              <span
-                className="m-header-avatar-wrapper"
-                onClick={() => history.push('/my')}
-              >
-                <Avatar className="m-header-avatar" src={accountUi.filePath} />
-              </span>
-              <span className="m-header-menu-icon">
-                <Icon
-                  type="menu"
-                  onClick={() => setIsDrawerToggleValue(true)}
-                />
-              </span>
-            </>
-          ) : accountIsLoading ? (
-            <Icon className="m-header-loading-icon" type="loading" />
-          ) : (
-            <>
+            </Responsive.Min1000>
+            <Responsive.Max1000>
               <Button
                 size="small"
                 className="m-header-sign-up-btn"
@@ -113,10 +92,10 @@ const Header: React.FC<IHeaderProps> = ({
               >
                 로그인
               </Button>
-            </>
-          )}
-        </Layout.Header>
-      </Responsive.Max1000>
+            </Responsive.Max1000>
+          </>
+        )}
+      </Layout.Header>
       {/*
         // @ts-ignore */}
       <SideBar
