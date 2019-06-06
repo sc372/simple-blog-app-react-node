@@ -12,8 +12,6 @@ interface IPrivateRoute {
   readonly accountUi: IAccountUi
 }
 
-
-// TODO: 비동기 통신으로 page guard 에 이슈가 있음
 const PrivateRoute: React.FC<IPrivateRoute> = ({
   component: Component,
   accountUi,
