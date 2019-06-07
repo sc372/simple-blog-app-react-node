@@ -4,7 +4,7 @@ import {
   NotAcceptableError,
   UnauthorizedError,
 } from 'routing-controllers'
-import { getCustomRepository, getRepository } from 'typeorm'
+import { getCustomRepository } from 'typeorm'
 import { Container, Service } from 'typedi'
 import { Request, Response } from 'express'
 import { Logger, LoggerService } from '../logger/logger.service'
@@ -30,7 +30,7 @@ export class AuthChecker {
     response: Response
   ): Promise<void> => {
     const jwtService = Container.get(JWTService)
-    const decoded = await JWTService.decodeToken(token)
+    const decoded = await jwtService.decodeToken(token)
     const exp = moment(decoded.exp * 1000)
     const dif = exp.diff(new Date(), 'days')
     if (dif >= -7) {
@@ -79,7 +79,7 @@ export class AuthChecker {
     if (/[A-Za-z0-9\-._~+\/]+=*/.test(token) && /[Bb]earer/.test(schema)) {
       try {
         const jwtService = Container.get(JWTService)
-        const jwtTokenDecoded = await JWTService.verifyToken(token)
+        const jwtTokenDecoded = await jwtService.verifyToken(token)
 
         request['user'] = jwtTokenDecoded['user']
       } catch (error) {

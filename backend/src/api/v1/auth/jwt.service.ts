@@ -22,7 +22,7 @@ export class JWTService {
    * @param token - JWT token encoded
    * @returns Token verification
    */
-  public static async verifyToken(token: string): Promise<object | string> {
+  public async verifyToken(token: string): Promise<object | string> {
     return await jwt.verify(token, process.env.JWT_SECRET)
   }
 
@@ -31,7 +31,7 @@ export class JWTService {
    * @param token - JWT token
    * @returns Decoded token
    */
-  public static async decodeToken(token: string): Promise<any> {
+  public async decodeToken(token: string): Promise<any> {
     return await jwt.decode(token)
   }
 

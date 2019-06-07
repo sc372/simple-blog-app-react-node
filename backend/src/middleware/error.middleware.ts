@@ -12,7 +12,7 @@ import {
 } from 'routing-controllers'
 import { EntityMetadataNotFoundError } from 'typeorm/error/EntityMetadataNotFoundError'
 import { Container } from 'typedi'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { HTTP_STATUS_CODE } from '../handlers/api_response.handler'
 import { ApiError } from '../handlers/api_error.handler'
 import { LoggerService } from '../logger/logger.service'
@@ -28,7 +28,12 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
    * @param response - Response object
    * @param next - Next function
    */
-  async error(error: any, request: Request, response: Response, next: any) {
+  async error(
+    error: any,
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
     let status: HTTP_STATUS_CODE = HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR
     const log = Container.get(LoggerService)
     const apiError = new ApiError(response)
