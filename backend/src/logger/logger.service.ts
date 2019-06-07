@@ -11,7 +11,11 @@ import * as httpContext from 'express-http-context'
  * @param fileName - Filename context
  */
 export function Logger(fileName: string) {
-  return (object: Object, propertyName: string, index?: number) => {
+  return (
+    object: Record<string, any>,
+    propertyName: string,
+    index?: number
+  ) => {
     const logger = new LoggerService(fileName)
     Container.registerHandler({
       object,

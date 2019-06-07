@@ -4,7 +4,6 @@ import {
   Column,
   Entity,
   OneToMany,
-  OneToOne,
   UpdateDateColumn,
 } from 'typeorm'
 import { CUI } from '../common/CUI'
