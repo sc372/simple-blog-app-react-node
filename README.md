@@ -24,6 +24,7 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
 ```bash
  $> sudo su postgres
  postgres@~$ psql
+ postgres=# create user test password 'test'; // 데이터 베이스 유저 생성
  postgres=# create database simple_blog owner test;  // 데이터 베이스 생성
  postgres=# \c simple_blog  // 데이터 베이스 접근
  simple_blog=# CREATE EXTENSION IF NOT EXISTS "uuid-ossp";  // UUID auto generate 위한 세팅
