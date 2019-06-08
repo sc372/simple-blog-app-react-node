@@ -20,7 +20,7 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
   - node.js (10.15.3)
   - postgresql
 
-- 데이터베이스 세팅 (ubuntu 18.04)
+- 데이터베이스 세팅 (database setting with ubuntu 18.04)
 ```bash
  $> sudo su postgres
  postgres@~$ psql
