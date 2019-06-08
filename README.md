@@ -15,12 +15,12 @@ React.js 와 Node.js 로 구현한 간단한 블로그 웹 애플리케이션 �
 
 ## quick start
 
-- require(필수 조건)
+- 필수 조건(require)
 
   - node.js (10.15.3)
   - postgresql
 
-- 데이터베이스 세팅 (ubuntu 18.04 기준)
+- 데이터베이스 세팅 (ubuntu 18.04)
 ```bash
  $> sudo su postgres
  postgres@~$ psql
@@ -55,13 +55,13 @@ JWT_SECRET=test123
 
 ```
 
-- backend dev server start (backend dev 서버 구동)
+- backend dev 서버 구동(backend dev server start)
 ```bash
 $> cd backend  // root path 기준 
 $> yarn && yarn dev  // npm install && npm run dev
 ```
 
-- frontend dev server start(frontend dev 서버 구동)
+- frontend dev 서버 구동(frontend dev server start)
 ```bash
 $> cd frontend  // root path 기준 
 $> yarn && yarn dev  // npm install && npm run dev
