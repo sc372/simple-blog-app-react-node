@@ -17,7 +17,7 @@
   "private": true,
   "dependencies": {
     "@types/ramda": "^0.26.7",
-    "bcrypt": "^3.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "class-transformer": "~0.2.0",
     "class-validator": "^0.9.1",
