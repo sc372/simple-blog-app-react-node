@@ -38,7 +38,7 @@
     "redis": "^2.8.0",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.7.7",
-    "sharp": "^0.21.1",
+    "sharp": "^0.30.5",
     "typedi": "^0.8.0",
     "typeorm": "0.2.9",
     "typeorm-typedi-extensions": "^0.2.1",
